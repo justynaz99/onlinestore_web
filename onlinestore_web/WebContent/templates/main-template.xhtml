@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title><ui:insert name="title">Sklep internetowy</ui:insert></title>
+	<h:outputStylesheet name="css/main.css" library="assets" />
+</h:head>
+
+<h:body class="is-preload">
+	<div id="wrapper">
+
+		<ui:insert name="header">
+			<div id="header" class="box bottom-space">
+				<ui:include src="/templates/header-snippet.xhtml" />
+			</div>
+		</ui:insert>
+		<div id="content" class="box bottom-space">
+			<ui:insert name="content"></ui:insert>
+		</div>
+		<ui:insert name="footer">
+			<div id="footer" class="box top-space">
+				<ui:include src="/templates/footer-snippet.xhtml" />
+			</div>
+		</ui:insert>
+	</div>
+
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+</h:body>
+
+</html>
