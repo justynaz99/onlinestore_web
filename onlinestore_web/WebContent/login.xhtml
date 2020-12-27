@@ -8,24 +8,16 @@
 
 <ui:composition template="/templates/page-template.xhtml">
 
-	<ui:define name="title">Wynik</ui:define>
+	<ui:define name="pageContent">
 
-		<ui:define name="pageContent">
-	
-			<p:panel>
-				<h:form>
-					<h:panelGrid columns="1" cellpadding="5">
-	
-						<p:autoComplete id="result" minQueryLength="3"
-							value="#{creditBB.result}" />
-						<p:commandButton value="Powrót" action="index" />
-						<p:messages />
-					</h:panelGrid>
-				</h:form>
-			</p:panel>
-	
-		
+		<div id="main">login test</div>
+
+
+
+
+
 	</ui:define>
 
 </ui:composition>
+
 </html>

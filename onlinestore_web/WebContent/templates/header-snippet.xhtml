@@ -4,26 +4,22 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-	<!--<p:panel toggleable="true" styleClass="bottom-space">
-		<h1>
-			<ui:insert name="title">...</ui:insert>
-
-			<div id="wrapper">header test</div>
-		</h1>
-	</p:panel>-->
 
 	<header id="header">
 		<h1>
-			<a href="index.xhtml">Future Imperfect</a>
+			<h:form><h:commandLink id="nonAjax" value="Online Store" action="#{storeBB.indexPage()}" /></h:form>
 		</h1>
+		
 		<nav class="links">
+		<h:form>
 			<ul>
 				<li><a href="#">Lorem</a></li>
 				<li><a href="#">Ipsum</a></li>
 				<li><a href="#">Feugiat</a></li>
 				<li><a href="#">Tempus</a></li>
-				<li><a href="#">Adipiscing</a></li>
+				<li><h:commandLink id="nonAjax" value="Zaloguj" action="#{storeBB.loginPage()}" /></li>
 			</ul>
+			</h:form>
 		</nav>
 		<nav class="main">
 			<ul>
