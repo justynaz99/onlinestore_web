@@ -6,29 +6,35 @@
 
 
 	<header id="header">
-		<h1>
-			Online Store
-		</h1>
-		
+		<h1>Online Store</h1>
+
 		<nav class="links">
-		<h:form>
-			<ul>
-				<li><h:commandLink id="index" value="Strona główna" action="#{storeBB.indexPage()}" /></li>
-				<li><h:commandLink id="login" value="Zaloguj" action="#{storeBB.loginPage()}" /></li>
-				<li><h:commandLink id="registartion" value="Zarejestruj" action="#{storeBB.registrationPage()}" /></li>
-				<li><h:commandLink id="shoppingCart" value="Koszyk" action="#{storeBB.shoppingCartPage()}" /></li>
-				<li><h:commandLink id="orders" value="Zamówienia" action="#{storeBB.ordersPage()}" /></li>
-				<li><h:commandLink id="logout" value="Wyloguj" action="#{storeBB.loginPage()}" /></li>
-			</ul>
+			<h:form>
+				<ul>
+					<li><h:commandLink id="index" value="Strona główna"
+							action="#{storeBB.indexPage()}" /></li>
+					<li><h:commandLink id="login" value="Zaloguj"
+							action="#{storeBB.loginPage()}" /></li>
+					<li><h:commandLink id="registartion" value="Zarejestruj"
+							action="#{storeBB.registrationPage()}" /></li>
+					<li><h:commandLink id="shoppingCart" value="Koszyk"
+							action="#{storeBB.shoppingCartPage()}" /></li>
+					<li><h:commandLink id="orders" value="Zamówienia"
+							action="#{storeBB.ordersPage()}" /></li>
+					<li><h:commandLink id="logout" value="Wyloguj"
+							action="#{storeBB.loginPage()}" /></li>
+				</ul>
 			</h:form>
 		</nav>
 		<nav class="main">
 			<ul>
-				<li class="search"><a class="fa-search" href="#search">Search</a>
-					<form id="search" method="get" action="#">
+				<li class="search"><i class="fa fa-fw fa-search" href="#search"
+					style="margin: 20px; cursor: pointer; hover"></i>
+					<form id="search" method="get" action="#search">
 						<input type="text" name="query" placeholder="Search" />
 					</form></li>
-				<li class="menu"><a class="fa-bars" href="#menu">Menu</a></li>
+
+
 			</ul>
 		</nav>
 	</header>

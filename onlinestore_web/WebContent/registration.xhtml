@@ -13,50 +13,36 @@
 		<div id="main">
 			<h:form style="width:350px">
 				<h3 style="margin-bottom: 30px">Zarejestruj się</h3>
-				<div class="p-field p-grid">
-					<p:outputLabel for="firstname" styleClass="p-col-fixed"
-						style="width:115px" value="Imię" />
-					<div class="p-col">
+				<div class="ui-fluid">
+					<div class="p-field">
+						<p:outputLabel for="firstname" value="Imię" />
 						<p:inputText id="firstname" />
 					</div>
-				</div>
-				<div class="p-field p-grid">
-					<p:outputLabel for="lastname" styleClass="p-col-fixed"
-						style="width:115px" value="Nazwisko" />
-					<div class="p-col">
-						<p:inputText id="lastname" />
+					<div class="p-field">
+						<p:outputLabel for="secondname" value="Nazwisko" />
+						<p:inputText id="secondname" />
 					</div>
-				</div>
-				<div class="p-field p-grid">
-					<p:outputLabel for="email" styleClass="p-col-fixed"
-						style="width:115px" value="E-mail" />
-					<div class="p-col">
+					<div class="p-field">
+						<p:outputLabel for="email" value="Email" />
 						<p:inputText id="email" />
 					</div>
-				</div>
-				<div class="p-field p-grid">
-					<p:outputLabel for="username" styleClass="p-col-fixed"
-						style="width:115px" value="Login" />
-					<div class="p-col">
+					<div class="p-field">
+						<p:outputLabel for="username" value="Login" />
 						<p:inputText id="username" />
 					</div>
-				</div>
-				
-					<div class="p-field p-grid">
-						<p:outputLabel for="password" styleClass="p-col-fixed"
-							style="width:115px" value="Hasło" />
-						<div class="p-col">
-							<p:password id="password" feedback="true" />
-						</div>
+					<div class="p-field">
+						<p:outputLabel for="password" value="Hasło" />
+						<p:password id="password" feedback="true" inline="true" />
 					</div>
-				
-				<div class="p-field p-grid">
-					<p:outputLabel for="password2" styleClass="p-col-fixed"
-						style="width:115px" value="Powtórz hasło" />
-					<div class="p-col">
+					<div class="p-field">
+						<p:outputLabel for="password2" value="Powtórz hasło" />
 						<p:password id="password2" />
 					</div>
 				</div>
+				
+				<ul class="actions">
+					<li style="margin-top: 20px"><a href="#" class="button">Zarejestruj</a></li>
+				</ul>
 
 			</h:form>
 		</div>
