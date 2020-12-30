@@ -23,11 +23,11 @@
 				<ui:include src="/templates/header-snippet.xhtml" />
 			</div>
 		</ui:insert>
-		<div id="content" class="box bottom-space">
+		<div id="content" class="box bottom-space" style="border: none">
 			<ui:insert name="content"></ui:insert>
 		</div>
-		<ui:insert name="footer">
-			<div id="footer" class="box bottom-space">
+		<ui:insert name="footer" style=" margin-bottom: -5em">
+			<div id="footer" class="box top-space" style="border: none; margin-bottom: -5em">
 				<ui:include src="/templates/footer-snippet.xhtml" />
 			</div>
 		</ui:insert>
