@@ -5,14 +5,21 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
 
+<f:metadata>
+    <f:viewAction action="#{registartionBB.onLoad()}" />
+</f:metadata>
+
+
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title><ui:insert name="title">Sklep internetowy</ui:insert></title>
 	<h:outputStylesheet name="css/main.css" library="assets" />
-	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
 	<h:outputStylesheet name="css/primeflex/primeflex.css" library="assets" />
-	<h:outputStylesheet name="css/primeflex/primeflex.min.css" library="assets" />
-	
+	<h:outputStylesheet name="css/primeflex/primeflex.min.css"
+		library="assets" />
+
 </h:head>
 
 <h:body class="is-preload">
@@ -27,12 +34,13 @@
 			<ui:insert name="content"></ui:insert>
 		</div>
 		<ui:insert name="footer" style=" margin-bottom: -5em">
-			<div id="footer" class="box top-space" style="border: none; margin-bottom: -5em">
+			<div id="footer" class="box top-space"
+				style="border: none; margin-bottom: -5em">
 				<ui:include src="/templates/footer-snippet.xhtml" />
 			</div>
 		</ui:insert>
 	</div>
-	
+
 	<h:outputScript library="assets" name="js/jquery.min.js" />
 	<h:outputScript library="assets" name="js/browser.min.js" />
 	<h:outputScript library="assets" name="js/breakpoints.min.js" />

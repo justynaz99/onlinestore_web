@@ -36,6 +36,7 @@ public class StoreBB {
 	}
 	
 	public String registrationPage() {
+		
 		return PAGE_REGISTRATION;
 	}
 	
