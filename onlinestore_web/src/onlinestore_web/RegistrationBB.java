@@ -66,7 +66,7 @@ public class RegistrationBB implements Serializable {
 
 		flash.put("user", user);
 
-		return PAGE_INDEX;
+		return PAGE_STAY_AT_THE_SAME;
 		
 	}
 
