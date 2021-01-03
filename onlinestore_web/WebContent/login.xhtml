@@ -24,11 +24,10 @@
 						<p:password id="password" feedback="true" inline="true" />
 					</div>
 				</div>
-
-
-				<ul class="actions">
-					<li style="margin-top: 20px"><a href="#" class="button">Zaloguj</a></li>
-				</ul>
+				
+				<p:commandButton styleClass="button" value="Zaloguj" 
+				action="#{registrationBB.registration()}" update="@form"/>
+				
 			</h:form>
 		</div>
 

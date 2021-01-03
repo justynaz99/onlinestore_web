@@ -13,8 +13,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-
-
 import jsfproject.dao.UserDAO;
 import jsfproject.entities.User;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestScoped
 public class RegistrationBB implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final String PAGE_INDEX = "index?faces-redirect=true";
 	private static final String PAGE_LOGIN = "login?faces-redirect=true";
 	private static final String PAGE_REGISTRATION = "registration?faces-redirect=true";
@@ -59,47 +57,29 @@ public class RegistrationBB implements Serializable {
 	public User getUser() {
 		return user;
 	}
-	
-	public String newUser() {
-		
-		User user = new User();
 
-		flash.put("user", user);
+//	public void onLoad() throws IOException {
+//		
+//		loaded = (User) flash.get("user");
+//
+//		if (loaded != null) {
+//			user = loaded;
+//		} else {
+//			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³êdne u¿ycie systemu", null));
+//		}
+//		
+//
+//	}
 
-		return PAGE_STAY_AT_THE_SAME;
-		
-	}
+	public String registration() {
 
-	public void onLoad() throws IOException {
-		
-		newUser();
-
-		loaded = (User) flash.get("user");
-
-		if (loaded != null) {
-			user = loaded;
-		} else {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³êdne u¿ycie systemu", null));
-		}
-
-	}
-
-	
-	public String register() {
-		
-		
-		if (loaded == null) {
-			return PAGE_STAY_AT_THE_SAME;
-		}
+//		if (loaded == null) {
+//			return PAGE_STAY_AT_THE_SAME;
+//		}
 
 		try {
-			if (user.getIdUser() == null) {
-				// new record
-				userDAO.create(user);
-			} else {
-				// existing record
-				userDAO.merge(user);
-			}
+			userDAO.create(user);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			context.addMessage(null,

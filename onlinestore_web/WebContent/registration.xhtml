@@ -7,8 +7,6 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-
-
 <ui:composition template="/templates/page-template.xhtml">
 
 	<ui:define name="pageContent">
@@ -19,45 +17,41 @@
 				<div class="ui-fluid">
 					<div class="p-field">
 						<p:outputLabel for="firstname" value="Imię" />
-						<p:inputText id="firstname" value="#{registration.user.firstName}" />
+						<p:inputText id="firstname"
+							value="#{registrationBB.user.firstName}" />
 					</div>
 					<div class="p-field">
-						<p:outputLabel for="secondname" value="Nazwisko" />
-						<p:inputText id="secondname"
-							value="#{registration.user.secondName}" />
+						<p:outputLabel for="lastname" value="Nazwisko" />
+						<p:inputText id="lastname" value="#{registrationBB.user.lastName}" />
 					</div>
 					<div class="p-field">
 						<p:outputLabel for="email" value="Email" />
-						<p:inputText id="email" />
+						<p:inputText id="email" value="#{registrationBB.user.email}" />
 					</div>
 					<div class="p-field">
 						<p:outputLabel for="username" value="Login" />
-						<p:inputText id="username" />
+						<p:inputText id="username" value="#{registrationBB.user.username}" />
 					</div>
 					<div class="p-field">
 						<p:outputLabel for="password" value="Hasło" />
-						<p:password id="password" feedback="true" inline="true" />
+						<p:password id="password" feedback="true" inline="true"
+							value="#{registrationBB.user.password}" />
 					</div>
-					<div class="p-field">
+					 <div class="p-field">
 						<p:outputLabel for="password2" value="Powtórz hasło" />
 						<p:password id="password2" />
-					</div>
+					</div> 
 				</div>
+				
+				<p:commandButton styleClass="button" value="Zarejestruj" 
+				action="#{registrationBB.registration()}" update="@form"/>
+				
+				
 
-				<!-- <ul class="actions">
-					<li style="margin-top: 20px"><a href="#" class="button">Zarejestruj</a></li>
-				</ul> -->
-
-				<p:commandButton value="Zarejestruj"
-					action="#{registrationBB.register()}" style="margin-right: 1em;"
-					update="@form" />
-
+				
+				
 			</h:form>
 		</div>
-
-
-
-
 
 	</ui:define>
 
