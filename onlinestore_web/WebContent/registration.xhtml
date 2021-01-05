@@ -42,8 +42,9 @@
 					<div class="formInput">
 						<p:inputText id="email" value="#{registrationBB.user.email}"
 							required="true" requiredMessage="Wprowadz email"
-							validatorMessage="Email powinien zawierać od 3 do 20 znaków">
+							validatorMessage="Niepoprawny format adresu email">
 							<f:validateLength minimum="3" maximum="20" />
+							<f:validateRegex pattern="^[A-Za-z0-9+_.-]+@(.+)$" />
 						</p:inputText>
 					</div>
 					<p:message for="email" class="formMessage" />
@@ -61,9 +62,11 @@
 					<p:outputLabel for="password" value="Hasło" class="formLabel" />
 					<div class="formInput">
 						<p:password id="password" value="#{registrationBB.user.password}"
-							required="true" requiredMessage="Wprowadz hasło"
-							validatorMessage="Hasło powinno zawierać od 3 do 20 znaków">
-							<f:validateLength minimum="3" maximum="20" />
+							required="true" requiredMessage="Wprowadz hasło" match="password2"
+							validatorMessage="Hasło powinno zawierać od 8 do 20 znaków, przynajmniej jedną małą literę,
+							wielką literę, oraz cyfrę">
+							<f:validateRegex pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" />
+							<f:validateLength minimum="8" maximum="20" />
 						</p:password>
 					</div>
 					<p:message for="password" class="formMessage" />
@@ -71,10 +74,9 @@
 					<p:outputLabel for="password2" value="Powtórz hasło"
 						class="formLabel" />
 					<div class="formInput">
-						<p:password id="password2" required="true"
+						<p:password id="password2" required="true" 
 							requiredMessage="Wprowadz ponownie hasło"
 							validatorMessage="Hasła nie są identyczne">
-							<f:validateLength minimum="3" maximum="20" />
 						</p:password>
 					</div>
 					<p:message for="password2" class="formMessage" />
@@ -82,7 +84,7 @@
 
 				<div style="clear: both">
 					<p:commandButton value="Zarejestruj"
-						action="#{registrationBB.registration()}" update="@form" />
+						action="#{registrationBB.registration()}" update="@form" ajax="true" />
 				</div>
 			</h:form>
 

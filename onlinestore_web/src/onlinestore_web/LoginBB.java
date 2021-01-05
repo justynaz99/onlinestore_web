@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Named
 @RequestScoped
-public class RegistrationBB implements Serializable {
+public class LoginBB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final String PAGE_INDEX = "index?faces-redirect=true";
@@ -60,17 +60,9 @@ public class RegistrationBB implements Serializable {
 
 
 
-	public String registration() {
+	public String login() {
 
-		try {
-			userDAO.create(user);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			context.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wyst¹pi³ b³¹d podczas rejestracji", null));
-			return PAGE_STAY_AT_THE_SAME;
-		}
+		
 
 		return PAGE_INDEX;
 	}

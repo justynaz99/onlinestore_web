@@ -11,23 +11,30 @@
 	<ui:define name="pageContent">
 
 		<div id="main">
-
-			<h:form style="width:400px">
+			<h:form>
 				<h3 style="margin-bottom: 30px">Zaloguj się</h3>
-				<div class="ui-fluid">
-					<div class="p-field">
-						<p:outputLabel for="username" value="Login" />
-						<p:inputText id="username" />
+				<div>
+					<p:outputLabel for="username" value="Login" class="formLabel" />
+					<div class="formInput">
+						<p:inputText id="username" value="#{loginBB.user.username}"
+							required="true" requiredMessage="Wprowadz login">
+						</p:inputText>
 					</div>
-					<div class="p-field">
-						<p:outputLabel for="password" value="Hasło" />
-						<p:password id="password" feedback="true" inline="true" />
+					<p:message for="username" class="formMessage" />
+
+					<p:outputLabel for="password" value="Hasło" class="formLabel" />
+					<div class="formInput">
+						<p:password id="password" value="#{loginBB.user.password}"
+							required="true" requiredMessage="Wprowadz hasło">
+						</p:password>
+					</div>
+					<p:message for="password" class="formMessage" />
+
+					<div style="clear: both">
+						<p:commandButton value="Zaloguj" action="#" update="@form"
+							ajax="true" />
 					</div>
 				</div>
-				
-				<p:commandButton styleClass="button" value="Zaloguj" 
-				action="#{registrationBB.registration()}" update="@form"/>
-				
 			</h:form>
 		</div>
 

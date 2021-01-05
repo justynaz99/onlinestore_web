@@ -57,14 +57,6 @@ public class StoreBB {
 		return PAGE_ORDERS;
 	}
 
-//	public String newUser() {
-//
-//		User user = new User();
-//
-//		flash.put("user", user);
-//
-//		return PAGE_REGISTRATION;
-//
-//	}
+
 
 }
