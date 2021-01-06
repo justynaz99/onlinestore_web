@@ -13,8 +13,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
+
+
 import jsfproject.dao.UserDAO;
 import jsfproject.entities.User;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 @Named
@@ -28,7 +32,6 @@ public class LoginBB implements Serializable {
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private User user = new User();
-	private User loaded = null;
 
 	@Inject
 	FacesContext context;
@@ -38,9 +41,15 @@ public class LoginBB implements Serializable {
 
 	@Inject
 	Flash flash;
-
+	
 	@EJB
 	UserDAO userDAO;
+	
+	
+	
+	public User getUser() {
+		return user;
+	}
 
 	public String indexPage() {
 		return PAGE_INDEX;
@@ -54,17 +63,22 @@ public class LoginBB implements Serializable {
 		return PAGE_REGISTRATION;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-
-
+	
 	public String login() {
-
 		
-
-		return PAGE_INDEX;
+		User user1 = userDAO.checkUser(user.getUsername(), user.getPassword());
+		if (user1 != null) {
+			user = user1;
+			HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+			session.setAttribute("role", user.getRole());
+			return PAGE_INDEX;
+		}
+			
+		
+		return PAGE_STAY_AT_THE_SAME;
 	}
+	
 
+	
+	
 }

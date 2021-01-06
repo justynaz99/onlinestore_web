@@ -9,6 +9,8 @@ import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+
+
 import javax.servlet.http.HttpServletRequest;
 
 import jsfproject.dao.UserDAO;
@@ -42,6 +44,9 @@ public class StoreBB {
 	}
 
 	public String loginPage() {
+		User user = new User();
+
+		flash.put("user", user);
 		return PAGE_LOGIN;
 	}
 
@@ -56,7 +61,5 @@ public class StoreBB {
 	public String ordersPage() {
 		return PAGE_ORDERS;
 	}
-
-
 
 }

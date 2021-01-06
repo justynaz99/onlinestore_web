@@ -6,6 +6,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
+
 <ui:composition template="/templates/page-template.xhtml">
 
 	<ui:define name="pageContent">
@@ -31,7 +32,7 @@
 					<p:message for="password" class="formMessage" />
 
 					<div style="clear: both">
-						<p:commandButton value="Zaloguj" action="#" update="@form"
+						<p:commandButton value="Zaloguj" action="#{loginBB.login()}" update="@form"
 							ajax="true" />
 					</div>
 				</div>
