@@ -15,26 +15,24 @@ import javax.servlet.http.HttpSession;
 
 
 
-import jsfproject.dao.UserDAO;
-import jsfproject.entities.User;
+import jsfproject.dao.OrderDAO;
+import jsfproject.entities.Order;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 @Named
 @RequestScoped
-public class LoginBB implements Serializable {
+public class OrderBB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final String PAGE_INDEX = "index?faces-redirect=true";
 	private static final String PAGE_LOGIN = "login?faces-redirect=true";
 	private static final String PAGE_REGISTRATION = "registration?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
-
-	private User user = new User();
 	
-
-
+	Order order = new Order();
+	
 	@Inject
 	FacesContext context;
 
@@ -45,13 +43,9 @@ public class LoginBB implements Serializable {
 	Flash flash;
 	
 	@EJB
-	UserDAO userDAO;
+	OrderDAO orderDAO;
 	
 	
-	
-	public User getUser() {
-		return user;
-	}
 
 	public String indexPage() {
 		return PAGE_INDEX;
@@ -66,37 +60,9 @@ public class LoginBB implements Serializable {
 	}
 
 	
-	public String login() {
+	public void addToCart() {
+		orderDAO.createOrder();
 		
-		User user1 = userDAO.checkUser(user.getUsername(), user.getPassword());
-		if (user1 != null) {
-			user = user1;
-			HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-			session.setAttribute("role", user.getRole());
-			session.setAttribute("user", user);
-			session.setAttribute("userID", user.getIdUser());
-			return PAGE_INDEX;
-		}
-			
-		
-		return PAGE_STAY_AT_THE_SAME;
-	}
-	
-	public String logout() {
-		
-		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-		session.setAttribute("role", "guest");
-		
-		
-		return PAGE_INDEX;
-	}
-	
-	public boolean checkIfUser() {
-		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-		if (session.getAttribute("role") != null) {
-			return session.getAttribute("role").equals("user");
-		}
-		else return false;
 	}
 	
 	

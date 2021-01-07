@@ -1497,7 +1497,9 @@ hr.major {
 	letter-spacing: 0.25em;
 	text-transform: uppercase;
 	white-space: nowrap;
+	
 }
+
 
 .author .name {
 	-moz-transition: border-bottom-color 0.2s ease;
@@ -1512,11 +1514,15 @@ hr.major {
 .author img {
 	border-radius: 100%;
 	display: block;
-	width: 4em;
+	width: 3em;
 }
 
 .author:hover .name {
 	border-bottom-color: transparent;
+}
+
+.ui-addButton{
+	color: yellow !important;
 }
 
 /* Blurb */
@@ -1610,13 +1616,15 @@ input[type="submit"], input[type="reset"], input[type="button"], button,
 	height: 4.8125em !important;
 	letter-spacing: 0.25em !important;
 	line-height: 4.8125em !important;
-	padding: 0 2.5em !important;
+	/* padding: 0 2.5em !important; */
 	text-align: center !important;
 	text-decoration: none !important;
 	text-transform: uppercase !important;
 	white-space: nowrap !important;
 	margin-top: 20px !important;
 	border-radius: 0px !important;
+	width: 170px !important;
+	
 }
 
 .ui-button:hover {
@@ -2348,7 +2356,7 @@ ul.posts article header>:last-child {
 .mini-post header .author {
 	position: absolute;
 	right: 2em;
-	top: 2em;
+	top: 0em;
 }
 
 .mini-posts {
