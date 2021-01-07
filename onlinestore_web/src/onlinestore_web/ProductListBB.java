@@ -31,7 +31,6 @@ public class ProductListBB implements Serializable {
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private Product product = new Product();
-	private Product loaded = null;
 
 	@Inject
 	FacesContext context;
@@ -54,14 +53,29 @@ public class ProductListBB implements Serializable {
 		return product;
 	}
 	
+	public String deleteProduct(Product product) {
+		productDAO.remove(product);
+		return PAGE_STAY_AT_THE_SAME;
+	}
+	
+	public String addProduct() {
+
+		try {
+			productDAO.create(product);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			context.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wyst¹pi³ b³¹d podczas dodawania rekordu", null));
+			return PAGE_STAY_AT_THE_SAME;
+		}
+
+		return PAGE_STAY_AT_THE_SAME;
+	}
+	
 
 	public List<Product> getList(){
-		
-		List<Product> list = null;
-		
-		list = productDAO.getFullList();
-		
-		return list;
+		return productDAO.listAllProducts();
 	}
 
 	

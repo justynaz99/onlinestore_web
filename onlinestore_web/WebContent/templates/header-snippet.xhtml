@@ -9,14 +9,10 @@
 		<h1>Sklep internetowy</h1>
 
 		<nav class="links">
-			<h:form>
+			<h:form rendered="#{loginBB.checkIfUser()}">
 				<ul>
 					<li><h:commandLink id="index" value="Strona główna"
 							action="#{storeBB.indexPage()}" /></li>
-					<li><h:commandLink id="login" value="Zaloguj"
-							action="#{storeBB.loginPage()}" /></li>
-					<li><h:commandLink id="registartion" value="Zarejestruj"
-							action="#{storeBB.registrationPage()}" /></li>
 					<li><h:commandLink id="shoppingCart" value="Koszyk"
 							action="#{storeBB.shoppingCartPage()}" /></li>
 					<li><h:commandLink id="orders" value="Zamówienia"
@@ -25,16 +21,46 @@
 							action="#{loginBB.logout()}" /></li>
 				</ul>
 			</h:form>
+			
+			<h:form rendered="#{loginBB.checkIfAdmin()}">
+				<ul>
+					<li><h:commandLink id="index" value="Strona główna"
+							action="#{storeBB.indexPage()}" /></li>
+					<li><h:commandLink id="users" value="Użytkownicy"
+							action="#{storeBB.usersPage()}" /></li>
+					<li><h:commandLink id="logout" value="Wyloguj"
+							action="#{loginBB.logout()}" /></li>
+				</ul>
+			</h:form>
+			
+			<h:form rendered="#{loginBB.checkIfSeller()}">
+				<ul>
+					<li><h:commandLink id="index" value="Strona główna"
+							action="#{storeBB.indexPage()}" /></li>
+					<li><h:commandLink id="logout" value="Wyloguj"
+							action="#{loginBB.logout()}" /></li>
+				</ul>
+			</h:form>
+
+			<h:form>
+				<ul>
+					<li><h:commandLink id="index" value="Strona główna"
+							action="#{storeBB.indexPage()}" /></li>
+					<li><h:commandLink id="login" value="Zaloguj"
+							action="#{storeBB.loginPage()}" /></li>
+					<li><h:commandLink id="registartion" value="Zarejestruj"
+							action="#{storeBB.registrationPage()}" /></li>
+				</ul>
+			</h:form>
+			
 		</nav>
 		<nav class="main">
 			<ul>
 				<li class="search"><i class="fa fa-fw fa-search" href="#search"
-					style="margin: 20px; cursor: pointer; hover"></i>
+					style="margin: 20px; cursor: pointer;"></i>
 					<form id="search" method="get" action="#search">
 						<input type="text" name="query" placeholder="Search" />
 					</form></li>
-
-
 			</ul>
 		</nav>
 	</header>

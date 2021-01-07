@@ -37,6 +37,7 @@ public class StoreBB {
 	private static final String PAGE_REGISTRATION = "registration?faces-redirect=true";
 	private static final String PAGE_SHOPPING_CART = "shoppingCart?faces-redirect=true";
 	private static final String PAGE_ORDERS = "orders?faces-redirect=true";
+	private static final String PAGE_USERS = "users?faces-redirect=true";
 	private static final String PAGE_INDEXX = "/public/index";
 
 	public String indexPage() {
@@ -60,6 +61,10 @@ public class StoreBB {
 
 	public String ordersPage() {
 		return PAGE_ORDERS;
+	}
+	
+	public String usersPage() {
+		return PAGE_USERS;
 	}
 
 }

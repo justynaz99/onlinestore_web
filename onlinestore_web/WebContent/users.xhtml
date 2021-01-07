@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/templates/page-template.xhtml">
+
+	<ui:define name="pageContent">
+
+		<div id="main">
+			<ui:fragment rendered="#{loginBB.checkIfUserEmpty()}">
+				<h2 style="margin-bottom: 30px">Brak użytkowników w bazie!</h2>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{loginBB.checkIfUserNotEmpty()}">
+				<h2 style="margin-bottom: 30px">Użytkownicy</h2>
+
+				<section>
+				<ul class="posts">
+					<li>
+						<table>
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Login</th>
+									<th>Hasło</th>
+									<th>Imię</th>
+									<th>Nazwisko</th>
+									<th>Email</th>
+									<th>Rola</th>
+									<th></th>
+								</tr>
+							</thead>
+							<c:forEach items="#{loginBB.getList()}" var="u">
+								<tbody>
+									<tr>
+										<td><h:outputText value="#{u.idUser}" /></td>
+										<td><h:outputText value="#{u.username}" /></td>
+										<td><h:outputText value="#{u.password}" /></td>
+										<td><h:outputText value="#{u.firstName}" /></td>
+										<td><h:outputText value="#{u.lastName}" /></td>
+										<td><h:outputText value="#{u.email}" /></td>
+										<td><h:outputText value="#{u.role}" /></td>
+										<td><p:commandLink value="Edytuj" action="#" /></td>
+									</tr>
+								</tbody>
+							</c:forEach>
+						</table>
+					</li>
+				</ul>
+				</section>
+
+			</ui:fragment>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

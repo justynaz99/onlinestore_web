@@ -2,6 +2,7 @@ package onlinestore_web;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 
 import jsfproject.dao.UserDAO;
+import jsfproject.entities.Order;
 import jsfproject.entities.User;
 
 import javax.servlet.ServletException;
@@ -97,6 +99,41 @@ public class LoginBB implements Serializable {
 			return session.getAttribute("role").equals("user");
 		}
 		else return false;
+	}
+	public boolean checkIfGuest() {
+		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+		if (session.getAttribute("role") != null) {
+			return session.getAttribute("role").equals("guest");
+		}
+		else return false;
+	}
+	
+	public boolean checkIfSeller() {
+		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+		if (session.getAttribute("role") != null) {
+			return session.getAttribute("role").equals("seller");
+		}
+		else return false;
+	}
+	
+	public boolean checkIfAdmin() {
+		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+		if (session.getAttribute("role") != null) {
+			return session.getAttribute("role").equals("admin");
+		}
+		else return false;
+	}
+	
+	public List<User> getList() {
+		return userDAO.listAllUsers();
+	}
+	
+	public boolean checkIfUserEmpty() {
+		return getList().isEmpty();
+	}
+
+	public boolean checkIfUserNotEmpty() {
+		return !getList().isEmpty();
 	}
 	
 	

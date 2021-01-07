@@ -2,7 +2,9 @@ package onlinestore_web;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -14,25 +16,21 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-import jsfproject.dao.OrderDAO;
-import jsfproject.entities.Order;
+import jsfproject.dao.OrderPositionDAO;
+import jsfproject.dao.ProductDAO;
 import jsfproject.entities.OrderPosition;
-
-import javax.servlet.ServletException;
+import jsfproject.entities.Product;
 import javax.servlet.http.HttpServletRequest;
 
 @Named
 @RequestScoped
-public class OrderBB implements Serializable {
+public class OrderPositionBB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final String PAGE_INDEX = "index?faces-redirect=true";
-	private static final String PAGE_LOGIN = "login?faces-redirect=true";
-	private static final String PAGE_REGISTRATION = "registration?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
-	Order order = new Order();
-
+	
 	@Inject
 	FacesContext context;
 
@@ -43,29 +41,15 @@ public class OrderBB implements Serializable {
 	Flash flash;
 
 	@EJB
-	OrderDAO orderDAO;
+	OrderPositionDAO orderPositionDAO;
 
 	public String indexPage() {
 		return PAGE_INDEX;
 	}
 
-	public String loginPage() {
-		return PAGE_LOGIN;
-	}
 
-	public String registrationPage() {
-		return PAGE_REGISTRATION;
-	}
-
-	public void addToCart() {
-		orderDAO.createOrder();
-
-	}
-
-	public List<Order> getList() {
-
-		List<Order> list = orderDAO.listAllOrders();
-		return list;
+	public List<OrderPosition> getList(){
+		return orderPositionDAO.listAllPositions();
 	}
 	
 	public boolean checkIfEmpty() {
