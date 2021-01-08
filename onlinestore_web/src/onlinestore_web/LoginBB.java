@@ -87,6 +87,7 @@ public class LoginBB implements Serializable {
 	public String logout() {
 		
 		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+		session.invalidate();
 		session.setAttribute("role", "guest");
 		
 		
@@ -112,6 +113,13 @@ public class LoginBB implements Serializable {
 		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
 		if (session.getAttribute("role") != null) {
 			return session.getAttribute("role").equals("seller");
+		}
+		else return false;
+	}
+	public boolean checkIfNotSeller() {
+		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+		if (session.getAttribute("role") != null) {
+			return !session.getAttribute("role").equals("seller");
 		}
 		else return false;
 	}

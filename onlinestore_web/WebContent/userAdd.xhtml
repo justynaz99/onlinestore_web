@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/templates/page-template.xhtml">
+
+	<ui:define name="pageContent">
+
+
+		<div id="main">
+			<h:form>
+				<h3 style="margin-bottom: 30px">Zarejestruj się</h3>
+				<div>
+					<p:outputLabel for="firstname" value="Imię" />
+					<div class="formInput">
+						<p:inputText id="firstname"
+							value="#{userBB.user.firstName}" required="true"
+							requiredMessage="Wprowadz imię"
+							validatorMessage="Imię powinno zawierać od 3 do 20 znaków">
+							<f:validateLength minimum="3" maximum="20" />
+						</p:inputText>
+					</div>
+					<p:message for="firstname" class="formMessage" />
+
+
+					<p:outputLabel for="lastname" value="Nazwisko" class="formLabel" />
+					<div class="formInput">
+						<p:inputText id="lastname" value="#{userBB.user.lastName}"
+							required="true" requiredMessage="Wprowadz nazwisko"
+							validatorMessage="Nazwisko powinno zawierać od 3 do 20 znaków">
+							<f:validateLength minimum="3" maximum="20" />
+						</p:inputText>
+					</div>
+					<p:message for="lastname" class="formMessage" />
+
+					<p:outputLabel for="email" value="Email" class="formLabel" />
+					<div class="formInput">
+						<p:inputText id="email" value="#{userBB.user.email}"
+							required="true" requiredMessage="Wprowadz email"
+							validatorMessage="Niepoprawny format adresu email">
+							<f:validateLength minimum="3" maximum="20" />
+							<f:validateRegex pattern="^[A-Za-z0-9+_.-]+@(.+)$" />
+						</p:inputText>
+					</div>
+					<p:message for="email" class="formMessage" />
+
+					<p:outputLabel for="username" value="Login" class="formLabel" />
+					<div class="formInput">
+						<p:inputText id="username" value="#{userBB.user.username}"
+							required="true" requiredMessage="Wprowadz login"
+							validatorMessage="Login powinien zawierać od 3 do 20 znaków">
+							<f:validateLength minimum="3" maximum="20" />
+						</p:inputText>
+					</div>
+					<p:message for="username" class="formMessage" />
+
+					<p:outputLabel for="password" value="Hasło" class="formLabel" />
+					<div class="formInput">
+						<p:password id="password" value="#{userBB.user.password}"
+							required="true" requiredMessage="Wprowadz hasło" match="password2"
+							validatorMessage="Hasło powinno zawierać od 8 do 20 znaków, przynajmniej jedną małą literę,
+							wielką literę, oraz cyfrę">
+							<f:validateRegex pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" />
+							<f:validateLength minimum="8" maximum="20" />
+						</p:password>
+					</div>
+					<p:message for="password" class="formMessage" />
+
+					<p:outputLabel for="password2" value="Powtórz hasło"
+						class="formLabel" />
+					<div class="formInput">
+						<p:password id="password2" required="true" 
+							requiredMessage="Wprowadz ponownie hasło"
+							validatorMessage="Hasła nie są identyczne">
+						</p:password>
+					</div>
+					<p:message for="password2" class="formMessage" />
+				</div>
+
+				<div style="clear: both">
+					<p:commandButton value="Zapisz"
+						action="#{userBB.saveAddUser()}"/>
+				</div>
+			</h:form>
+
+		</div>
+	</ui:define>
+
+</ui:composition>
+
+</html>

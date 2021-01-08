@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-
+import com.jsf.entities.Person;
 
 import jsfproject.dao.ProductDAO;
 import jsfproject.entities.Product;
@@ -77,6 +77,8 @@ public class ProductListBB implements Serializable {
 	public List<Product> getList(){
 		return productDAO.listAllProducts();
 	}
+	
+
 
 	
 

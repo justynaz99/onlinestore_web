@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import jsfproject.dao.OrderDAO;
 import jsfproject.entities.Order;
 import jsfproject.entities.OrderPosition;
+import jsfproject.entities.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ public class OrderBB implements Serializable {
 	private static final String PAGE_INDEX = "index?faces-redirect=true";
 	private static final String PAGE_LOGIN = "login?faces-redirect=true";
 	private static final String PAGE_REGISTRATION = "registration?faces-redirect=true";
+	private static final String PAGE_SHOPPING_CART = "shoppingCart?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	Order order = new Order();
@@ -57,10 +59,7 @@ public class OrderBB implements Serializable {
 		return PAGE_REGISTRATION;
 	}
 
-	public void addToCart() {
-		orderDAO.createOrder();
-
-	}
+	
 
 	public List<Order> getList() {
 

@@ -81,7 +81,7 @@
 					</h3>
 					<h:outputText class="published" value="#{p.price}" /> <p:commandButton
 						class="author" value="Dodaj do koszyka"
-						action="#{orderBB.addToCart()}" ajax="true"
+						action="#{orderPositionBB.addToCart(p)}" ajax="true"
 						rendered="#{loginBB.checkIfUser()}" /> <p:commandButton
 						class="author" value="Usuń produkt"
 						action="#{productListBB.deleteProduct(p)}" ajax="true"
@@ -93,6 +93,28 @@
 			</div>
 			</section>
 		</h:form>
+		
+		<h:form rendered="#{loginBB.checkIfNotSeller()}">
+			<section id="sidebar">
+			<div class="mini-posts">
+				<c:forEach items="#{productListBB.getList()}" var="p">
+
+					<article class="mini-post"> <header>
+					<h3>
+						<h:outputText value="#{p.name}" />
+					</h3>
+					<h:outputText class="published" value="#{p.price}" /> <p:commandButton
+						class="author" value="Dodaj do koszyka"
+						action="#{orderPositionBB.addToCart(p)}" ajax="true"
+						rendered="#{loginBB.checkIfUser()}" /> </header> <a
+						href="#" class="image"><h:graphicImage
+							url="/resources/images/#{p.name}.jpg" /></a> </article>
+
+				</c:forEach>		
+			</div>
+			</section>
+		</h:form>
+	
 
 		<div style="margin-top: 20px">
 

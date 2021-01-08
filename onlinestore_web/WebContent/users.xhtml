@@ -12,45 +12,51 @@
 	<ui:define name="pageContent">
 
 		<div id="main">
-			<ui:fragment rendered="#{loginBB.checkIfUserEmpty()}">
+			<ui:fragment rendered="#{userBB.checkIfUserEmpty()}">
 				<h2 style="margin-bottom: 30px">Brak użytkowników w bazie!</h2>
 			</ui:fragment>
 
-			<ui:fragment rendered="#{loginBB.checkIfUserNotEmpty()}">
+			<ui:fragment rendered="#{userBB.checkIfUserNotEmpty()}">
 				<h2 style="margin-bottom: 30px">Użytkownicy</h2>
+				
 
 				<section>
 				<ul class="posts">
-					<li>
-						<table>
-							<thead>
-								<tr>
-									<th>Id</th>
-									<th>Login</th>
-									<th>Hasło</th>
-									<th>Imię</th>
-									<th>Nazwisko</th>
-									<th>Email</th>
-									<th>Rola</th>
-									<th></th>
-								</tr>
-							</thead>
-							<c:forEach items="#{loginBB.getList()}" var="u">
-								<tbody>
+					<li><h:form>
+							<table>
+								<thead>
 									<tr>
-										<td><h:outputText value="#{u.idUser}" /></td>
-										<td><h:outputText value="#{u.username}" /></td>
-										<td><h:outputText value="#{u.password}" /></td>
-										<td><h:outputText value="#{u.firstName}" /></td>
-										<td><h:outputText value="#{u.lastName}" /></td>
-										<td><h:outputText value="#{u.email}" /></td>
-										<td><h:outputText value="#{u.role}" /></td>
-										<td><p:commandLink value="Edytuj" action="#" /></td>
+										<th>Id</th>
+										<th>Login</th>
+										<th>Hasło</th>
+										<th>Imię</th>
+										<th>Nazwisko</th>
+										<th>Email</th>
+										<th>Rola</th>
+										<th></th>
 									</tr>
-								</tbody>
-							</c:forEach>
-						</table>
-					</li>
+								</thead>
+								<c:forEach items="#{userBB.getList()}" var="u">
+									<tbody>
+										<tr>
+											<td><h:outputText value="#{u.idUser}" /></td>
+											<td><h:outputText value="#{u.username}" /></td>
+											<td><h:outputText value="#{u.password}" /></td>
+											<td><h:outputText value="#{u.firstName}" /></td>
+											<td><h:outputText value="#{u.lastName}" /></td>
+											<td><h:outputText value="#{u.email}" /></td>
+											<td><h:outputText value="#{u.role}" /></td>
+											<td><p:commandButton value="Usuń"
+													action="#{userBB.deleteUser(u)}" update="@form" /></td>
+											<td><p:commandButton value="Edytuj"
+													action="#{userBB.editUser(u)}" /></td>
+										</tr>
+									</tbody>
+								</c:forEach>
+							</table>
+						</h:form>
+						<p:commandButton value="Dodaj użytkownika" action="#{userBB.addUser()}" 
+						style="margin-top: -20px !important"/></li>
 				</ul>
 				</section>
 

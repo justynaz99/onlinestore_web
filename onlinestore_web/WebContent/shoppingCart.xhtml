@@ -19,33 +19,35 @@
 			<ui:fragment rendered="#{orderPositionBB.checkIfNotEmpty()}">
 				<h2 style="margin-bottom: 30px">Twój koszyk</h2>
 				<div class="posts">
-
-					<table>
-						<thead>
-							<tr>
-								<th>Nazwa</th>
-								<th>Cena</th>
-								<th>Ilość</th>
-							</tr>
-						</thead>
-						<c:forEach items="#{orderPositionBB.getList()}" var="o">
-							<tbody>
+					<h:form>
+						<table>
+							<thead>
 								<tr>
-									<td>Nazwa</td>
-									<td><h:outputText value="#{o.priceProduct}" /></td>
-									<td><h:outputText value="#{o.quantity}" /></td>
+									<th>Nazwa</th>
+									<th>Cena</th>
+									<th>Ilość</th>
 								</tr>
-							</tbody>
-						</c:forEach>
-						<tfoot>
-							<tr>
-								<td>Wartość</td>
-								<td>100.00</td>
-								<td></td>
-							</tr>
-						</tfoot>
-					</table>
-
+							</thead>
+							<c:forEach items="#{orderPositionBB.getList()}" var="o">
+								<tbody>
+									<tr>
+										<td>Nazwa</td>
+										<td><h:outputText value="#{o.priceProduct}" /></td>
+										<td><h:outputText value="#{o.quantity}" /></td>
+										<td><p:commandButton value="Usuń"
+												action="#{orderPositionBB.deletePosition(o)}" update="@form" /></td>
+									</tr>
+								</tbody>
+							</c:forEach>
+							<tfoot>
+								<tr>
+									<td>Wartość</td>
+									<td>100.00</td>
+									<td></td>
+								</tr>
+							</tfoot>
+						</table>
+					</h:form>
 				</div>
 			</ui:fragment>
 		</div>
