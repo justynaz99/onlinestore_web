@@ -39,6 +39,7 @@ public class StoreBB {
 	private static final String PAGE_ORDERS = "orders?faces-redirect=true";
 	private static final String PAGE_USERS = "users?faces-redirect=true";
 	private static final String PAGE_INDEXX = "/public/index";
+	
 
 	public String indexPage() {
 		return PAGE_INDEX;

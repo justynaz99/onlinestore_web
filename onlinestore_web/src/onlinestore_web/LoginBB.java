@@ -14,8 +14,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-
-
 import jsfproject.dao.UserDAO;
 import jsfproject.entities.Order;
 import jsfproject.entities.User;
@@ -34,8 +32,6 @@ public class LoginBB implements Serializable {
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private User user = new User();
-	
-
 
 	@Inject
 	FacesContext context;
@@ -45,14 +41,18 @@ public class LoginBB implements Serializable {
 
 	@Inject
 	Flash flash;
-	
+
 	@EJB
 	UserDAO userDAO;
-	
-	
-	
+
+	private static HttpSession session;
+
 	public User getUser() {
 		return user;
+	}
+
+	public static HttpSession getSession() {
+		return session;
 	}
 
 	public String indexPage() {
@@ -67,75 +67,77 @@ public class LoginBB implements Serializable {
 		return PAGE_REGISTRATION;
 	}
 
-	
 	public String login() {
-		
+		session = (HttpSession) context.getExternalContext().getSession(true);
 		User user1 = userDAO.checkUser(user.getUsername(), user.getPassword());
 		if (user1 != null) {
 			user = user1;
-			HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+
 			session.setAttribute("role", user.getRole());
 			session.setAttribute("user", user);
 			session.setAttribute("userID", user.getIdUser());
 			return PAGE_INDEX;
 		}
-			
-		
+
 		return PAGE_STAY_AT_THE_SAME;
 	}
-	
+
 	public String logout() {
-		
-		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-		session.invalidate();
-		session.setAttribute("role", "guest");
-		
-		
+
+		if (session != null) {
+//			session.invalidate();
+			session.setAttribute("role", null);
+			session.setAttribute("user", null);
+			session.setAttribute("userID", null);
+		}
+
 		return PAGE_INDEX;
 	}
-	
+
 	public boolean checkIfUser() {
-		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-		if (session.getAttribute("role") != null) {
-			return session.getAttribute("role").equals("user");
+		if (session != null) {
+			if (session.getAttribute("role") != null)
+				return session.getAttribute("role").equals("user");
+
 		}
-		else return false;
+		return false;
 	}
-	public boolean checkIfGuest() {
-		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-		if (session.getAttribute("role") != null) {
-			return session.getAttribute("role").equals("guest");
-		}
-		else return false;
-	}
-	
+
 	public boolean checkIfSeller() {
-		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-		if (session.getAttribute("role") != null) {
+
+		if (session != null && session.getAttribute("role") != null) {
 			return session.getAttribute("role").equals("seller");
-		}
-		else return false;
+		} else
+			return false;
 	}
+
 	public boolean checkIfNotSeller() {
-		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-		if (session.getAttribute("role") != null) {
+
+		if (session != null && session.getAttribute("role") != null) {
 			return !session.getAttribute("role").equals("seller");
-		}
-		else return false;
+		} else
+			return true;
 	}
-	
+
 	public boolean checkIfAdmin() {
-		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-		if (session.getAttribute("role") != null) {
+
+		if (session != null && session.getAttribute("role") != null) {
 			return session.getAttribute("role").equals("admin");
-		}
-		else return false;
+		} else
+			return false;
 	}
-	
+
+	public boolean checkIfGuest() {
+		if (session == null || session.getAttribute("role") == null) {
+			return true;
+		} else
+			return false;
+	}
+
 	public List<User> getList() {
 		return userDAO.listAllUsers();
 	}
-	
+
 	public boolean checkIfUserEmpty() {
 		return getList().isEmpty();
 	}
@@ -143,10 +145,5 @@ public class LoginBB implements Serializable {
 	public boolean checkIfUserNotEmpty() {
 		return !getList().isEmpty();
 	}
-	
-	
-	
 
-	
-	
 }

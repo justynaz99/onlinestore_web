@@ -14,13 +14,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
-
-import com.jsf.entities.Person;
-
 import jsfproject.dao.ProductDAO;
 import jsfproject.entities.Product;
-import javax.servlet.http.HttpServletRequest;
+
 
 @Named
 @RequestScoped
@@ -43,6 +39,8 @@ public class ProductListBB implements Serializable {
 
 	@EJB
 	ProductDAO productDAO;
+	
+	
 
 	public String indexPage() {
 		return PAGE_INDEX;
@@ -76,6 +74,12 @@ public class ProductListBB implements Serializable {
 
 	public List<Product> getList(){
 		return productDAO.listAllProducts();
+	}
+	
+	public String nextPage() {
+		String next = "index.xhtml?id=" + (productDAO.getPage() + 1) + "&faces-redirect=true";
+		productDAO.setPage(productDAO.getPage() + 1);
+	    return next;
 	}
 	
 

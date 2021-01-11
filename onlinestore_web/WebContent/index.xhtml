@@ -38,7 +38,7 @@
 		<h:form rendered="#{loginBB.checkIfSeller()}">
 			<section id="sidebar">
 			<div>
-			<h3 style="margin-bottom: 30px">Dodaj produkt</h3>
+				<h3 style="margin-bottom: 30px">Dodaj produkt</h3>
 				<p:outputLabel for="name" value="Nazwa" class="formLabel" />
 				<div class="formInput">
 					<p:inputText id="name" value="#{productListBB.product.name}"
@@ -46,7 +46,7 @@
 					</p:inputText>
 				</div>
 				<p:message for="name" class="formMessage" />
-				
+
 				<p:outputLabel for="price" value="Cena" class="formLabel" />
 				<div class="formInput">
 					<p:inputText id="price" value="#{productListBB.product.price}"
@@ -54,23 +54,25 @@
 					</p:inputText>
 				</div>
 				<p:message for="name" class="formMessage" />
-				
-				<p:outputLabel for="quantity" value="Dostępna ilość" class="formLabel" />
+
+				<p:outputLabel for="quantity" value="Dostępna ilość"
+					class="formLabel" />
 				<div class="formInput">
-					<p:inputText id="quantity" value="#{productListBB.product.availableQuantity}"
-						required="true" requiredMessage="Wprowadz dostępną ilość">
+					<p:inputText id="quantity"
+						value="#{productListBB.product.availableQuantity}" required="true"
+						requiredMessage="Wprowadz dostępną ilość">
 					</p:inputText>
 				</div>
 				<p:message for="name" class="formMessage" />
 
 
 				<div style="clear: both">
-					<p:commandButton value="Dodaj" action="#{productListBB.addProduct()}"
-						update="@form" ajax="true" />
+					<p:commandButton value="Dodaj"
+						action="#{productListBB.addProduct()}" update="@form" ajax="true" />
 				</div>
 			</div>
 			</section>
-		
+
 			<section id="sidebar">
 			<div class="mini-posts">
 				<c:forEach items="#{productListBB.getList()}" var="p">
@@ -79,10 +81,7 @@
 					<h3>
 						<h:outputText value="#{p.name}" />
 					</h3>
-					<h:outputText class="published" value="#{p.price}" /> <p:commandButton
-						class="author" value="Dodaj do koszyka"
-						action="#{orderPositionBB.addToCart(p)}" ajax="true"
-						rendered="#{loginBB.checkIfUser()}" /> <p:commandButton
+					<h:outputText class="published" value="#{p.price}" />  <p:commandButton
 						class="author" value="Usuń produkt"
 						action="#{productListBB.deleteProduct(p)}" ajax="true"
 						rendered="#{loginBB.checkIfSeller()}" update="@form" /> </header> <a
@@ -92,8 +91,9 @@
 				</c:forEach>
 			</div>
 			</section>
+
 		</h:form>
-		
+
 		<h:form rendered="#{loginBB.checkIfNotSeller()}">
 			<section id="sidebar">
 			<div class="mini-posts">
@@ -106,23 +106,30 @@
 					<h:outputText class="published" value="#{p.price}" /> <p:commandButton
 						class="author" value="Dodaj do koszyka"
 						action="#{orderPositionBB.addToCart(p)}" ajax="true"
-						rendered="#{loginBB.checkIfUser()}" /> </header> <a
-						href="#" class="image"><h:graphicImage
+						rendered="#{loginBB.checkIfUser()}" /> <p:commandButton
+						class="author" value="Zaloguj się aby dodać do koszyka" action="#"
+						ajax="true" rendered="#{loginBB.checkIfGuest()}" /> </header> <a href="#"
+						class="image"><h:graphicImage
 							url="/resources/images/#{p.name}.jpg" /></a> </article>
 
-				</c:forEach>		
+				</c:forEach>
 			</div>
 			</section>
 		</h:form>
-	
+
+
+
 
 		<div style="margin-top: 20px">
 
 			<div style="float: left; margin-right: 10px">
-				<p:commandButton value="Poprzednia strona" action="#" ajax="true" />
+				
+
+				<p:commandButton value="Poprzednia strona" action="#" ajax="true"
+					rendered="#{$storeBB.getPage() == 1}" />
 			</div>
 			<div>
-				<p:commandButton value="Następna strona" action="#" ajax="true" />
+				<p:commandButton value="Następna strona" action="#{productListBB.nextPage()}" ajax="true"/>
 			</div>
 		</div>
 

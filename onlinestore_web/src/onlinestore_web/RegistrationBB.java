@@ -28,7 +28,6 @@ public class RegistrationBB implements Serializable {
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private User user = new User();
-	private User loaded = null;
 
 	@Inject
 	FacesContext context;

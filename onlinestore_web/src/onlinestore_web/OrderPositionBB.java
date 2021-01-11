@@ -15,17 +15,15 @@ import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
-
 import jsfproject.dao.OrderDAO;
 import jsfproject.dao.OrderPositionDAO;
-import jsfproject.dao.ProductDAO;
+
 import jsfproject.entities.Order;
 import jsfproject.entities.OrderPosition;
 import jsfproject.entities.OrderStatus;
 import jsfproject.entities.Product;
 import jsfproject.entities.User;
 
-import javax.servlet.http.HttpServletRequest;
 
 @Named
 @RequestScoped
@@ -36,9 +34,10 @@ public class OrderPositionBB implements Serializable {
 	private static final String PAGE_SHOPPING_CART = "shoppingCart?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
-	Order order = new Order();
-	OrderPosition orderPosition = new OrderPosition();
-	OrderStatus orderStatus = new OrderStatus(); 
+	private Order order = new Order();
+	private OrderPosition orderPosition = new OrderPosition();
+	private OrderStatus orderStatus = new OrderStatus(); 
+	private HttpSession session = LoginBB.getSession();
 	
 	@Inject
 	FacesContext context;
@@ -75,7 +74,6 @@ public class OrderPositionBB implements Serializable {
 	
 	public String addToCart(Product product) {
 		
-		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
 		session.setAttribute("order", order);
 		order.setUser((User) session.getAttribute("user"));
 		order.setOrderStatus(orderStatusDAO.find(1));
