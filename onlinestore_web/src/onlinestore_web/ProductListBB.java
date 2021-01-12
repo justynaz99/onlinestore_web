@@ -14,6 +14,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+
 import jsfproject.dao.ProductDAO;
 import jsfproject.entities.Product;
 
@@ -27,7 +29,8 @@ public class ProductListBB implements Serializable {
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private Product product = new Product();
-
+	private String name;
+	
 	@Inject
 	FacesContext context;
 
@@ -40,8 +43,10 @@ public class ProductListBB implements Serializable {
 	@EJB
 	ProductDAO productDAO;
 	
+	public String getName() {
+		return name;
+	}
 	
-
 	public String indexPage() {
 		return PAGE_INDEX;
 	}
@@ -73,14 +78,53 @@ public class ProductListBB implements Serializable {
 	
 
 	public List<Product> getList(){
+		
+		if (name != null && name.length() > 0){
+			productDAO.listAllProducts();
+		}
 		return productDAO.listAllProducts();
 	}
 	
+//	public List<Product> getList(){
+//		List<Product> list = null;
+//		Map<String,Object> searchParams = new HashMap<String, Object>();
+//		
+//		if (name != null && name.length() > 0){
+//			searchParams.put("name", name);
+//		}
+//		
+//		list = productDAO.getList(searchParams);
+//		return list;
+//	}
+	
 	public String nextPage() {
-		String next = "index.xhtml?id=" + (productDAO.getPage() + 1) + "&faces-redirect=true";
-		productDAO.setPage(productDAO.getPage() + 1);
-	    return next;
+		if(productDAO.getPage() != productDAO.getLastPage()) {
+			productDAO.setOffset(productDAO.getOffset() + productDAO.getQuantity()); 
+			productDAO.setPage(productDAO.getPage() + 1);
+		}
+		return PAGE_STAY_AT_THE_SAME;
 	}
+	
+	public String prevPage() {
+		if(productDAO.getPage() != 1) {
+			productDAO.setOffset(productDAO.getOffset() - productDAO.getQuantity()); 
+			productDAO.setPage(productDAO.getPage() - 1);
+		}
+		return PAGE_STAY_AT_THE_SAME;
+	}
+	
+	public boolean checkIfNotFirstPage() {
+		if (productDAO.getPage() != 1)
+				return true;
+		return false;
+	}
+	
+	public boolean checkIfNotLastPage() {
+		if (productDAO.getLastPage() != productDAO.getPage())
+			return true;
+		return false;
+	}
+
 	
 
 
