@@ -30,6 +30,7 @@ public class ProductListBB implements Serializable {
 
 	private Product product = new Product();
 	private String name;
+	private String orderBy;
 	
 	@Inject
 	FacesContext context;
@@ -78,24 +79,23 @@ public class ProductListBB implements Serializable {
 	
 
 	public List<Product> getList(){
-		
-		if (name != null && name.length() > 0){
-			productDAO.listAllProducts();
-		}
+		/*
+		 * if (name != null && name.length() > 0){ productDAO.listAllProducts(); }
+		 */
 		return productDAO.listAllProducts();
 	}
 	
-//	public List<Product> getList(){
-//		List<Product> list = null;
-//		Map<String,Object> searchParams = new HashMap<String, Object>();
-//		
-//		if (name != null && name.length() > 0){
-//			searchParams.put("name", name);
-//		}
-//		
-//		list = productDAO.getList(searchParams);
-//		return list;
-//	}
+	public List<Product> search() {
+		List<Product> list = null;
+		Map<String,Object> searchParams = new HashMap<String, Object>();
+		
+		if (name != null && name.length() > 0){
+			searchParams.put("name", name);
+		}
+		
+		list = productDAO.getList(searchParams);
+		return list;
+	}
 	
 	public String nextPage() {
 		if(productDAO.getPage() != productDAO.getLastPage()) {
@@ -118,9 +118,19 @@ public class ProductListBB implements Serializable {
 				return true;
 		return false;
 	}
+	public boolean checkIfFirstPage() {
+		if (productDAO.getPage() == 1)
+				return true;
+		return false;
+	}
 	
 	public boolean checkIfNotLastPage() {
 		if (productDAO.getLastPage() != productDAO.getPage())
+			return true;
+		return false;
+	}
+	public boolean checkIfLastPage() {
+		if (productDAO.getLastPage() == productDAO.getPage())
 			return true;
 		return false;
 	}

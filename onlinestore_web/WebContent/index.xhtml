@@ -94,17 +94,33 @@
 
 		</h:form>
 
-		<!-- <p:outputLabel class="formLabel" />
-		<div class="formInput" style="margin-bottom: -10px">
-			<p:inputText value="#{productListBB.name}" />
-		</div>
-		<div style="clear: both;">
-			<p:commandButton value="Wyszukaj" update="products" />
-		</div>
- -->
+
+
+
+
 		<h:form id="products" rendered="#{loginBB.checkIfNotSeller()}">
 			<section id="sidebar">
 			<div class="mini-posts">
+			
+				<!-- <div style="margin-bottom: 10px">
+					<select name="order" id="order" style="width: 250px">
+						<option>Sortuj</option>
+						<option value="volvo">Od najniższej ceny</option>
+						<option value="volvo">Od najwyższej ceny</option>
+						<option value="saab">Alfabetycznie</option>
+
+					</select>
+				</div>
+
+				<p:outputLabel class="formLabel" />
+				<div class="formInput" style="margin-bottom: -10px">
+					<p:inputText value="#{productListBB.getName()}" />
+				</div>
+				<div style="clear: both; margin-top: 8px">
+					<p:commandButton value="Wyszukaj"
+						action="#{productListBB.search()}" update="products" />
+				</div> -->
+				
 				<c:forEach items="#{productListBB.list}" var="p">
 					<article class="mini-post"> <header>
 					<h3>
@@ -125,19 +141,25 @@
 
 			<div style="margin-top: 20px">
 				<p:commandButton value="Poprzednia strona"
-					action="#{productListBB.prevPage()}" ajax="true"
-					 update="products" rendered="#{productListBB.checkIfNotFirstPage()}"/>
+					action="#{productListBB.prevPage()}" ajax="true" update="products"
+					rendered="#{productListBB.checkIfNotFirstPage()}" />
 				<p:commandButton value="Poprzednia strona"
-					action="#{productListBB.prevPage()}" ajax="true"
-					 update="products" rendered="#{productListBB.checkIfNotFirstPage()}"
-					 style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important;"/>
+					action="#{productListBB.prevPage()}" ajax="true" update="products"
+					rendered="#{productListBB.checkIfFirstPage()}"
+					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important;" />
 				<p:commandButton value="Następna strona"
 					action="#{productListBB.nextPage()}" ajax="true" update="products"
-					 rendered="#{productListBB.checkIfNotLastPage()}"/>
+					rendered="#{productListBB.checkIfNotLastPage()}" />
+				<p:commandButton value="Następna strona"
+					action="#{productListBB.nextPage()}" ajax="true" update="products"
+					rendered="#{productListBB.checkIfLastPage()}"
+					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important;" />
 			</div>
+
 		</h:form>
-		
 	</ui:define>
 </ui:composition>
+
+
 
 </html>

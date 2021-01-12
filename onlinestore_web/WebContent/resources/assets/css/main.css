@@ -100,8 +100,6 @@ body {
 	background: #f4f4f4;
 }
 
-
-
 body.is-preload *, body.is-preload *:before, body.is-preload *:after {
 	-moz-animation: none !important;
 	-webkit-animation: none !important;
@@ -1499,9 +1497,7 @@ hr.major {
 	letter-spacing: 0.25em;
 	text-transform: uppercase;
 	white-space: nowrap;
-	
 }
-
 
 .author .name {
 	-moz-transition: border-bottom-color 0.2s ease;
@@ -1523,7 +1519,7 @@ hr.major {
 	border-bottom-color: transparent;
 }
 
-.ui-addButton{
+.ui-addButton {
 	color: yellow !important;
 }
 
@@ -1626,7 +1622,6 @@ input[type="submit"], input[type="reset"], input[type="button"], button,
 	margin-top: 20px !important;
 	border-radius: 0px !important;
 	/* width: 170px !important; */
-	
 }
 
 .ui-button:hover {
@@ -1737,12 +1732,17 @@ form.search>input:first-child {
 }
 
 label {
-	color: #3c3b3b;
+	
 	display: block;
-	font-size: 0.9em;
-	font-weight: 700;
-	margin: 0 0 1em 0;
-}
+	color: #3c3b3b !important;
+	font-family: "Raleway", Helvetica, sans-serif;
+	font-size: 1em;
+	font-weight: 550;
+	letter-spacing: 0.2em;
+	text-decoration: none;
+	text-transform: uppercase;
+	white-space: nowrap;
+} 
 
 input[type="text"], input[type="password"], input[type="email"], input[type="tel"],
 	select, textarea {
@@ -2052,7 +2052,7 @@ ol li {
 	padding-left: 0.25em;
 }
 
-ul {
+/* ul {
 	list-style: disc;
 	margin: 0 0 2em 0;
 	padding-left: 1em;
@@ -2075,7 +2075,7 @@ ul.alt li {
 ul.alt li:first-child {
 	border-top: 0;
 	padding-top: 0;
-}
+} */
 
 dl {
 	margin: 0 0 2em 0;
@@ -3242,5 +3242,54 @@ body.is-menu-visible #menu {
 
 .formMessage {
 	border-radius: 0px !important;
+}
+
+ul.pagination li>.page {
+	-moz-transition: background-color 0.2s ease-in-out, color 0.2s
+		ease-in-out;
+	-webkit-transition: background-color 0.2s ease-in-out, color 0.2s
+		ease-in-out;
+	-ms-transition: background-color 0.2s ease-in-out, color 0.2s
+		ease-in-out;
+	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	border-bottom: 0;
+	border-radius: 0.375em;
+	display: inline-block;
+	font-size: 0.8em;
+	font-weight: 600;
+	height: 2em;
+	line-height: 2em;
+	margin: 0 0.125em;
+	min-width: 2em;
+	padding: 0 0.5em;
+	text-align: center;
+}
+
+ol, ul {
+	list-style: none !important
+}
+
+ul {
+	list-style: disc;
+	margin: 0 0 2em 0;
+}
+
+ul li {
+	display: inline !important;
+}
+
+ul.alt {
+	list-style: none;
+	padding-left: 0;
+}
+
+ul.alt li {
+	border-top: solid 1px rgba(210, 215, 217, 0.75);
+	padding: 0.5em 0;
+}
+
+ul.alt li:first-child {
+	border-top: 0;
+	padding-top: 0;
 }
 

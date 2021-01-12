@@ -32,6 +32,7 @@ public class LoginBB implements Serializable {
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private User user = new User();
+	private String role;
 
 	@Inject
 	FacesContext context;
@@ -76,6 +77,7 @@ public class LoginBB implements Serializable {
 			session.setAttribute("role", user.getRole());
 			session.setAttribute("user", user);
 			session.setAttribute("userID", user.getIdUser());
+			role = (String) session.getAttribute("role");
 			return PAGE_INDEX;
 		}
 
@@ -92,6 +94,10 @@ public class LoginBB implements Serializable {
 		}
 
 		return PAGE_INDEX;
+	}
+	
+	public String getRole() {
+		return (String) session.getAttribute("role");
 	}
 
 	public boolean checkIfUser() {
