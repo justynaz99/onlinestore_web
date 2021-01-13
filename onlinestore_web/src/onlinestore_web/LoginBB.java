@@ -87,7 +87,7 @@ public class LoginBB implements Serializable {
 	public String logout() {
 
 		if (session != null) {
-//			session.invalidate();
+			session.invalidate();
 			session.setAttribute("role", null);
 			session.setAttribute("user", null);
 			session.setAttribute("userID", null);

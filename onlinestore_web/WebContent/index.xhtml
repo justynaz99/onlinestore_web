@@ -95,14 +95,11 @@
 		</h:form>
 
 
-
-
-
 		<h:form id="products" rendered="#{loginBB.checkIfNotSeller()}">
 			<section id="sidebar">
 			<div class="mini-posts">
 			
-				<!-- <div style="margin-bottom: 10px">
+				<div style="margin-bottom: 10px">
 					<select name="order" id="order" style="width: 250px">
 						<option>Sortuj</option>
 						<option value="volvo">Od najniższej ceny</option>
@@ -114,12 +111,12 @@
 
 				<p:outputLabel class="formLabel" />
 				<div class="formInput" style="margin-bottom: -10px">
-					<p:inputText value="#{productListBB.getName()}" />
+					<p:inputText value="#{productListBB.name}" />
 				</div>
 				<div style="clear: both; margin-top: 8px">
 					<p:commandButton value="Wyszukaj"
-						action="#{productListBB.search()}" update="products" />
-				</div> -->
+						action="#{productListBB.search()}" update="products" ajax="true" />
+				</div> 
 				
 				<c:forEach items="#{productListBB.list}" var="p">
 					<article class="mini-post"> <header>
@@ -147,6 +144,9 @@
 					action="#{productListBB.prevPage()}" ajax="true" update="products"
 					rendered="#{productListBB.checkIfFirstPage()}"
 					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important;" />
+					
+				<p:commandButton value="#{productListBB.getPage()}" style="pointer-events: none;" />
+					
 				<p:commandButton value="Następna strona"
 					action="#{productListBB.nextPage()}" ajax="true" update="products"
 					rendered="#{productListBB.checkIfNotLastPage()}" />
@@ -154,6 +154,12 @@
 					action="#{productListBB.nextPage()}" ajax="true" update="products"
 					rendered="#{productListBB.checkIfLastPage()}"
 					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important;" />
+					
+					<select name="page" id="page" style="width: 50px; float: left">
+						<option value="#{productListBB.getPage()}">1</option>
+						<option value="#{productListBB.getPage()}">2</option>
+						<option value="#{productListBB.getPage()}">3</option>
+					</select>
 			</div>
 
 		</h:form>

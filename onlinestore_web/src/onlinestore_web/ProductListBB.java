@@ -48,6 +48,10 @@ public class ProductListBB implements Serializable {
 		return name;
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public String indexPage() {
 		return PAGE_INDEX;
 	}
@@ -97,6 +101,8 @@ public class ProductListBB implements Serializable {
 		return list;
 	}
 	
+	
+
 	public String nextPage() {
 		if(productDAO.getPage() != productDAO.getLastPage()) {
 			productDAO.setOffset(productDAO.getOffset() + productDAO.getQuantity()); 
@@ -134,7 +140,10 @@ public class ProductListBB implements Serializable {
 			return true;
 		return false;
 	}
-
+	
+	public String getPage() {
+		return Integer.toString(productDAO.getPage());
+	}
 	
 
 
