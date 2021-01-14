@@ -1590,10 +1590,6 @@ input[type="submit"], input[type="reset"], input[type="button"], button,
 }
 
 .ui-button {
-	-moz-appearance: none !important;
-	-webkit-appearance: none !important;
-	-ms-appearance: none !important;
-	appearance: none !important;
 	-moz-transition: background-color 0.2s ease, box-shadow 0.2s ease, color
 		0.2s ease !important;
 	-webkit-transition: background-color 0.2s ease, box-shadow 0.2s ease,
@@ -1614,19 +1610,23 @@ input[type="submit"], input[type="reset"], input[type="button"], button,
 	height: 4.8125em !important;
 	letter-spacing: 0.25em !important;
 	line-height: 4.8125em !important;
-	/* padding: 0 2.5em !important; */
 	text-align: center !important;
 	text-decoration: none !important;
 	text-transform: uppercase !important;
 	white-space: nowrap !important;
 	margin-top: 20px !important;
 	border-radius: 0px !important;
-	/* width: 170px !important; */
+	padding: 0em;
+
 }
 
 .ui-button:hover {
 	box-shadow: inset 0 0 0 1px #2ebaae !important;
 	color: #2ebaae !important;
+}
+
+.ui.button:before, .ui-button:after {
+	position: relative;
 }
 
 input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover,

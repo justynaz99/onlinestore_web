@@ -51,11 +51,6 @@ public class ProductListBB implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public String indexPage() {
-		return PAGE_INDEX;
-	}
-
 
 	public Product getProduct() {
 		return product;
@@ -82,14 +77,12 @@ public class ProductListBB implements Serializable {
 	}
 	
 
-	public List<Product> getList(){
-		/*
-		 * if (name != null && name.length() > 0){ productDAO.listAllProducts(); }
-		 */
+	public List<Product> getFullList(){
 		return productDAO.listAllProducts();
 	}
+
 	
-	public List<Product> search() {
+	public List<Product> getList() {
 		List<Product> list = null;
 		Map<String,Object> searchParams = new HashMap<String, Object>();
 		
@@ -101,6 +94,14 @@ public class ProductListBB implements Serializable {
 		return list;
 	}
 	
+	public String search() {
+		return PAGE_STAY_AT_THE_SAME;
+	}
+	
+	public String allProducts() {
+		setName("");
+		return PAGE_STAY_AT_THE_SAME;
+	}
 	
 
 	public String nextPage() {
