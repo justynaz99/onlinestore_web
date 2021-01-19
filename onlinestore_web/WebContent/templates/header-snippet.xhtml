@@ -9,7 +9,7 @@
 		<h1>Sklep internetowy</h1>
 
 		<nav class="links">
-			<h:form rendered="#{loginBB.checkIfUser()}">
+			<h:form rendered="#{loginBB.role == 'user'}">
 				<ul>
 					<li><h:commandLink id="index" value="Strona główna"
 							action="#{storeBB.indexPage()}" /></li>
@@ -22,7 +22,7 @@
 				</ul>
 			</h:form>
 			
-			<h:form rendered="#{loginBB.checkIfAdmin()}">
+			<h:form rendered="#{loginBB.role == 'admin'}">
 				<ul>
 					<li><h:commandLink id="index" value="Strona główna"
 							action="#{storeBB.indexPage()}" /></li>
@@ -33,7 +33,7 @@
 				</ul>
 			</h:form>
 			
-			<h:form rendered="#{loginBB.checkIfSeller()}">
+			<h:form rendered="#{loginBB.role == 'seller'}">
 				<ul>
 					<li><h:commandLink id="index" value="Strona główna"
 							action="#{storeBB.indexPage()}" /></li>

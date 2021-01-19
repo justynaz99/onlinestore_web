@@ -19,23 +19,23 @@
 				<p>O nas</p>
 			</div>
 			</header>
-
 			<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus
 				nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor
 				magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi
 				non congue ullam corper. Praesent tincidunt sed tellus ut rutrum.
 				Sed vitae justo condimentum, porta lectus vitae, ultricies congue
 				gravida diam non fringilla.</p>
-
 			<footer>
 			<ul class="actions">
 				<li><a href="#" class="button large">Kontakt</a></li>
 			</ul>
 			</footer> </article>
-
 		</div>
 
-		<h:form rendered="#{loginBB.checkIfSeller()}">
+		<!--....................... dodawanie produktu przez sellera .......................-->
+
+
+		<h:form rendered="#{loginBB.role == 'seller'}">
 			<section id="sidebar">
 			<div>
 				<h3 style="margin-bottom: 30px">Dodaj produkt</h3>
@@ -68,58 +68,51 @@
 
 				<div style="clear: both">
 					<p:commandButton value="Dodaj"
-						action="#{productListBB.addProduct()}" update="@form" ajax="true" />
+						action="#{productListBB.addProduct()}" update="products"
+						ajax="true" />
 				</div>
 			</div>
 			</section>
-
-			<section id="sidebar">
-			<div class="mini-posts">
-				<c:forEach items="#{productListBB.getList()}" var="p">
-
-					<article class="mini-post"> <header>
-					<h3>
-						<h:outputText value="#{p.name}" />
-					</h3>
-					<h:outputText class="published" value="#{p.price}" /> <p:commandButton
-						class="author" value="Usuń produkt"
-						action="#{productListBB.deleteProduct(p)}" ajax="true"
-						rendered="#{loginBB.checkIfSeller()}" update="@form" /> </header> <a
-						href="#" class="image"><h:graphicImage
-							url="/resources/images/#{p.name}.jpg" /></a> </article>
-
-				</c:forEach>
-			</div>
-			</section>
-
 		</h:form>
 
-
-		<h:form id="products" rendered="#{loginBB.checkIfNotSeller()}">
-
-			<section id="sidebar">
-			<div class="mini-posts" style="clear: both; width: 400px">
+		<!--.........................................................................-->
 
 
-				<select name="order" id="order" style="width: 400px">
-					<option>Sortuj</option>
-					<option value="volvo">Od najniższej ceny</option>
-					<option value="volvo">Od najwyższej ceny</option>
-					<option value="saab">Alfabetycznie</option>
 
-				</select>
 
-				<p:outputLabel class="formLabel" />
 
-				<h:inputText value="#{productListBB.name}" />
-				<p:commandButton value="Wyszukaj" action="#{productListBB.search()}"
-					update="products" ajax="true" />
-				<p:commandButton value="Wszystkie produkty"
-					action="#{productListBB.allProducts()}" update="products"
-					ajax="true" />
+		<section id="sidebar">
+		<div class="mini-posts" style="clear: both; width: 400px">
 
-			</div>
+			<!--............................... sortowanie ...................................-->
 
+			<select name="order" id="order"
+				style="width: 400px; margin-bottom: 10px">
+				<option>Sortuj</option>
+				<option value="volvo">Od najniższej ceny</option>
+				<option value="volvo">Od najwyższej ceny</option>
+				<option value="saab">Alfabetycznie</option>
+			</select>
+
+			<!--.............................................................................-->
+
+
+			<!--............................... wyszukiwanie ................................-->
+
+			<h:inputText value="#{productListBB.name}" />
+			<p:commandButton value="Wyszukaj" action="#{productListBB.search()}"
+				update="products" ajax="true" />
+			<p:commandButton value="Wszystkie produkty"
+				action="#{productListBB.allProducts()}" update="products"
+				ajax="true" />
+
+			<!--..............................................................................-->
+
+		</div>
+
+		<!--.................................. lista produktów ..................................-->
+
+		<h:form id="products">
 			<div class="mini-posts">
 				<c:forEach items="#{productListBB.list}" var="p">
 					<article class="mini-post"> <header>
@@ -129,38 +122,43 @@
 					<h:outputText class="published" value="#{p.price}" /> <p:commandButton
 						class="author" value="Dodaj do koszyka"
 						action="#{orderPositionBB.addToCart(p)}" ajax="true"
-						rendered="#{loginBB.checkIfUser()}" /> <p:commandButton
+						rendered="#{loginBB.role == 'user'}" /> <p:commandButton
 						class="author" value="Zaloguj się aby dodać do koszyka" action="#"
-						ajax="true" rendered="#{loginBB.checkIfGuest()}" /> </header> <a href="#"
-						class="image"><h:graphicImage
+						ajax="true" rendered="#{loginBB.role == ''}" /> <p:commandButton
+						class="author" value="Usuń produkt"
+						action="#{productListBB.deleteProduct(p)}" ajax="true"
+						rendered="#{loginBB.role == 'seller'}" update="products" /> </header> <a
+						href="#" class="image"><h:graphicImage
 							url="/resources/images/#{p.name}.jpg" /></a> </article>
-
 				</c:forEach>
 			</div>
-			</section>
+
+			<!--...............................................................................-->
 
 
+
+			<!--................................. stronicowanie ...................................-->
 
 			<div style="margin-top: 20px;">
 				<p:commandButton value="Poprzednia strona" style="width: 190px"
 					action="#{productListBB.prevPage()}" ajax="true" update="products"
-					rendered="#{productListBB.checkIfNotFirstPage()}" />
+					rendered="#{productListBB.page != 1}" />
 				<p:commandButton value="Poprzednia strona"
 					action="#{productListBB.prevPage()}" ajax="true" update="products"
-					rendered="#{productListBB.checkIfFirstPage()}"
+					rendered="#{productListBB.page == 1}"
 					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important; width: 190px" />
 
-				<h:commandButton value="#{productListBB.getPage()}"
+				<h:commandButton value="#{productListBB.stringPage}"
 					style="pointer-events: none; box-shadow: none; font-size: 0.9em;" />
 
 				<p:commandButton value="Następna strona"
 					style="width: 190px; box-shadow: none"
 					action="#{productListBB.nextPage()}" ajax="true" update="products"
-					rendered="#{productListBB.checkIfNotLastPage()}" />
+					rendered="#{productListBB.page != productListBB.lastPage}" />
 				<p:commandButton value="Następna strona"
 					action="#{productListBB.nextPage()}" ajax="true" update="products"
-					rendered="#{productListBB.checkIfLastPage()}"
-					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important; width: 190px; float:left" />
+					rendered="#{productListBB.page == productListBB.lastPage}"
+					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important; width: 190px" />
 
 
 				<!-- <select name="page" id="page" style="width: 100px">
@@ -168,13 +166,11 @@
 					<option value="#{productListBB.getPage()}">2</option>
 					<option value="#{productListBB.getPage()}">3</option>
 				</select> -->
-
-
 			</div>
 
+			<!--...................................................................................-->
+		</h:form> </section>
 
-
-		</h:form>
 	</ui:define>
 </ui:composition>
 

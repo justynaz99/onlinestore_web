@@ -33,6 +33,16 @@ public class LoginBB implements Serializable {
 
 	private User user = new User();
 	private String role;
+	private static HttpSession session;
+	
+
+	public static HttpSession getSession() {
+		return session;
+	}
+
+	public void setSession(HttpSession session) {
+		this.session = session;
+	}
 
 	@Inject
 	FacesContext context;
@@ -46,14 +56,14 @@ public class LoginBB implements Serializable {
 	@EJB
 	UserDAO userDAO;
 
-	private static HttpSession session;
 
 	public User getUser() {
 		return user;
 	}
 
-	public static HttpSession getSession() {
-		return session;
+	public String getRole() {
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		return (String) session.getAttribute("role");
 	}
 
 	public String indexPage() {
@@ -85,60 +95,14 @@ public class LoginBB implements Serializable {
 	}
 
 	public String logout() {
-
+		session = (HttpSession) context.getExternalContext().getSession(false);
 		if (session != null) {
 			session.invalidate();
-			session.setAttribute("role", null);
-			session.setAttribute("user", null);
-			session.setAttribute("userID", null);
 		}
 
 		return PAGE_INDEX;
 	}
 	
-	public String getRole() {
-		return (String) session.getAttribute("role");
-	}
-
-	public boolean checkIfUser() {
-		if (session != null) {
-			if (session.getAttribute("role") != null)
-				return session.getAttribute("role").equals("user");
-
-		}
-		return false;
-	}
-
-	public boolean checkIfSeller() {
-
-		if (session != null && session.getAttribute("role") != null) {
-			return session.getAttribute("role").equals("seller");
-		} else
-			return false;
-	}
-
-	public boolean checkIfNotSeller() {
-
-		if (session != null && session.getAttribute("role") != null) {
-			return !session.getAttribute("role").equals("seller");
-		} else
-			return true;
-	}
-
-	public boolean checkIfAdmin() {
-
-		if (session != null && session.getAttribute("role") != null) {
-			return session.getAttribute("role").equals("admin");
-		} else
-			return false;
-	}
-
-	public boolean checkIfGuest() {
-		if (session == null || session.getAttribute("role") == null) {
-			return true;
-		} else
-			return false;
-	}
 
 	public List<User> getList() {
 		return userDAO.listAllUsers();

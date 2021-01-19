@@ -62,6 +62,7 @@ public class RegistrationBB implements Serializable {
 	public String registration() {
 
 		try {
+			user.setRole("user");
 			userDAO.create(user);
 
 		} catch (Exception e) {

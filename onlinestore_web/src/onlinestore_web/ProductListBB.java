@@ -1,11 +1,9 @@
 package onlinestore_web;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -14,8 +12,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-
 import jsfproject.dao.ProductDAO;
 import jsfproject.entities.Product;
 
@@ -23,14 +19,15 @@ import jsfproject.entities.Product;
 @Named
 @RequestScoped
 public class ProductListBB implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
-
-	private static final String PAGE_INDEX = "index?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
-
 	private Product product = new Product();
 	private String name;
-	private String orderBy;
+	private Integer page;
+	private String stringPage;
+	private int lastPage;
+	List<Product> list = null;
 	
 	@Inject
 	FacesContext context;
@@ -77,13 +74,12 @@ public class ProductListBB implements Serializable {
 	}
 	
 
-	public List<Product> getFullList(){
-		return productDAO.listAllProducts();
-	}
+//	public List<Product> getFullList(){
+//		return productDAO.listAllProducts();
+//	}
 
 	
 	public List<Product> getList() {
-		List<Product> list = null;
 		Map<String,Object> searchParams = new HashMap<String, Object>();
 		
 		if (name != null && name.length() > 0){
@@ -120,30 +116,19 @@ public class ProductListBB implements Serializable {
 		return PAGE_STAY_AT_THE_SAME;
 	}
 	
-	public boolean checkIfNotFirstPage() {
-		if (productDAO.getPage() != 1)
-				return true;
-		return false;
-	}
-	public boolean checkIfFirstPage() {
-		if (productDAO.getPage() == 1)
-				return true;
-		return false;
+	public Integer getPage() {
+		page = productDAO.getPage();
+		return page;
 	}
 	
-	public boolean checkIfNotLastPage() {
-		if (productDAO.getLastPage() != productDAO.getPage())
-			return true;
-		return false;
-	}
-	public boolean checkIfLastPage() {
-		if (productDAO.getLastPage() == productDAO.getPage())
-			return true;
-		return false;
+	public String getStringPage() {
+		stringPage = page.toString();
+		return stringPage;
 	}
 	
-	public String getPage() {
-		return Integer.toString(productDAO.getPage());
+	public int getLastPage() {
+		lastPage = productDAO.getLastPage();
+		return lastPage;
 	}
 	
 
