@@ -28,14 +28,16 @@
 									<th>Ilość</th>
 								</tr>
 							</thead>
-							<c:forEach items="#{orderPositionBB.getList()}" var="o">
+							<c:forEach items="#{orderPositionBB.getPositions()}" var="o">
 								<tbody>
 									<tr>
-										<td>Nazwa</td>
+										<td><h:outputText value="#{o.getProduct().name}"
+												/></td>
 										<td><h:outputText value="#{o.priceProduct}" /></td>
 										<td><h:outputText value="#{o.quantity}" /></td>
 										<td><p:commandButton value="Usuń"
-												action="#{orderPositionBB.deletePosition(o)}" update="@form" /></td>
+												action="#{orderPositionBB.deletePosition(o)}" update="@form"
+												style="margin-top: 0em !important" /></td>
 									</tr>
 								</tbody>
 							</c:forEach>

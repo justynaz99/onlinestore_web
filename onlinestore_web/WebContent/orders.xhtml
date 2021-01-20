@@ -12,14 +12,14 @@
 	<ui:define name="pageContent">
 
 		<div id="main">
-			<ui:fragment rendered="#{orderBB.checkIfEmpty()}">
+			<ui:fragment rendered="#{orderBB.orders.size() == 0}">
 				<h2 style="margin-bottom: 30px">Nie masz jeszcze żadnych
 					zamówień!</h2>
 			</ui:fragment>
 
-			<ui:fragment rendered="#{orderBB.checkIfNotEmpty()}">
+			<ui:fragment rendered="#{orderBB.orders.size() > 0}">
 				<h2 style="margin-bottom: 30px">Twoje zamówienia</h2>
-				<c:forEach items="#{orderBB.getList()}" var="o">
+				<c:forEach items="#{orderBB.orders}" var="o">
 					<section>
 					<ul class="posts">
 						<li><article style="margin-bottom: 20px"> <header
@@ -27,25 +27,24 @@
 							<h3>
 								<a>#<h:outputText value="#{o.idOrder}" /></a>
 							</h3>
-							<time class="published" datetime="2015-10-20"> <h:outputText
-								value="#{o.date}" /></time> </header> </article>
+							<h:outputText class="published" value="#{o.date}" />
+							 </header> </article>
 
 							<table>
-								<thead>
-									<tr>
-										<th>Item1</th>
-										<th>29.99</th>
-										<th>1</th>
-
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>Total</td>
-										<td>100</td>
-										<td></td>
-									</tr>
-								</tbody>
+								<c:forEach items="#{orderPositionBB.getPositions(o)}" var="op">
+									<tbody>
+										<tr>
+											<td><h:outputText value="#{op.getProduct().name}" /></td>
+											<td><h:outputText value="#{op.getProduct().price}" /></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</c:forEach>
+								<tfoot>
+									<td>Total</td>
+									<td>100</td>
+									<td></td>
+								</tfoot>
 							</table></li>
 					</ul>
 					</section>

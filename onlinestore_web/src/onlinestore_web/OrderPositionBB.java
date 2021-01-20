@@ -2,6 +2,8 @@ package onlinestore_web;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +35,8 @@ public class OrderPositionBB implements Serializable {
 	private static final String PAGE_SHOPPING_CART = "shoppingCart?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
-	
-	private HttpSession session = LoginBB.getSession();
+	private HttpSession session;
+	private List<OrderPosition> positions;
 
 	@Inject
 	FacesContext context;
@@ -56,28 +58,22 @@ public class OrderPositionBB implements Serializable {
 		return PAGE_INDEX;
 	}
 
-	public List<OrderPosition> getList() {
-		return orderPositionDAO.listAllPositions();
+	public List<OrderPosition> getPositions(Order order) { // lists all positions from given order
+		return orderPositionDAO.listPositionsFromThisOrder(order);
 	}
 
-	public boolean checkIfEmpty() {
-		return getList().isEmpty();
-	}
-
-	public boolean checkIfNotEmpty() {
-		return !getList().isEmpty();
-	}
-
-	public String addToCart(Product product) {
-
+	public String addToCart(Product product) { // creating cart and first position or if cart already exists adding
+												// position to cart
+		session = (HttpSession) context.getExternalContext().getSession(false);
 		if (!cartExists()) {
-
 			Order order = new Order();
-			//OrderStatusDAO orderStatusDAO = new OrderStatusDAO();
-			
-			OrderStatus orderStatus = orderStatusDAO.getCart();
+			Date date = new Date(System.currentTimeMillis());
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+			OrderStatus orderStatus = orderStatusDAO.getCartStatus();
 			order.setUser((User) session.getAttribute("user"));
 			order.setOrderStatus(orderStatus);
+			order.setDate(Date.valueOf(formatter.format(date)));
 			orderDAO.create(order);
 
 			OrderPosition orderPosition = new OrderPosition();
@@ -86,10 +82,18 @@ public class OrderPositionBB implements Serializable {
 			orderPosition.setProduct(product);
 			orderPosition.setQuantity(1);
 			orderPositionDAO.create(orderPosition);
+
+			return PAGE_SHOPPING_CART;
+		} else { // if order with status cart already exists
+			OrderPosition orderPosition = new OrderPosition();
+			orderPosition.setOrder(orderDAO.getCart((User) session.getAttribute("user")));
+
+			orderPosition.setPriceProduct(product.getPrice());
+			orderPosition.setProduct(product);
+			orderPosition.setQuantity(1);
+			orderPositionDAO.create(orderPosition);
 			return PAGE_SHOPPING_CART;
 		}
-		
-		return PAGE_SHOPPING_CART;
 	}
 
 	public void deletePosition(OrderPosition position) {

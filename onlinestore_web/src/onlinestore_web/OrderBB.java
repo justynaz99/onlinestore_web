@@ -34,6 +34,7 @@ public class OrderBB implements Serializable {
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	Order order = new Order();
+	private List<Order> orders;
 
 	@Inject
 	FacesContext context;
@@ -61,18 +62,17 @@ public class OrderBB implements Serializable {
 
 	
 
-	public List<Order> getList() {
-
-		List<Order> list = orderDAO.listAllOrders();
-		return list;
+	public List<Order> getOrders() {
+		List<Order> orders = orderDAO.listAllOrders();
+		return orders;
 	}
 	
 	public boolean checkIfEmpty() {
-		return getList().isEmpty();
+		return getOrders().isEmpty();
 	}
 
 	public boolean checkIfNotEmpty() {
-		return !getList().isEmpty();
+		return !getOrders().isEmpty();
 	}
 
 }
