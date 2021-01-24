@@ -1,9 +1,11 @@
 package onlinestore_web;
 
+import java.io.Console;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +39,7 @@ public class OrderPositionBB implements Serializable {
 
 	private HttpSession session;
 	private List<OrderPosition> positions;
-
+	
 	@Inject
 	FacesContext context;
 
@@ -54,18 +56,16 @@ public class OrderPositionBB implements Serializable {
 	@EJB
 	OrderStatusDAO orderStatusDAO;
 
+	
 	public String indexPage() {
 		return PAGE_INDEX;
 	}
 
-	public List<OrderPosition> getPositions(Order order) { // lists all positions from given order
-		return orderPositionDAO.listPositionsFromThisOrder(order);
-	}
-
 	public String addToCart(Product product) { // creating cart and first position or if cart already exists adding
 												// position to cart
+		OrderBB orderBB = new OrderBB();
 		session = (HttpSession) context.getExternalContext().getSession(false);
-		if (!cartExists()) {
+		if (!orderDAO.cartExists(session.getAttribute("user"))) {
 			Order order = new Order();
 			Date date = new Date(System.currentTimeMillis());
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -84,7 +84,7 @@ public class OrderPositionBB implements Serializable {
 			orderPositionDAO.create(orderPosition);
 
 			return PAGE_SHOPPING_CART;
-		} else { // if order with status cart already exists
+		} else { 							// if order with status cart already exists for user saved in session
 			OrderPosition orderPosition = new OrderPosition();
 			orderPosition.setOrder(orderDAO.getCart((User) session.getAttribute("user")));
 
@@ -99,12 +99,14 @@ public class OrderPositionBB implements Serializable {
 	public void deletePosition(OrderPosition position) {
 		orderPositionDAO.remove(position);
 	}
-
-	public boolean cartExists() {
-		User user = (User) session.getAttribute("user");
-		if (orderDAO.cartExists(user))
-			return true;
-		return false;
+	
+	public List<OrderPosition> getPositions(Order order) { // lists all positions from given order
+		return orderPositionDAO.listPositionsFromThisOrder(order);
 	}
+	
+	public List<OrderPosition> getPositions() { // lists all positions from all orders
+		return orderPositionDAO.listAllPositions();
+	}
+	
 
 }

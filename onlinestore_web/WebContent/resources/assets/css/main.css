@@ -1731,18 +1731,13 @@ form.search>input:first-child {
 	padding-left: 2.5em;
 }
 
-label {
+label { 
 	
-	display: block;
-	color: #3c3b3b !important;
-	font-family: "Raleway", Helvetica, sans-serif;
-	font-size: 1em;
-	font-weight: 550;
-	letter-spacing: 0.2em;
-	text-decoration: none;
-	text-transform: uppercase;
-	white-space: nowrap;
-} 
+		display: block;
+		font-size: 0.9em;
+		font-weight: 700;
+		margin: 0 0 0.5em 0;
+	}
 
 input[type="text"], input[type="password"], input[type="email"], input[type="tel"],
 	select, textarea {

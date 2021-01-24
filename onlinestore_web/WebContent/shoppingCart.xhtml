@@ -12,11 +12,11 @@
 	<ui:define name="pageContent">
 
 		<div id="main">
-			<ui:fragment rendered="#{orderPositionBB.checkIfEmpty()}">
+			<ui:fragment rendered="#">
 				<h2 style="margin-bottom: 30px">Twój koszyk jest pusty!</h2>
 			</ui:fragment>
 
-			<ui:fragment rendered="#{orderPositionBB.checkIfNotEmpty()}">
+			<ui:fragment>
 				<h2 style="margin-bottom: 30px">Twój koszyk</h2>
 				<div class="posts">
 					<h:form>
@@ -28,15 +28,15 @@
 									<th>Ilość</th>
 								</tr>
 							</thead>
-							<c:forEach items="#{orderPositionBB.getPositions()}" var="o">
+							<c:forEach items="#{orderPositionBB.getPositions(orderBB.cart)}" var="op">
 								<tbody>
 									<tr>
-										<td><h:outputText value="#{o.getProduct().name}"
+										<td><h:outputText value="#{op.getProduct().name}"
 												/></td>
-										<td><h:outputText value="#{o.priceProduct}" /></td>
-										<td><h:outputText value="#{o.quantity}" /></td>
+										<td><h:outputText value="#{op.priceProduct}" /></td>
+										<td><h:outputText value="#{op.quantity}" /></td>
 										<td><p:commandButton value="Usuń"
-												action="#{orderPositionBB.deletePosition(o)}" update="@form"
+												action="#{orderPositionBB.deletePosition(op)}" update="@form"
 												style="margin-top: 0em !important" /></td>
 									</tr>
 								</tbody>

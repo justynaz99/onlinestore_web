@@ -2,6 +2,7 @@ package onlinestore_web;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -24,11 +25,14 @@ public class ProductListBB implements Serializable {
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 	private Product product = new Product();
 	private String name;
+	//pagination
 	private Integer page;
 	private String stringPage;
 	private int lastPage;
-	List<Product> list = null;
-	
+	//sorting
+	private Map<String, String> availableItems;
+	private String selectedItem = "1";
+
 	@Inject
 	FacesContext context;
 
@@ -41,6 +45,23 @@ public class ProductListBB implements Serializable {
 	@EJB
 	ProductDAO productDAO;
 	
+//	public ProductListBB() {
+//		availableItems = new HashMap<String, String>();
+//		availableItems.put("1", "Po cenie rosn¹co");
+//		availableItems.put("2", "Po cenie malej¹co");
+//		availableItems.put("3", "Alfabetycznie");
+//	}
+	
+//	public Map<String, String> getAvailableItems() {
+//		return availableItems;
+//	}
+	
+	public Product getProduct() {
+		return product;
+	}
+	
+	//searching
+	
 	public String getName() {
 		return name;
 	}
@@ -48,15 +69,53 @@ public class ProductListBB implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	//sorting
+	
+	public String getSelectedItem() {
+		return selectedItem;
+	}
 
-	public Product getProduct() {
-		return product;
+	public void setSelectedItem(String selectedItem) {
+		this.selectedItem = selectedItem;
 	}
 	
-	public String deleteProduct(Product product) {
-		productDAO.remove(product);
-		return PAGE_STAY_AT_THE_SAME;
+	//pagination
+	
+	public Integer getPage() {
+		page = productDAO.getPage();
+		return page;
 	}
+	
+	public String getStringPage() {
+		stringPage = page.toString();
+		return stringPage;
+	}
+	
+	public int getLastPage() {
+		lastPage = productDAO.getLastPage();
+		return lastPage;
+	}
+	
+	
+	
+	public List<Product> getList() {
+		List<Product> list = null;
+		Map<String,Object> searchParams = new HashMap<String, Object>();
+		
+		if (name != null && name.length() > 0){
+			searchParams.put("name", name);
+		}
+		
+		if(selectedItem != null) {
+			searchParams.put("selectedItem", selectedItem);
+		}
+			
+		list = productDAO.getList(searchParams);
+		return list;
+	}
+	
+	//methods for seller
 	
 	public String addProduct() {
 
@@ -73,32 +132,29 @@ public class ProductListBB implements Serializable {
 		return PAGE_STAY_AT_THE_SAME;
 	}
 	
-
-//	public List<Product> getFullList(){
-//		return productDAO.listAllProducts();
-//	}
-
-	
-	public List<Product> getList() {
-		Map<String,Object> searchParams = new HashMap<String, Object>();
-		
-		if (name != null && name.length() > 0){
-			searchParams.put("name", name);
-		}
-		
-		list = productDAO.getList(searchParams);
-		return list;
+	public String deleteProduct(Product product) {
+		productDAO.remove(product);
+		return PAGE_STAY_AT_THE_SAME;
 	}
+	
+	//searching
 	
 	public String search() {
 		return PAGE_STAY_AT_THE_SAME;
 	}
-	
+
 	public String allProducts() {
 		setName("");
 		return PAGE_STAY_AT_THE_SAME;
 	}
 	
+	//sorting
+	
+	public String sort() {
+		return PAGE_STAY_AT_THE_SAME;
+	}
+	
+	//pagination
 
 	public String nextPage() {
 		if(productDAO.getPage() != productDAO.getLastPage()) {
@@ -116,20 +172,12 @@ public class ProductListBB implements Serializable {
 		return PAGE_STAY_AT_THE_SAME;
 	}
 	
-	public Integer getPage() {
-		page = productDAO.getPage();
-		return page;
-	}
 	
-	public String getStringPage() {
-		stringPage = page.toString();
-		return stringPage;
-	}
+
 	
-	public int getLastPage() {
-		lastPage = productDAO.getLastPage();
-		return lastPage;
-	}
+	
+	
+	
 	
 
 

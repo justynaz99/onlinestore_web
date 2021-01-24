@@ -7,6 +7,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
+
 <ui:composition template="templates/page-template.xhtml">
 
 	<ui:define name="pageContent">
@@ -77,42 +78,40 @@
 
 		<!--.........................................................................-->
 
-
-
-
-
-		<section id="sidebar">
-		<div class="mini-posts" style="clear: both; width: 400px">
-
-			<!--............................... sortowanie ...................................-->
-
-			<select name="order" id="order"
-				style="width: 400px; margin-bottom: 10px">
-				<option>Sortuj</option>
-				<option value="volvo">Od najniższej ceny</option>
-				<option value="volvo">Od najwyższej ceny</option>
-				<option value="saab">Alfabetycznie</option>
-			</select>
-
-			<!--.............................................................................-->
-
-
-			<!--............................... wyszukiwanie ................................-->
-
-			<h:inputText value="#{productListBB.name}" />
-			<p:commandButton value="Wyszukaj" action="#{productListBB.search()}"
-				update="products" ajax="true" />
-			<p:commandButton value="Wszystkie produkty"
-				action="#{productListBB.allProducts()}" update="products"
-				ajax="true" />
-
-			<!--..............................................................................-->
-
-		</div>
-
-		<!--.................................. lista produktów ..................................-->
-
 		<h:form id="products">
+
+			<section id="sidebar">
+			<div class="mini-posts" style="clear: both; width: 400px">
+
+				<!--............................... sortowanie ...................................-->
+
+				<h:selectOneMenu value="#{productListBB.selectedItem}"
+					style="width: 400px">
+						<f:selectItem itemValue = "1" itemLabel = "Item 1" />
+						<f:selectItem itemValue = "2" itemLabel = "Item 2" />
+				</h:selectOneMenu>
+				<p:commandButton value="Sortuj" action="#{productListBB.sort()}"
+					update="products" ajax="true" />
+
+				<!--.............................................................................-->
+
+
+				<!--............................... wyszukiwanie ................................-->
+
+				<h:inputText value="#{productListBB.name}" />
+				<p:commandButton value="Wyszukaj" action="#{productListBB.search()}"
+					update="products" ajax="true" />
+				<p:commandButton value="Wszystkie produkty"
+					action="#{productListBB.allProducts()}" update="products"
+					ajax="true" />
+
+				<!--..............................................................................-->
+
+			</div>
+
+			<!--.................................. lista produktów ..................................-->
+
+
 			<div class="mini-posts">
 				<c:forEach items="#{productListBB.list}" var="p">
 					<article class="mini-post"> <header>
@@ -169,7 +168,9 @@
 			</div>
 
 			<!--...................................................................................-->
-		</h:form> </section>
+
+			</section>
+		</h:form>
 
 	</ui:define>
 </ui:composition>

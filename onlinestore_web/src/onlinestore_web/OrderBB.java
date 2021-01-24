@@ -15,6 +15,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import jsfproject.dao.OrderDAO;
+import jsfproject.dao.OrderPositionDAO;
 import jsfproject.entities.Order;
 import jsfproject.entities.OrderPosition;
 import jsfproject.entities.User;
@@ -26,16 +27,16 @@ import javax.servlet.http.HttpServletRequest;
 @RequestScoped
 public class OrderBB implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	private static final String PAGE_INDEX = "index?faces-redirect=true";
 	private static final String PAGE_LOGIN = "login?faces-redirect=true";
 	private static final String PAGE_REGISTRATION = "registration?faces-redirect=true";
 	private static final String PAGE_SHOPPING_CART = "shoppingCart?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
-	Order order = new Order();
 	private List<Order> orders;
-
+	private HttpSession session;
+	private Order cart;
+	
 	@Inject
 	FacesContext context;
 
@@ -47,6 +48,8 @@ public class OrderBB implements Serializable {
 
 	@EJB
 	OrderDAO orderDAO;
+	@EJB
+	OrderPositionDAO orderPositionDAO;
 
 	public String indexPage() {
 		return PAGE_INDEX;
@@ -61,18 +64,24 @@ public class OrderBB implements Serializable {
 	}
 
 	
-
 	public List<Order> getOrders() {
 		List<Order> orders = orderDAO.listAllOrders();
 		return orders;
 	}
 	
-	public boolean checkIfEmpty() {
-		return getOrders().isEmpty();
+	public boolean cartExists() { //checks if there is already an order with status cart for user saved in session
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		User user = (User) session.getAttribute("user");
+		if (orderDAO.cartExists(user))
+			return true;
+		return false;
+	}
+	
+	public Order getCart() { //returns order with status cart for user saved in session
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		User user = (User) session.getAttribute("user");
+		return orderDAO.getCart(user);
 	}
 
-	public boolean checkIfNotEmpty() {
-		return !getOrders().isEmpty();
-	}
 
 }
