@@ -16,8 +16,10 @@ import javax.servlet.http.HttpSession;
 
 import jsfproject.dao.OrderDAO;
 import jsfproject.dao.OrderPositionDAO;
+import jsfproject.dao.OrderStatusDAO;
 import jsfproject.entities.Order;
 import jsfproject.entities.OrderPosition;
+import jsfproject.entities.OrderStatus;
 import jsfproject.entities.User;
 
 import javax.servlet.ServletException;
@@ -31,6 +33,8 @@ public class OrderBB implements Serializable {
 	private static final String PAGE_LOGIN = "login?faces-redirect=true";
 	private static final String PAGE_REGISTRATION = "registration?faces-redirect=true";
 	private static final String PAGE_SHOPPING_CART = "shoppingCart?faces-redirect=true";
+	private static final String PAGE_ORDERS = "orders?faces-redirect=true";
+	private static final String PAGE_CONFIRM_ORDER = "confirmOrder?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private List<Order> orders;
@@ -50,6 +54,9 @@ public class OrderBB implements Serializable {
 	OrderDAO orderDAO;
 	@EJB
 	OrderPositionDAO orderPositionDAO;
+	@EJB
+	OrderStatusDAO orderStatusDAO;
+	
 
 	public String indexPage() {
 		return PAGE_INDEX;
@@ -81,6 +88,11 @@ public class OrderBB implements Serializable {
 		session = (HttpSession) context.getExternalContext().getSession(false);
 		User user = (User) session.getAttribute("user");
 		return orderDAO.getCart(user);
+	}
+	
+	public String orderItemsFromCart() { //changes order status from cart to ordered
+		
+		return PAGE_CONFIRM_ORDER;
 	}
 
 

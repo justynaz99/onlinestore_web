@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/templates/page-template.xhtml">
+
+	<ui:define name="pageContent">
+
+		<div id="main">
+
+			<div id="form" style="float: left; margin-right: 20em">
+				<h:form>
+					<h3 style="margin-bottom: 30px">Twoje dane</h3>
+					<div>
+						<p:outputLabel for="firstName" value="Imię" class="formLabel" />
+						<div class="formInput">
+							<p:inputText id="firstName" value="#{user.firstName}"
+								required="true" requiredMessage="Wprowadz imię">
+							</p:inputText>
+						</div>
+						<p:message for="firstName" class="formMessage" />
+
+						<p:outputLabel for="lastName" value="Nazwisko" class="formLabel" />
+						<div class="formInput">
+							<p:inputText id="lastName" value="#{user.lastName}"
+								required="true" requiredMessage="Wprowadz nazwisko">
+							</p:inputText>
+						</div>
+						<p:message for="lastName" class="formMessage" />
+
+						<p:outputLabel for="phone" value="Numer telefonu"
+							class="formLabel" />
+						<div class="formInput">
+							<p:inputText id="phone" value="" required="true"
+								requiredMessage="Wprowadz numer">
+							</p:inputText>
+						</div>
+						<p:message for="phone" class="formMessage" />
+
+						<p:outputLabel for="street" value="Ulica nr domu/nr mieszkania" class="formLabel" />
+						<div class="formInput">
+							<p:inputText id="street" value="" required="true"
+								requiredMessage="Wprowadz adres">
+							</p:inputText>
+						</div>
+						<p:message for="street" class="formMessage" />
+						
+						<p:outputLabel for="city" value="Miasto" class="formLabel" />
+						<div class="formInput">
+							<p:inputText id="city" value="" required="true"
+								requiredMessage="Wprowadz miasto">
+							</p:inputText>
+						</div>
+						<p:message for="city" class="formMessage" />
+						
+						<p:outputLabel for="country" value="Kraj" class="formLabel" />
+						<div class="formInput">
+							<p:inputText id="country" value="" required="true"
+								requiredMessage="Wprowadz kraj">
+							</p:inputText>
+						</div>
+						<p:message for="country" class="formMessage" />
+					</div>
+				</h:form>
+			</div>
+
+			<div id="deliver" style="margin-bottom: 30px">
+				<h3 style="margin-bottom: 30px; margin-right: 20em">Sposób
+					dostawy</h3>
+				<div class="col-4 col-12-small">
+					<input type="radio" id="demo-priority-low" name="demo-priority" />
+					<label for="demo-priority-low">Kurier DHL 15zł</label>
+				</div>
+				<div class="col-4 col-12-small">
+					<input type="radio" id="demo-priority-normal" name="demo-priority" />
+					<label for="demo-priority-normal">Paczkomaty INPOST 8.99zł</label>
+				</div>
+				<div class="col-4 col-12-small">
+					<input type="radio" id="demo-priority-high" name="demo-priority" />
+					<label for="demo-priority-high">Poczta Polska 6.99zł</label>
+				</div>
+			</div>
+
+			<div id="deliver">
+				<h3 style="margin-bottom: 30px; margin-right: 20em">Płatność</h3>
+				<div class="col-4 col-12-small">
+					<input type="radio" id="demo-priority-low" name="demo-priority" />
+					<label for="demo-priority-low">Przy odbiorze</label>
+				</div>
+				<div class="col-4 col-12-small">
+					<input type="radio" id="demo-priority-normal" name="demo-priority" />
+					<label for="demo-priority-normal">Przelew online</label>
+				</div>
+			</div>
+
+
+			<div id="summary">
+				<h:form>
+					<h3
+						style="margin-bottom: 30px; margin-top: 30px; margin-right: 20em">Podsumowanie</h3>
+					<ui:fragment>
+						<div class="posts">
+							<table class="summary">
+								<tbody>
+									<c:forEach
+										items="#{orderPositionBB.getPositions(orderBB.cart)}" var="op">
+
+										<tr>
+											<td><h:outputText value="#{op.getProduct().name}" /></td>
+											<td><h:outputText value="#{op.priceProduct}" /></td>
+											<td><h:outputText value="#{op.quantity}" /></td>
+										</tr>
+
+									</c:forEach>
+
+								</tbody>
+								<tfoot>
+									<tr>
+										<td>Wartość</td>
+										<td><h:outputText
+												value="#{orderPositionBB.getValue(orderBB.cart)}" /></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>Dostawa</td>
+										<td><h:outputText value="" /></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td style="font-weight: 600">Suma</td>
+										<td><h:outputText value="" /></td>
+										<td></td>
+
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</ui:fragment>
+					<div style="margin-top: -2em;">
+					<p:commandButton value="Przejdz do płatności" action="#"
+						style="width: 42em;" />
+				</div>
+				</h:form>
+				
+			</div>
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

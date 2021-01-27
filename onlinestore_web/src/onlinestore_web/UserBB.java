@@ -11,7 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
-
+import javax.servlet.http.HttpSession;
 import jsfproject.dao.UserDAO;
 import jsfproject.entities.User;
 
@@ -25,9 +25,9 @@ public class UserBB implements Serializable {
 	private static final String PAGE_USER_ADD = "userAdd?faces-redirect=true";
 	private static final String PAGE_USERS = "users?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
-
 	private User user = new User();
 	private User loaded = null;
+	private List<User> list = null;
 
 	@Inject
 	FacesContext context;
@@ -50,38 +50,35 @@ public class UserBB implements Serializable {
 	}
 
 	public List<User> getList() {
-		return userDAO.listAllUsers();
-	}
-
-	public boolean checkIfUserEmpty() {
-		return getList().isEmpty();
-	}
-
-	public boolean checkIfUserNotEmpty() {
-		return !getList().isEmpty();
+		return list = userDAO.listAllUsers();
 	}
 
 	public String editUser(User user) {
+
 		flash.put("user", user);
 		return PAGE_USER_EDIT;
 	}
 
 	public void onLoad() throws IOException {
+
 		loaded = (User) flash.get("user");
 		if (loaded != null) {
 			user = loaded;
 		} else {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³êdne u¿ycie systemu", null));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", null));
 		}
 	}
 
 	public String saveData() {
-
 		if (loaded == null) {
 			return PAGE_STAY_AT_THE_SAME;
 		}
 		try {
-			userDAO.merge(user);
+			if (user.getIdUser() == null) {
+				userDAO.create(user);
+			} else {
+				userDAO.merge(user);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			context.addMessage(null,
@@ -91,15 +88,10 @@ public class UserBB implements Serializable {
 		return PAGE_USERS;
 	}
 
-	public String deleteUser(User user) {
-		userDAO.remove(user);
-		return PAGE_STAY_AT_THE_SAME;
-	}
-	
 	public String addUser() {
 		return PAGE_USER_ADD;
 	}
-	
+
 	public String saveAddUser() {
 		try {
 			userDAO.create(user);

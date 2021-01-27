@@ -10,20 +10,18 @@
     <f:viewAction action="#{userBB.onLoad()}" />
 </f:metadata>
 
-
 <ui:composition template="/templates/page-template.xhtml">
 
 	<ui:define name="pageContent">
 
 		<div id="main">
-			<h:form >
+			<h:form>
 				<h3 style="margin-bottom: 30px">Edytuj użytkownika</h3>
 				<div>
 					<p:outputLabel for="firstname" value="Imię" />
 					<div class="formInput">
-						<p:inputText id="firstname"
-							value="#{userBB.user.firstName}" required="true"
-							requiredMessage="Wprowadz imię"
+						<p:inputText id="firstname" value="#{userBB.user.firstName}"
+							required="true" requiredMessage="Wprowadz imię"
 							validatorMessage="Imię powinno zawierać od 3 do 20 znaków">
 							<f:validateLength minimum="3" maximum="20" />
 						</p:inputText>
@@ -64,19 +62,16 @@
 
 					<p:outputLabel for="password" value="Hasło" class="formLabel" />
 					<div class="formInput">
-						<p:password id="password" value="#{userBB.user.password}"
-							required="true" requiredMessage="Wprowadz hasło" ><!-- match="password2" 
-							 validatorMessage="Hasło powinno zawierać od 8 do 20 znaków, przynajmniej jedną małą literę,
-							wielką literę, oraz cyfrę">
-							<f:validateRegex pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" />
-							<f:validateLength minimum="8" maximum="20" /> -->
-						</p:password>
+						<p:inputText id="password" value="#{userBB.user.password}"
+							required="true" requiredMessage="Wprowadz hasło"
+							validatorMessage="Hasło powinnno zawierać od 3 do 20 znaków">
+							<f:validateLength minimum="3" maximum="20" />
+						</p:inputText>
 					</div>
 					<p:message for="password" class="formMessage" />
 
 					<div style="clear: both">
-						<p:commandButton value="Zapisz" action="#{userBB.saveData()}" update="@form"
-							ajax="true" />
+						<p:commandButton value="Zapisz" action="#{userBB.saveData()}" />
 					</div>
 				</div>
 			</h:form>

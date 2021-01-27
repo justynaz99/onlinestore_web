@@ -12,14 +12,15 @@
 	<ui:define name="pageContent">
 
 		<div id="main">
-			<ui:fragment rendered="#">
-				<h2 style="margin-bottom: 30px">Twój koszyk jest pusty!</h2>
-			</ui:fragment>
+			<h:form>
+				<ui:fragment rendered="#{orderBB.cartExists() == false}">
+					<h2 style="margin-bottom: 30px">Twój koszyk jest pusty!</h2>
+				</ui:fragment>
 
-			<ui:fragment>
-				<h2 style="margin-bottom: 30px">Twój koszyk</h2>
-				<div class="posts">
-					<h:form>
+				<ui:fragment rendered="#{orderBB.cartExists()}">
+					<h2 style="margin-bottom: 30px">Twój koszyk</h2>
+					<div class="posts">
+
 						<table>
 							<thead>
 								<tr>
@@ -28,30 +29,37 @@
 									<th>Ilość</th>
 								</tr>
 							</thead>
-							<c:forEach items="#{orderPositionBB.getPositions(orderBB.cart)}" var="op">
+							<c:forEach items="#{orderPositionBB.getPositions(orderBB.cart)}"
+								var="op">
 								<tbody>
 									<tr>
-										<td><h:outputText value="#{op.getProduct().name}"
-												/></td>
+										<td><h:outputText value="#{op.getProduct().name}" /></td>
 										<td><h:outputText value="#{op.priceProduct}" /></td>
 										<td><h:outputText value="#{op.quantity}" /></td>
 										<td><p:commandButton value="Usuń"
-												action="#{orderPositionBB.deletePosition(op)}" update="@form"
-												style="margin-top: 0em !important" /></td>
+												action="#{orderPositionBB.deletePosition(op)}"
+												update="@form"
+												style="margin-top: 0em !important; width: 60px !important" /></td>
 									</tr>
 								</tbody>
 							</c:forEach>
 							<tfoot>
 								<tr>
 									<td>Wartość</td>
-									<td>100.00</td>
+									<td><h:outputText
+											value="#{orderPositionBB.getValue(orderBB.cart)}" /></td>
 									<td></td>
+									<td><p:commandButton value="Zamów"
+											action="#{orderBB.orderItemsFromCart()}"
+											style="margin-top: 0em !important" /></td>
 								</tr>
 							</tfoot>
 						</table>
-					</h:form>
-				</div>
-			</ui:fragment>
+
+
+					</div>
+				</ui:fragment>
+			</h:form>
 		</div>
 
 

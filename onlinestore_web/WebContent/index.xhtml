@@ -123,12 +123,9 @@
 						action="#{orderPositionBB.addToCart(p)}" ajax="true"
 						rendered="#{loginBB.role == 'user'}" /> <p:commandButton
 						class="author" value="Zaloguj się aby dodać do koszyka" action="#"
-						ajax="true" rendered="#{loginBB.role == ''}" /> <p:commandButton
-						class="author" value="Usuń produkt"
-						action="#{productListBB.deleteProduct(p)}" ajax="true"
-						rendered="#{loginBB.role == 'seller'}" update="products" /> </header> <a
+						ajax="true" rendered="#{loginBB.role == ''}" />  </header> <a
 						href="#" class="image"><h:graphicImage
-							url="/resources/images/#{p.name}.jpg" /></a> </article>
+							url="resources/images/#{p.name}.jpg" /></a> </article>
 				</c:forEach>
 			</div>
 

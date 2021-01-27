@@ -14,7 +14,7 @@
 	<ui:define name="pageContent">
 
 		<div id="main">
-			<h:form >
+			<h:form>
 				<h3 style="margin-bottom: 30px">Zaloguj się</h3>
 				<div>
 					<p:outputLabel for="username" value="Login" class="formLabel" />
@@ -34,8 +34,8 @@
 					<p:message for="password" class="formMessage" />
 
 					<div style="clear: both">
-						<p:commandButton value="Zaloguj" action="#{loginBB.login()}" update="@form"
-							ajax="true" />
+						<p:commandButton value="Zaloguj" action="#{loginBB.login()}"
+							update="@form" ajax="true" />
 					</div>
 				</div>
 			</h:form>
