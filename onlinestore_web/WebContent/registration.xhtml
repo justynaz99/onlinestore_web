@@ -16,6 +16,9 @@
 			<h:form>
 				<h3 style="margin-bottom: 30px">Zarejestruj się</h3>
 				<div>
+				<p:messages style="width:22em" severity= "error" closable="true">
+					<p:autoUpdate />
+				</p:messages>
 					<p:outputLabel for="firstname" value="Imię" />
 					<div class="formInput">
 						<p:inputText id="firstname"
@@ -25,8 +28,6 @@
 							<f:validateLength minimum="3" maximum="20" />
 						</p:inputText>
 					</div>
-					<p:message for="firstname" class="formMessage" />
-
 
 					<p:outputLabel for="lastname" value="Nazwisko" class="formLabel" />
 					<div class="formInput">
@@ -36,7 +37,6 @@
 							<f:validateLength minimum="3" maximum="20" />
 						</p:inputText>
 					</div>
-					<p:message for="lastname" class="formMessage" />
 
 					<p:outputLabel for="email" value="Email" class="formLabel" />
 					<div class="formInput">
@@ -47,7 +47,7 @@
 							<f:validateRegex pattern="^[A-Za-z0-9+_.-]+@(.+)$" />
 						</p:inputText>
 					</div>
-					<p:message for="email" class="formMessage" />
+
 
 					<p:outputLabel for="username" value="Login" class="formLabel" />
 					<div class="formInput">
@@ -57,7 +57,6 @@
 							<f:validateLength minimum="3" maximum="20" />
 						</p:inputText>
 					</div>
-					<p:message for="username" class="formMessage" />
 
 					<p:outputLabel for="password" value="Hasło" class="formLabel" />
 					<div class="formInput">
@@ -69,7 +68,6 @@
 							<f:validateLength minimum="8" maximum="20" />
 						</p:password>
 					</div>
-					<p:message for="password" class="formMessage" />
 
 					<p:outputLabel for="password2" value="Powtórz hasło"
 						class="formLabel" />
@@ -79,7 +77,6 @@
 							validatorMessage="Hasła nie są identyczne">
 						</p:password>
 					</div>
-					<p:message for="password2" class="formMessage" />
 				</div>
 
 				<div style="clear: both">

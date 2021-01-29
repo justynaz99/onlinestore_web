@@ -1617,7 +1617,6 @@ input[type="submit"], input[type="reset"], input[type="button"], button,
 	margin-top: 20px !important;
 	border-radius: 0px !important;
 	padding: 0em;
-
 }
 
 .ui-button:hover {
@@ -1731,13 +1730,12 @@ form.search>input:first-child {
 	padding-left: 2.5em;
 }
 
-label { 
-	
-		display: block;
-		font-size: 0.9em;
-		font-weight: 700;
-		margin: 0 0 0.5em 0;
-	}
+label {
+	display: block;
+	font-size: 0.9em;
+	font-weight: 700;
+	margin: 0 0 0.5em 0;
+}
 
 input[type="text"], input[type="password"], input[type="email"], input[type="tel"],
 	select, textarea {
@@ -2047,6 +2045,7 @@ ol li {
 	padding-left: 0.25em;
 }
 
+
 /* ul {
 	list-style: disc;
 	margin: 0 0 2em 0;
@@ -2071,7 +2070,6 @@ ul.alt li:first-child {
 	border-top: 0;
 	padding-top: 0;
 } */
-
 dl {
 	margin: 0 0 2em 0;
 }
@@ -2330,7 +2328,7 @@ ul.posts article header>:last-child {
 .mini-post header {
 	padding: 1.25em 4.25em 0.1em 1.25em;
 	max-height: 5em;
-	
+	min-height: 5em;
 	position: relative;
 	-moz-flex-grow: 1;
 	-webkit-flex-grow: 1;
@@ -2361,6 +2359,40 @@ ul.posts article header>:last-child {
 .mini-posts {
 	margin: 0 0 2em 0;
 }
+
+/* product.xhtml product picture */
+
+.mini-product {
+	display: -moz-flex;
+	display: -webkit-flex;
+	display: -ms-flex;
+	display: flex;
+	-moz-flex-direction: column-reverse;
+	-webkit-flex-direction: column-reverse;
+	-ms-flex-direction: column-reverse;
+	flex-direction: column-reverse;
+	background: #ffffff;
+	border: solid 1px rgba(160, 160, 160, 0.3);
+	margin: 0 0 2em 0;
+}
+
+.mini-product .image {
+	overflow: hidden;
+	width: 100%;
+}
+
+.mini-product .image img {
+	-moz-transition: -moz-transform 0.2s ease-out;
+	-webkit-transition: -webkit-transform 0.2s ease-out;
+	-ms-transition: -ms-transform 0.2s ease-out;
+	transition: transform 0.2s ease-out;
+	width: 100%;
+	max-height: 25em;
+}
+
+
+
+
 
 @media screen and (max-width: 1280px) {
 	.mini-posts {
@@ -3291,22 +3323,53 @@ ul.alt li:first-child {
 }
 
 body {
-    text-rendering: optimizeLegibility;
-    -webkit-text-size-adjust: 100%;
-}
-body {
-    font-size: 14px;
-    line-height: 1.42857143;
+	text-rendering: optimizeLegibility;
+	-webkit-text-size-adjust: 100%;
 }
 
-body .ui-widget:not(.pi), body .ui-widget .ui-widget:not(.pi) {
-    font-family: "Ralway","Helvetica",sans-serif;
-    font-size: 14px;
+body {
+	font-size: 14px;
+	line-height: 1.42857143;
 }
 
 .summary {
-    margin: 0 0 2em 0;
-    width: 25em;
-    
+	margin: 0 0 2em 0;
+	width: 25em;
+}
 
+/* product.xhtml AccordionPanel opis produktu */
+body .ui-widget:not(.pi), body .ui-widget .ui-widget:not(.pi) {
+	font-family: "Raleway", Helvetica, sans-serif;
+	font-size: 14px;
+}
 
+body .ui-accordion .ui-accordion-header {
+	all: none;
+	margin-top: 0;
+	border-radius: 0px;
+	color: inherit;
+}
+
+body .ui-accordion .ui-accordion-header.ui-state-active {
+	border: 1px solid #c0c0c0;
+	background-color: #f4f4f4;
+	color: inherit;
+}
+
+body .ui-accordion .ui-accordion-header.ui-state-active:hover, 
+body .ui-accordion .ui-accordion-header.ui-state-active.ui-tabs.outline
+	{
+	border: 1px solid #c0c0c0;
+	background-color: #f4f4f4;
+	color: inherit;
+}
+
+:root { 
+	-input-border-color: #a6a6a6; 
+	-input-hover-border-color: #212121; 
+	-input-focus-border-color: #f4f4f4;
+}
+
+.ui-messages-error-summary {
+	display: block;
+}

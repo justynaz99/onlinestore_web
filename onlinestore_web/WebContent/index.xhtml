@@ -87,8 +87,8 @@
 
 				<h:selectOneMenu value="#{productListBB.selectedItem}"
 					style="width: 400px">
-						<f:selectItem itemValue = "1" itemLabel = "Item 1" />
-						<f:selectItem itemValue = "2" itemLabel = "Item 2" />
+					<f:selectItem itemValue="1" itemLabel="Item 1" />
+					<f:selectItem itemValue="2" itemLabel="Item 2" />
 				</h:selectOneMenu>
 				<p:commandButton value="Sortuj" action="#{productListBB.sort()}"
 					update="products" ajax="true" />
@@ -123,9 +123,10 @@
 						action="#{orderPositionBB.addToCart(p)}" ajax="true"
 						rendered="#{loginBB.role == 'user'}" /> <p:commandButton
 						class="author" value="Zaloguj się aby dodać do koszyka" action="#"
-						ajax="true" rendered="#{loginBB.role == ''}" />  </header> <a
-						href="#" class="image"><h:graphicImage
-							url="resources/images/#{p.name}.jpg" /></a> </article>
+						ajax="true" rendered="#{loginBB.role == ''}" /> </header> <p:commandLink
+						class="image" action="#{productBB.showMore(p)}">
+						<h:graphicImage url="resources/images/#{p.name}.jpg" />
+					</p:commandLink> </article>
 				</c:forEach>
 			</div>
 

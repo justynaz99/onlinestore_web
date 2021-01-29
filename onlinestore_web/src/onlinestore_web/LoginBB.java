@@ -33,10 +33,9 @@ public class LoginBB implements Serializable {
 
 	private User user = new User();
 	private String role;
-	private static HttpSession session;
-	
+	private HttpSession session;
 
-	public static HttpSession getSession() {
+	public HttpSession getSession() {
 		return session;
 	}
 
@@ -55,7 +54,6 @@ public class LoginBB implements Serializable {
 
 	@EJB
 	UserDAO userDAO;
-
 
 	public User getUser() {
 		return user;
@@ -79,16 +77,23 @@ public class LoginBB implements Serializable {
 	}
 
 	public String login() {
-		session = (HttpSession) context.getExternalContext().getSession(true);
-		User user1 = userDAO.checkUser(user.getUsername(), user.getPassword());
-		if (user1 != null) {
-			user = user1;
+		try {
+			session = (HttpSession) context.getExternalContext().getSession(true);
+			User user1 = userDAO.checkUser(user.getUsername(), user.getPassword());
+			if (user1 != null) {
+				user = user1;
 
-			session.setAttribute("role", user.getRole());
-			session.setAttribute("user", user);
-			session.setAttribute("userID", user.getIdUser());
-			role = (String) session.getAttribute("role");
-			return PAGE_INDEX;
+				session.setAttribute("role", user.getRole());
+				session.setAttribute("user", user);
+				session.setAttribute("userID", user.getIdUser());
+				role = (String) session.getAttribute("role");
+				return PAGE_INDEX;
+			}
+			FacesContext.getCurrentInstance().addMessage("login",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Niepoprawny login lub has³o", null));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return PAGE_STAY_AT_THE_SAME;
 		}
 
 		return PAGE_STAY_AT_THE_SAME;
@@ -102,7 +107,6 @@ public class LoginBB implements Serializable {
 
 		return PAGE_INDEX;
 	}
-	
 
 	public List<User> getList() {
 		return userDAO.listAllUsers();
@@ -114,6 +118,11 @@ public class LoginBB implements Serializable {
 
 	public boolean checkIfUserNotEmpty() {
 		return !getList().isEmpty();
+	}
+
+	public void error() {
+		FacesContext.getCurrentInstance().addMessage("login",
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Message Content."));
 	}
 
 }

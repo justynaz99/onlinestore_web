@@ -2,6 +2,8 @@ package onlinestore_web;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -60,19 +62,24 @@ public class RegistrationBB implements Serializable {
 
 
 	public String registration() {
-
+		Date date = new Date(System.currentTimeMillis());
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		try {
+			user.setWhoAdded(user.getIdUser());
+			user.setDateAdded(Date.valueOf(formatter.format(date)));
 			user.setRole("user");
 			userDAO.create(user);
+			user.setWhoAdded(user.getIdUser());
+			userDAO.merge(user);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			context.addMessage(null,
+			FacesContext.getCurrentInstance().addMessage("login",
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wyst¹pi³ b³¹d podczas rejestracji", null));
 			return PAGE_STAY_AT_THE_SAME;
 		}
 
-		return PAGE_INDEX;
+		return PAGE_LOGIN;
 	}
 
 }
