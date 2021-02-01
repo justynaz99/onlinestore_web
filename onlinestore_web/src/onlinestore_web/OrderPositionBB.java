@@ -35,6 +35,7 @@ public class OrderPositionBB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final String PAGE_INDEX = "index?faces-redirect=true";
+	private static final String PAGE_LOGIN = "login?faces-redirect=true";
 	private static final String PAGE_SHOPPING_CART = "shoppingCart?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
@@ -57,6 +58,11 @@ public class OrderPositionBB implements Serializable {
 	OrderDAO orderDAO;
 	@EJB
 	OrderStatusDAO orderStatusDAO;
+	
+	public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(severity, summary, detail));
+    }
 
 	public String getValue(Order order) {
 		List<OrderPosition> opList = orderPositionDAO.listPositionsFromThisOrder(order);
@@ -73,8 +79,8 @@ public class OrderPositionBB implements Serializable {
 
 	public String addToCart(Product product) { // creating cart and first position or if cart already exists adding
 												// position to cart
-		OrderBB orderBB = new OrderBB();
 		session = (HttpSession) context.getExternalContext().getSession(false);
+		
 		if (!orderDAO.cartExists(session.getAttribute("user"))) {
 			Order order = new Order();
 			Date date = new Date(System.currentTimeMillis());
@@ -92,17 +98,24 @@ public class OrderPositionBB implements Serializable {
 			orderPosition.setProduct(product);
 			orderPosition.setQuantity(1);
 			orderPositionDAO.create(orderPosition);
-
-			return PAGE_SHOPPING_CART;
+			addMessage(FacesMessage.SEVERITY_INFO, "Sukces!", "Produkt zosta³ dodany do koszyka");
+			
+			if(session != null)
+				return PAGE_STAY_AT_THE_SAME;
+			else return PAGE_LOGIN;
+			
 		} else { // if order with status cart already exists for user saved in session
 			OrderPosition orderPosition = new OrderPosition();
 			orderPosition.setOrder(orderDAO.getCart((User) session.getAttribute("user")));
-
 			orderPosition.setPriceProduct(product.getPrice());
 			orderPosition.setProduct(product);
 			orderPosition.setQuantity(1);
 			orderPositionDAO.create(orderPosition);
-			return PAGE_SHOPPING_CART;
+			addMessage(FacesMessage.SEVERITY_INFO, "Sukces!", "Produkt zosta³ dodany do koszyka");
+			
+			if(session != null)
+				return PAGE_STAY_AT_THE_SAME;
+			else return PAGE_LOGIN;
 		}
 	}
 
@@ -118,5 +131,8 @@ public class OrderPositionBB implements Serializable {
 	public List<OrderPosition> getPositions() { // lists all positions from all orders
 		return orderPositionDAO.listAllPositions();
 	}
+	
+	
+
 
 }

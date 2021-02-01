@@ -28,6 +28,7 @@ public class UserBB implements Serializable {
 	private User user = new User();
 	private User loaded = null;
 	private List<User> list = null;
+	private HttpSession session;
 
 	@Inject
 	FacesContext context;
@@ -54,14 +55,14 @@ public class UserBB implements Serializable {
 	}
 
 	public String editUser(User user) {
-
-		flash.put("user", user);
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		session.setAttribute("userEdit", user);
 		return PAGE_USER_EDIT;
 	}
 
 	public void onLoad() throws IOException {
-
-		loaded = (User) flash.get("user");
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		loaded = (User) session.getAttribute("userEdit");
 		if (loaded != null) {
 			user = loaded;
 		} else {
@@ -102,8 +103,9 @@ public class UserBB implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wyst¹pi³ b³¹d podczas rejestracji", null));
 			return PAGE_STAY_AT_THE_SAME;
 		}
-
 		return PAGE_USERS;
 	}
+	
+	
 
 }

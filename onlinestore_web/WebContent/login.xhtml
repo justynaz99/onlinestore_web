@@ -14,23 +14,30 @@
 
 
 	<ui:define name="pageContent">
-<h:form>
-		<div id="main">
+		<h:form>
+			<div id="main">
 
-			
 				<h3 style="margin-bottom: 30px">Zaloguj się</h3>
-				<p:messages style="width:22em" severity= "error" closable="true">
+				<p:messages style="width:22em" severity="error" closable="true">
 					<p:autoUpdate />
 				</p:messages>
-				<p:outputLabel for="username" value="Login" class="formLabel" />
-				<div class="formInput">
-					<p:inputText id="username" value="#{loginBB.user.username}"
-						required="true" requiredMessage="Wprowadz login">
+				<p:messages style="width:22em; background-color: #ffe399"
+					closable="true" severity="info">
+					<p:autoUpdate />
+				</p:messages>
+				
+				
+				
+				<div class="formInput" >
+				<p:outputLabel for="email" value="Email" class="formLabel" />
+					<p:inputText id="email" value="#{loginBB.user.email}"
+						required="true" requiredMessage="Wprowadz adres email">
 					</p:inputText>
 				</div>
 
+				
+				<div class="formInput" style="clear:both">
 				<p:outputLabel for="password" value="Hasło" class="formLabel" />
-				<div class="formInput">
 					<p:password id="password" value="#{loginBB.user.password}"
 						required="true" requiredMessage="Wprowadz hasło">
 					</p:password>
@@ -40,12 +47,12 @@
 					<p:commandButton id="login" value="Zaloguj"
 						action="#{loginBB.login()}" update="@form" ajax="true" />
 				</div>
-		
-		</div>
-</h:form>
+
+			</div>
+		</h:form>
 	</ui:define>
 
 </ui:composition>
-	
+
 
 </html>

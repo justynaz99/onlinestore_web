@@ -207,7 +207,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 800;
 	letter-spacing: 0.25em;
 	line-height: 1.65;
-	margin: 0 0 1em 0;
+	margin: 0 0 0em 0;
 	text-transform: uppercase;
 }
 
@@ -2346,7 +2346,7 @@ ul.posts article header>:last-child {
 	font-size: 0.6em;
 	font-weight: 400;
 	letter-spacing: 0.25em;
-	margin: -0.625em 0 1.7em 0;
+	margin: 0em 0 1.7em 0;
 	text-transform: uppercase;
 }
 
@@ -2705,7 +2705,6 @@ header p {
 	font-weight: 400;
 	letter-spacing: 0.25em;
 	line-height: 2.5;
-	margin-top: -1em;
 	text-transform: uppercase;
 }
 
@@ -3260,7 +3259,6 @@ body.is-menu-visible #menu {
 .formInput {
 	float: left;
 	width: 300px;
-	margin-bottom: 20px;
 	margin-right: 10px
 }
 
@@ -3373,3 +3371,9 @@ body .ui-accordion .ui-accordion-header.ui-state-active.ui-tabs.outline
 .ui-messages-error-summary {
 	display: block;
 }
+
+body .ui-messages .ui-messages-info {
+	background-color: #ffe399;
+}
+
+

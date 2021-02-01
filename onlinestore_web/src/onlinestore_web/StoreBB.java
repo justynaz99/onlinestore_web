@@ -20,6 +20,17 @@ import jsfproject.entities.User;
 @RequestScoped
 public class StoreBB {
 
+	private static final String PAGE_INDEX = "index?faces-redirect=true";
+	private static final String PAGE_LOGIN = "login?faces-redirect=true";
+	private static final String PAGE_REGISTRATION = "registration?faces-redirect=true";
+	private static final String PAGE_SHOPPING_CART = "shoppingCart?faces-redirect=true";
+	private static final String PAGE_ORDERS = "orders?faces-redirect=true";
+	private static final String PAGE_USERS = "users?faces-redirect=true";
+	private static final String PAGE_MY_ACCOUNT = "myAccount?faces-redirect=true";
+	private static final String PAGE_STAY_AT_THE_SAME = null;
+	
+	private HttpSession session;
+	
 	@Inject
 	FacesContext context;
 
@@ -31,14 +42,6 @@ public class StoreBB {
 
 	@EJB
 	UserDAO userDAO;
-
-	private static final String PAGE_INDEX = "index?faces-redirect=true";
-	private static final String PAGE_LOGIN = "login?faces-redirect=true";
-	private static final String PAGE_REGISTRATION = "registration?faces-redirect=true";
-	private static final String PAGE_SHOPPING_CART = "shoppingCart?faces-redirect=true";
-	private static final String PAGE_ORDERS = "orders?faces-redirect=true";
-	private static final String PAGE_USERS = "users?faces-redirect=true";
-	private static final String PAGE_INDEXX = "/public/index";
 	
 
 	public String indexPage() {
@@ -46,9 +49,6 @@ public class StoreBB {
 	}
 
 	public String loginPage() {
-		User user = new User();
-
-		flash.put("user", user);
 		return PAGE_LOGIN;
 	}
 
@@ -66,6 +66,23 @@ public class StoreBB {
 	
 	public String usersPage() {
 		return PAGE_USERS;
+	}
+	
+	public String myAccountPage() {
+		return PAGE_MY_ACCOUNT;
+		
+	}
+	
+	
+	public String checkSession() {
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		if(session != null)
+			return PAGE_STAY_AT_THE_SAME;
+		else {
+			FacesContext.getCurrentInstance().addMessage("sessionError",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sesja wygas³a! Zaloguj siê ponownie.", null));
+			return PAGE_LOGIN;
+		}
 	}
 
 }

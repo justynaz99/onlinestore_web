@@ -7,8 +7,12 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <f:metadata>
-    <f:viewAction action="#{userBB.onLoad()}" />
+	<f:viewAction action="#{storeBB.checkSession}" />
+	<f:viewAction action="#{userBB.onLoad}" />
 </f:metadata>
+
+
+
 
 <ui:composition template="/templates/page-template.xhtml">
 
@@ -18,9 +22,11 @@
 			<h:form>
 				<h3 style="margin-bottom: 30px">Edytuj użytkownika</h3>
 				<div>
+					
+					<div class="formInput" style="clear: both">
 					<p:outputLabel for="firstname" value="Imię" />
-					<div class="formInput">
 						<p:inputText id="firstname" value="#{userBB.user.firstName}"
+						placeholder="#{userBB.user.firstName}"
 							required="true" requiredMessage="Wprowadz imię"
 							validatorMessage="Imię powinno zawierać od 3 do 20 znaków">
 							<f:validateLength minimum="3" maximum="20" />
@@ -29,8 +35,8 @@
 					<p:message for="firstname" class="formMessage" />
 
 
+					<div class="formInput" style="clear: both">
 					<p:outputLabel for="lastname" value="Nazwisko" class="formLabel" />
-					<div class="formInput">
 						<p:inputText id="lastname" value="#{userBB.user.lastName}"
 							required="true" requiredMessage="Wprowadz nazwisko"
 							validatorMessage="Nazwisko powinno zawierać od 3 do 20 znaków">
@@ -39,8 +45,8 @@
 					</div>
 					<p:message for="lastname" class="formMessage" />
 
+					<div class="formInput" style="clear: both">
 					<p:outputLabel for="email" value="Email" class="formLabel" />
-					<div class="formInput">
 						<p:inputText id="email" value="#{userBB.user.email}"
 							required="true" requiredMessage="Wprowadz email"
 							validatorMessage="Niepoprawny format adresu email">
@@ -50,18 +56,8 @@
 					</div>
 					<p:message for="email" class="formMessage" />
 
-					<p:outputLabel for="username" value="Login" class="formLabel" />
-					<div class="formInput">
-						<p:inputText id="username" value="#{userBB.user.username}"
-							required="true" requiredMessage="Wprowadz login"
-							validatorMessage="Login powinien zawierać od 3 do 20 znaków">
-							<f:validateLength minimum="3" maximum="20" />
-						</p:inputText>
-					</div>
-					<p:message for="username" class="formMessage" />
-
+					<div class="formInput" style="clear: both">
 					<p:outputLabel for="password" value="Hasło" class="formLabel" />
-					<div class="formInput">
 						<p:inputText id="password" value="#{userBB.user.password}"
 							required="true" requiredMessage="Wprowadz hasło"
 							validatorMessage="Hasło powinnno zawierać od 3 do 20 znaków">

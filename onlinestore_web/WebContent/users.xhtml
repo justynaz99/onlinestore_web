@@ -7,6 +7,12 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
+<f:metadata>
+	<f:viewAction action="#{storeBB.checkSession}" />
+</f:metadata>
+
+
+
 <ui:composition template="/templates/page-template.xhtml">
 
 	<ui:define name="pageContent">
@@ -18,7 +24,7 @@
 
 			<ui:fragment rendered="#{userBB.list.size() > 0}">
 				<h2 style="margin-bottom: 30px">Użytkownicy</h2>
-				
+
 
 				<section>
 				<ul class="posts">
@@ -27,7 +33,6 @@
 								<thead>
 									<tr>
 										<th>Id</th>
-										<th>Login</th>
 										<th>Hasło</th>
 										<th>Imię</th>
 										<th>Nazwisko</th>
@@ -40,7 +45,6 @@
 									<tbody>
 										<tr>
 											<td><h:outputText value="#{u.idUser}" /></td>
-											<td><h:outputText value="#{u.username}" /></td>
 											<td><h:outputText value="#{u.password}" /></td>
 											<td><h:outputText value="#{u.firstName}" /></td>
 											<td><h:outputText value="#{u.lastName}" /></td>
@@ -52,9 +56,8 @@
 									</tbody>
 								</c:forEach>
 							</table>
-						</h:form>
-						<p:commandButton value="Dodaj użytkownika" action="#{userBB.addUser()}" 
-						style="margin-top: -20px !important"/></li>
+						</h:form> <p:commandButton value="Dodaj użytkownika"
+							action="#{userBB.addUser()}" style="margin-top: -20px !important" /></li>
 				</ul>
 				</section>
 

@@ -7,6 +7,10 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
+<f:metadata>
+	<f:viewAction action="#{storeBB.checkSession}" />
+</f:metadata>
+
 <ui:composition template="/templates/page-template.xhtml">
 
 	<ui:define name="pageContent">
@@ -42,14 +46,15 @@
 						</div>
 						<p:message for="phone" class="formMessage" />
 
-						<p:outputLabel for="street" value="Ulica nr domu/nr mieszkania" class="formLabel" />
+						<p:outputLabel for="street" value="Ulica nr domu/nr mieszkania"
+							class="formLabel" />
 						<div class="formInput">
 							<p:inputText id="street" value="" required="true"
 								requiredMessage="Wprowadz adres">
 							</p:inputText>
 						</div>
 						<p:message for="street" class="formMessage" />
-						
+
 						<p:outputLabel for="city" value="Miasto" class="formLabel" />
 						<div class="formInput">
 							<p:inputText id="city" value="" required="true"
@@ -57,7 +62,7 @@
 							</p:inputText>
 						</div>
 						<p:message for="city" class="formMessage" />
-						
+
 						<p:outputLabel for="country" value="Kraj" class="formLabel" />
 						<div class="formInput">
 							<p:inputText id="country" value="" required="true"
@@ -142,11 +147,11 @@
 						</div>
 					</ui:fragment>
 					<div style="margin-top: -2em;">
-					<p:commandButton value="Przejdz do płatności" action="#"
-						style="width: 42em;" />
-				</div>
+						<p:commandButton value="Przejdz do płatności" action="#"
+							style="width: 42em;" />
+					</div>
 				</h:form>
-				
+
 			</div>
 
 		</div>

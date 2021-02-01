@@ -91,8 +91,11 @@ public class OrderBB implements Serializable {
 	}
 	
 	public String orderItemsFromCart() { //changes order status from cart to ordered
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		if(session != null)
+			return PAGE_CONFIRM_ORDER;
+		return PAGE_LOGIN;
 		
-		return PAGE_CONFIRM_ORDER;
 	}
 
 

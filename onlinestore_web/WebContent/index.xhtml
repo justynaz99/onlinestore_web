@@ -111,7 +111,7 @@
 
 			<!--.................................. lista produktów ..................................-->
 
-
+			<p:growl id="addInfo" showDetail="true" severity="info" closable="true" />
 			<div class="mini-posts">
 				<c:forEach items="#{productListBB.list}" var="p">
 					<article class="mini-post"> <header>
@@ -120,10 +120,8 @@
 					</h3>
 					<h:outputText class="published" value="#{p.price}" /> <p:commandButton
 						class="author" value="Dodaj do koszyka"
-						action="#{orderPositionBB.addToCart(p)}" ajax="true"
-						rendered="#{loginBB.role == 'user'}" /> <p:commandButton
-						class="author" value="Zaloguj się aby dodać do koszyka" action="#"
-						ajax="true" rendered="#{loginBB.role == ''}" /> </header> <p:commandLink
+						action="#{orderPositionBB.addToCart(p)}" ajax="true" update="addInfo"
+						rendered="#{loginBB.role == 'user'}" /> </header> <p:commandLink
 						class="image" action="#{productBB.showMore(p)}">
 						<h:graphicImage url="resources/images/#{p.name}.jpg" />
 					</p:commandLink> </article>
@@ -166,6 +164,8 @@
 			</div>
 
 			<!--...................................................................................-->
+			
+			
 
 			</section>
 		</h:form>

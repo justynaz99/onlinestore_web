@@ -32,16 +32,9 @@ public class LoginBB implements Serializable {
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private User user = new User();
+	private String name;
 	private String role;
 	private HttpSession session;
-
-	public HttpSession getSession() {
-		return session;
-	}
-
-	public void setSession(HttpSession session) {
-		this.session = session;
-	}
 
 	@Inject
 	FacesContext context;
@@ -55,6 +48,14 @@ public class LoginBB implements Serializable {
 	@EJB
 	UserDAO userDAO;
 
+	public HttpSession getSession() {
+		return session;
+	}
+
+	public void setSession(HttpSession session) {
+		this.session = session;
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -62,6 +63,14 @@ public class LoginBB implements Serializable {
 	public String getRole() {
 		session = (HttpSession) context.getExternalContext().getSession(false);
 		return (String) session.getAttribute("role");
+	}
+
+	public String getName() {
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		User user = (User) session.getAttribute("user");
+		if(user != null)
+			return user.getFirstName();
+		return " ";
 	}
 
 	public String indexPage() {
@@ -79,10 +88,9 @@ public class LoginBB implements Serializable {
 	public String login() {
 		try {
 			session = (HttpSession) context.getExternalContext().getSession(true);
-			User user1 = userDAO.checkUser(user.getUsername(), user.getPassword());
+			User user1 = userDAO.checkUser(user.getEmail(), user.getPassword());
 			if (user1 != null) {
 				user = user1;
-
 				session.setAttribute("role", user.getRole());
 				session.setAttribute("user", user);
 				session.setAttribute("userID", user.getIdUser());
@@ -90,7 +98,9 @@ public class LoginBB implements Serializable {
 				return PAGE_INDEX;
 			}
 			FacesContext.getCurrentInstance().addMessage("login",
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Niepoprawny login lub has³o", null));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Niepoprawny adres email lub has³o", null));
+			FacesContext.getCurrentInstance().addMessage("login", new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Zarejestruj siê, jeœli nie posiadasz jeszcze konta", null));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return PAGE_STAY_AT_THE_SAME;
@@ -110,19 +120,6 @@ public class LoginBB implements Serializable {
 
 	public List<User> getList() {
 		return userDAO.listAllUsers();
-	}
-
-	public boolean checkIfUserEmpty() {
-		return getList().isEmpty();
-	}
-
-	public boolean checkIfUserNotEmpty() {
-		return !getList().isEmpty();
-	}
-
-	public void error() {
-		FacesContext.getCurrentInstance().addMessage("login",
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Message Content."));
 	}
 
 }

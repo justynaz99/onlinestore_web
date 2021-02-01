@@ -6,6 +6,10 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
+<f:metadata>
+	<f:viewAction action="#{storeBB.checkSession}" />
+</f:metadata>
+
 
 <ui:composition template="/templates/page-template.xhtml">
 
@@ -18,9 +22,8 @@
 				<div>
 					<p:outputLabel for="firstname" value="Imię" />
 					<div class="formInput">
-						<p:inputText id="firstname"
-							value="#{userBB.user.firstName}" required="true"
-							requiredMessage="Wprowadz imię"
+						<p:inputText id="firstname" value="#{userBB.user.firstName}"
+							required="true" requiredMessage="Wprowadz imię"
 							validatorMessage="Imię powinno zawierać od 3 do 20 znaków">
 							<f:validateLength minimum="3" maximum="20" />
 						</p:inputText>
@@ -62,10 +65,12 @@
 					<p:outputLabel for="password" value="Hasło" class="formLabel" />
 					<div class="formInput">
 						<p:password id="password" value="#{userBB.user.password}"
-							required="true" requiredMessage="Wprowadz hasło" match="password2"
+							required="true" requiredMessage="Wprowadz hasło"
+							match="password2"
 							validatorMessage="Hasło powinno zawierać od 8 do 20 znaków, przynajmniej jedną małą literę,
 							wielką literę, oraz cyfrę">
-							<f:validateRegex pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" />
+							<f:validateRegex
+								pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" />
 							<f:validateLength minimum="8" maximum="20" />
 						</p:password>
 					</div>
@@ -74,7 +79,7 @@
 					<p:outputLabel for="password2" value="Powtórz hasło"
 						class="formLabel" />
 					<div class="formInput">
-						<p:password id="password2" required="true" 
+						<p:password id="password2" required="true"
 							requiredMessage="Wprowadz ponownie hasło"
 							validatorMessage="Hasła nie są identyczne">
 						</p:password>
@@ -83,8 +88,7 @@
 				</div>
 
 				<div style="clear: both">
-					<p:commandButton value="Zapisz"
-						action="#{userBB.saveAddUser()}"/>
+					<p:commandButton value="Zapisz" action="#{userBB.saveAddUser()}" />
 				</div>
 			</h:form>
 

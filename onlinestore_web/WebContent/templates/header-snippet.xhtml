@@ -13,6 +13,8 @@
 				<ul>
 					<li><h:commandLink id="index" value="Strona główna"
 							action="#{storeBB.indexPage()}" /></li>
+					<li><h:commandLink id="myAccount" value="Moje konto"
+							action="#{storeBB.myAccountPage()}" /></li>
 					<li><h:commandLink id="shoppingCart" value="Koszyk"
 							action="#{storeBB.shoppingCartPage()}" /></li>
 					<li><h:commandLink id="orders" value="Zamówienia"
@@ -21,7 +23,7 @@
 							action="#{loginBB.logout()}" /></li>
 				</ul>
 			</h:form>
-			
+
 			<h:form rendered="#{loginBB.role == 'admin'}">
 				<ul>
 					<li><h:commandLink id="index" value="Strona główna"
@@ -32,11 +34,13 @@
 							action="#{loginBB.logout()}" /></li>
 				</ul>
 			</h:form>
-			
+
 			<h:form rendered="#{loginBB.role == 'seller'}">
 				<ul>
 					<li><h:commandLink id="index" value="Strona główna"
 							action="#{storeBB.indexPage()}" /></li>
+					<li><h:commandLink id="myAccount" value="Moje konto"
+							action="#{storeBB.myAccountPage()}" /></li>
 					<li><h:commandLink id="logout" value="Wyloguj"
 							action="#{loginBB.logout()}" /></li>
 				</ul>
@@ -52,54 +56,15 @@
 							action="#{storeBB.registrationPage()}" /></li>
 				</ul>
 			</h:form>
-			
 		</nav>
 		<nav class="main">
 			<ul>
-				<li class="search"><i class="fa fa-fw fa-search" href="#search"
-					style="margin: 20px; cursor: pointer;"></i>
-					<form id="search" method="get" action="#search">
-						<input type="text" name="query" placeholder="Search" />
-					</form></li>
+				<li class="menu"><a class="fa-bars" href="#menu">Menu</a></li>
 			</ul>
 		</nav>
 	</header>
 
-	<section id="menu">
 
-		<!-- Search -->
-		<section>
-			<form class="search" method="get" action="#">
-				<input type="text" name="query" placeholder="Search" />
-			</form>
-		</section>
 
-		<!-- Links -->
-		<section>
-			<ul class="links">
-				<li><a href="#">
-						<h3>Lorem ipsum</h3>
-						<p>Feugiat tempus veroeros dolor</p>
-				</a></li>
-				<li><a href="#">
-						<h3>Dolor sit amet</h3>
-						<p>Sed vitae justo condimentum</p>
-				</a></li>
-				<li><a href="#">
-						<h3>Feugiat veroeros</h3>
-						<p>Phasellus sed ultricies mi congue</p>
-				</a></li>
-				<li><a href="#">
-						<h3>Etiam sed consequat</h3>
-						<p>Porta lectus amet ultricies</p>
-				</a></li>
-			</ul>
-		</section>
 
-		<section>
-			<ul class="actions stacked">
-				<li><a href="#" class="button large fit">Log In</a></li>
-			</ul>
-		</section>
-	</section>
 </ui:composition>

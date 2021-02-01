@@ -7,6 +7,10 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
+<f:metadata>
+	<f:viewAction action="#{storeBB.checkSession}" />
+</f:metadata>
+
 <ui:composition template="/templates/page-template.xhtml">
 
 	<ui:define name="pageContent">
@@ -61,10 +65,6 @@
 				</ui:fragment>
 			</h:form>
 		</div>
-
-
-
-
 
 	</ui:define>
 
