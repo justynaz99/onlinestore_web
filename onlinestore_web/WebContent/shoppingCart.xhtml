@@ -18,7 +18,9 @@
 		<div id="main">
 			<h:form>
 				<ui:fragment rendered="#{orderBB.cartExists() == false}">
-					<h2 style="margin-bottom: 30px">Twój koszyk jest pusty!</h2>
+					<div class="center">
+						<h2>Twój koszyk jest pusty!</h2>
+					</div>
 				</ui:fragment>
 
 				<ui:fragment rendered="#{orderBB.cartExists()}">
@@ -54,12 +56,13 @@
 											value="#{orderPositionBB.getValue(orderBB.cart)}" /></td>
 									<td></td>
 									<td><p:commandButton value="Zamów"
-											action="#{orderBB.orderItemsFromCart()}"
+											action="#{orderBB.pageConfirmOrder()}"
 											style="margin-top: 0em !important" /></td>
 								</tr>
 							</tfoot>
 						</table>
-
+						<p:growl id="orderError" showDetail="true" severity="error"
+							closable="true" />
 
 					</div>
 				</ui:fragment>

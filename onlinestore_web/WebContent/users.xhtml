@@ -18,14 +18,14 @@
 	<ui:define name="pageContent">
 
 		<div id="main">
+			<p:growl id="editInfo" showDetail="true" severity="info"
+				closable="true" />
 			<ui:fragment rendered="#{userBB.list.size() == 0}">
 				<h2 style="margin-bottom: 30px">Brak użytkowników w bazie!</h2>
 			</ui:fragment>
 
-			<ui:fragment rendered="#{userBB.list.size() > 0}">
+			<ui:fragment rendered="#{userListBB.list.size() > 0}">
 				<h2 style="margin-bottom: 30px">Użytkownicy</h2>
-
-
 				<section>
 				<ul class="posts">
 					<li><h:form>
@@ -41,7 +41,7 @@
 										<th></th>
 									</tr>
 								</thead>
-								<c:forEach items="#{userBB.list}" var="u">
+								<c:forEach items="#{userListBB.list}" var="u">
 									<tbody>
 										<tr>
 											<td><h:outputText value="#{u.idUser}" /></td>
@@ -51,7 +51,7 @@
 											<td><h:outputText value="#{u.email}" /></td>
 											<td><h:outputText value="#{u.role}" /></td>
 											<td><p:commandButton value="Edytuj"
-													action="#{userBB.editUser(u)}" /></td>
+													action="#{userListBB.editUser(u)}" /></td>
 										</tr>
 									</tbody>
 								</c:forEach>

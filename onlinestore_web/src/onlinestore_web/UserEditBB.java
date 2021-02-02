@@ -17,7 +17,7 @@ import jsfproject.entities.User;
 
 @Named
 @RequestScoped
-public class UserBB implements Serializable {
+public class UserEditBB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final String PAGE_INDEX = "index?faces-redirect=true";
@@ -27,7 +27,6 @@ public class UserBB implements Serializable {
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 	private User user = new User();
 	private User loaded = null;
-	private List<User> list = null;
 	private HttpSession session;
 
 	@Inject
@@ -45,19 +44,9 @@ public class UserBB implements Serializable {
 	public User getUser() {
 		return user;
 	}
-
-	public String indexPage() {
-		return PAGE_INDEX;
-	}
-
-	public List<User> getList() {
-		return list = userDAO.listAllUsers();
-	}
-
-	public String editUser(User user) {
-		session = (HttpSession) context.getExternalContext().getSession(false);
-		session.setAttribute("userEdit", user);
-		return PAGE_USER_EDIT;
+	
+	public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
 	}
 
 	public void onLoad() throws IOException {
@@ -65,6 +54,7 @@ public class UserBB implements Serializable {
 		loaded = (User) session.getAttribute("userEdit");
 		if (loaded != null) {
 			user = loaded;
+			session.removeAttribute("userEdit");
 		} else {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", null));
 		}
@@ -75,37 +65,19 @@ public class UserBB implements Serializable {
 			return PAGE_STAY_AT_THE_SAME;
 		}
 		try {
-			if (user.getIdUser() == null) {
+			if (user.getIdUser() == null) {			
 				userDAO.create(user);
 			} else {
 				userDAO.merge(user);
 			}
+			addMessage(FacesMessage.SEVERITY_INFO, "Sukces!", "Dane zosta³y poprawnie edytowane. ");
 		} catch (Exception e) {
 			e.printStackTrace();
-			context.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wyst¹pi³ b³¹d podczas zapisu", null));
+			addMessage(FacesMessage.SEVERITY_ERROR, "B³¹d!", "Wyst¹pi³ b³¹d podczas edycji danych. ");
 			return PAGE_STAY_AT_THE_SAME;
 		}
 		return PAGE_USERS;
 	}
 
-	public String addUser() {
-		return PAGE_USER_ADD;
-	}
-
-	public String saveAddUser() {
-		try {
-			userDAO.create(user);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			context.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wyst¹pi³ b³¹d podczas rejestracji", null));
-			return PAGE_STAY_AT_THE_SAME;
-		}
-		return PAGE_USERS;
-	}
-	
-	
 
 }

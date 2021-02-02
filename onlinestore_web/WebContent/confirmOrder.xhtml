@@ -17,60 +17,58 @@
 
 		<div id="main">
 
-			<div id="form" style="float: left; margin-right: 20em">
+			<div id="form" style="float: left; margin-right: 10em; margin-left: 5em">
 				<h:form>
-					<h3 style="margin-bottom: 30px">Twoje dane</h3>
-					<div>
+					<h3>Twoje dane</h3>
+						<div class="formInput" style="clear: both">
 						<p:outputLabel for="firstName" value="Imię" class="formLabel" />
-						<div class="formInput">
 							<p:inputText id="firstName" value="#{user.firstName}"
 								required="true" requiredMessage="Wprowadz imię">
 							</p:inputText>
 						</div>
 						<p:message for="firstName" class="formMessage" />
 
+						<div class="formInput" style="clear: both">
 						<p:outputLabel for="lastName" value="Nazwisko" class="formLabel" />
-						<div class="formInput">
 							<p:inputText id="lastName" value="#{user.lastName}"
 								required="true" requiredMessage="Wprowadz nazwisko">
 							</p:inputText>
 						</div>
 						<p:message for="lastName" class="formMessage" />
 
+						<div class="formInput" style="clear: both">
 						<p:outputLabel for="phone" value="Numer telefonu"
 							class="formLabel" />
-						<div class="formInput">
 							<p:inputText id="phone" value="" required="true"
 								requiredMessage="Wprowadz numer">
 							</p:inputText>
 						</div>
 						<p:message for="phone" class="formMessage" />
 
+						<div class="formInput" style="clear: both">
 						<p:outputLabel for="street" value="Ulica nr domu/nr mieszkania"
 							class="formLabel" />
-						<div class="formInput">
 							<p:inputText id="street" value="" required="true"
 								requiredMessage="Wprowadz adres">
 							</p:inputText>
 						</div>
 						<p:message for="street" class="formMessage" />
 
+						<div class="formInput" style="clear: both">
 						<p:outputLabel for="city" value="Miasto" class="formLabel" />
-						<div class="formInput">
 							<p:inputText id="city" value="" required="true"
 								requiredMessage="Wprowadz miasto">
 							</p:inputText>
 						</div>
 						<p:message for="city" class="formMessage" />
 
+						<div class="formInput" style="clear: both">
 						<p:outputLabel for="country" value="Kraj" class="formLabel" />
-						<div class="formInput">
 							<p:inputText id="country" value="" required="true"
 								requiredMessage="Wprowadz kraj">
 							</p:inputText>
 						</div>
 						<p:message for="country" class="formMessage" />
-					</div>
 				</h:form>
 			</div>
 
@@ -147,7 +145,7 @@
 						</div>
 					</ui:fragment>
 					<div style="margin-top: -2em;">
-						<p:commandButton value="Przejdz do płatności" action="#"
+						<p:commandButton value="Zamów i przejdz do płatności" action="#{orderBB.orderItemsFromCart()}"
 							style="width: 42em;" />
 					</div>
 				</h:form>

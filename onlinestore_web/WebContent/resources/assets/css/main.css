@@ -73,7 +73,6 @@ input, select, textarea {
 }
 
 /* Basic */
-@
 -ms-viewport {
 	width: device-width;
 }
@@ -2045,7 +2044,6 @@ ol li {
 	padding-left: 0.25em;
 }
 
-
 /* ul {
 	list-style: disc;
 	margin: 0 0 2em 0;
@@ -2281,7 +2279,7 @@ ul.posts article header .published {
 	font-size: 0.6em;
 	font-weight: 400;
 	letter-spacing: 0.25em;
-	margin: -0.625em 0 1.7em 0;
+	margin: 0.3em 0 1.7em 0;
 	text-transform: uppercase;
 }
 
@@ -2346,7 +2344,7 @@ ul.posts article header>:last-child {
 	font-size: 0.6em;
 	font-weight: 400;
 	letter-spacing: 0.25em;
-	margin: 0em 0 1.7em 0;
+	margin: 0.3em 0 1.7em 0;
 	text-transform: uppercase;
 }
 
@@ -2361,7 +2359,6 @@ ul.posts article header>:last-child {
 }
 
 /* product.xhtml product picture */
-
 .mini-product {
 	display: -moz-flex;
 	display: -webkit-flex;
@@ -2389,10 +2386,6 @@ ul.posts article header>:last-child {
 	width: 100%;
 	max-height: 25em;
 }
-
-
-
-
 
 @media screen and (max-width: 1280px) {
 	.mini-posts {
@@ -3141,7 +3134,7 @@ body.single #wrapper {
 #footer .copyright {
 	color: #aaaaaa;
 	font-family: "Raleway", Helvetica, sans-serif;
-	font-size: 0.5em;
+	font-size: 0.8em;
 	font-weight: 400;
 	letter-spacing: 0.25em;
 	text-transform: uppercase;
@@ -3354,17 +3347,16 @@ body .ui-accordion .ui-accordion-header.ui-state-active {
 	color: inherit;
 }
 
-body .ui-accordion .ui-accordion-header.ui-state-active:hover, 
-body .ui-accordion .ui-accordion-header.ui-state-active.ui-tabs.outline
+body .ui-accordion .ui-accordion-header.ui-state-active:hover, body .ui-accordion .ui-accordion-header.ui-state-active.ui-tabs.outline
 	{
 	border: 1px solid #c0c0c0;
 	background-color: #f4f4f4;
 	color: inherit;
 }
 
-:root { 
-	-input-border-color: #a6a6a6; 
-	-input-hover-border-color: #212121; 
+:root {
+	-input-border-color: #a6a6a6;
+	-input-hover-border-color: #212121;
 	-input-focus-border-color: #f4f4f4;
 }
 
@@ -3376,4 +3368,30 @@ body .ui-messages .ui-messages-info {
 	background-color: #ffe399;
 }
 
+.center { /* for payment.xhtml */
+	margin-top: 13%;
+	margin-right: 9%;
+	font: 20px;
+	text-align: center;
+}
 
+.footer {
+
+	bottom: 0px;
+	padding: 0em 0 1em 0;
+	text-align: center;
+	display: block;
+	margin: 0;
+	border: 0;
+	font: inherit;
+	letter-spacing: 0.075em;
+}
+
+/* icons */
+body a {
+	color: inherit;
+}
+
+.box {
+	margin-bottom: 5em;
+}

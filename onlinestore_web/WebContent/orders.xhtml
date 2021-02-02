@@ -29,10 +29,10 @@
 						<li><article style="margin-bottom: 20px"> <header
 								style="pointer-events: none">
 							<h3>
-								<a>#<h:outputText value="#{o.idOrder}" /></a>
+								<h:outputText value="##{o.idOrder}" />
+								<h:outputText  value=" Status: #{o.orderStatus.name} "/>
 							</h3>
 							<h:outputText class="published" value="#{o.date}" /> </header> </article>
-
 							<table>
 								<c:forEach items="#{orderPositionBB.getPositions(o)}" var="op">
 									<tbody>
@@ -43,9 +43,10 @@
 										</tr>
 									</tbody>
 								</c:forEach>
+
 								<tfoot>
 									<td>Total</td>
-									<td>100</td>
+									<td><h:outputText value="#{orderPositionBB.getValue(o)}" /></td>
 									<td></td>
 								</tfoot>
 							</table></li>
