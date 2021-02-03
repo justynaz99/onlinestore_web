@@ -9,6 +9,7 @@
 
 <f:metadata>
 	<f:viewAction action="#{storeBB.checkSession}" />
+	<f:viewAction action="#{storeBB.checkRole('user', ' ')}" />
 </f:metadata>
 
 <ui:composition template="/templates/page-template.xhtml">
@@ -16,8 +17,10 @@
 	<ui:define name="pageContent">
 
 		<div id="main">
+		
+		<!--................................... data .................................-->
 
-			<div id="form" style="float: left; margin-right: 10em; margin-left: 5em">
+			<div id="form" style="float: left; margin-right: 10em; margin-bottom: 5em">
 				<h:form>
 					<h3>Twoje dane</h3>
 						<div class="formInput" style="clear: both">
@@ -71,6 +74,10 @@
 						<p:message for="country" class="formMessage" />
 				</h:form>
 			</div>
+			
+			<!--...........................................................................-->
+			
+			<!--............................ checkbox deliver .............................-->
 
 			<div id="deliver" style="margin-bottom: 30px">
 				<h3 style="margin-bottom: 30px; margin-right: 20em">Sposób
@@ -88,19 +95,26 @@
 					<label for="demo-priority-high">Poczta Polska 6.99zł</label>
 				</div>
 			</div>
+			
+			<!--...........................................................................-->
+			
+			<!--............................ checkbox payment .............................-->
 
-			<div id="deliver">
+			<div id="payment">
 				<h3 style="margin-bottom: 30px; margin-right: 20em">Płatność</h3>
 				<div class="col-4 col-12-small">
-					<input type="radio" id="demo-priority-low" name="demo-priority" />
-					<label for="demo-priority-low">Przy odbiorze</label>
+					<input type="radio" id="demo-priority-high2" name="demo-priority2" />
+					<label for="demo-priority-high2">Przy odbiorze</label>
 				</div>
 				<div class="col-4 col-12-small">
-					<input type="radio" id="demo-priority-normal" name="demo-priority" />
-					<label for="demo-priority-normal">Przelew online</label>
+					<input type="radio" id="demo-priority-normal2" name="demo-priority2" />
+					<label for="demo-priority-normal2">Przelew online</label>
 				</div>
 			</div>
-
+			
+			<!--...........................................................................-->
+			
+			<!--............................ table summary .............................-->
 
 			<div id="summary">
 				<h:form>
@@ -112,15 +126,12 @@
 								<tbody>
 									<c:forEach
 										items="#{orderPositionBB.getPositions(orderBB.cart)}" var="op">
-
 										<tr>
 											<td><h:outputText value="#{op.getProduct().name}" /></td>
 											<td><h:outputText value="#{op.priceProduct}" /></td>
 											<td><h:outputText value="#{op.quantity}" /></td>
 										</tr>
-
 									</c:forEach>
-
 								</tbody>
 								<tfoot>
 									<tr>
@@ -138,24 +149,21 @@
 										<td style="font-weight: 600">Suma</td>
 										<td><h:outputText value="" /></td>
 										<td></td>
-
 									</tr>
 								</tfoot>
 							</table>
 						</div>
 					</ui:fragment>
 					<div style="margin-top: -2em;">
-						<p:commandButton value="Zamów i przejdz do płatności" action="#{orderBB.orderItemsFromCart()}"
+						<p:commandButton value="Zamów" action="#{orderBB.orderItemsFromCart()}"
 							style="width: 42em;" />
 					</div>
 				</h:form>
-
 			</div>
+			
+			<!--...........................................................................-->
 
 		</div>
-
 	</ui:define>
-
 </ui:composition>
-
 </html>

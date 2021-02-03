@@ -84,5 +84,29 @@ public class StoreBB {
 			return PAGE_LOGIN;
 		}
 	}
+	
+	public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+	
+	public String checkRole(String role, String role2) {
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		try {			
+			User userFromSession = (User) session.getAttribute("user");
+			String roleFromSession = userFromSession.getRole();
+			if(roleFromSession.equals(role) || roleFromSession.equals(role2))
+				return PAGE_STAY_AT_THE_SAME;
+			else {
+				addMessage(FacesMessage.SEVERITY_ERROR, "B³¹d!", "Nie posiadasz uprawnieñ do tej strony!");
+				return PAGE_INDEX;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage("userError",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Zaloguj siê aby uzyskaæ dostêp do tej strony!", null));
+			return PAGE_LOGIN;
+		}
+	}
 
 }

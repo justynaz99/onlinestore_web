@@ -84,6 +84,11 @@ public class LoginBB implements Serializable {
 	public String registrationPage() {
 		return PAGE_REGISTRATION;
 	}
+	
+	public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(severity, summary, detail));
+    }
 
 	public String login() {
 		try {
@@ -114,7 +119,8 @@ public class LoginBB implements Serializable {
 		if (session != null) {
 			session.invalidate();
 		}
-
+		
+		addMessage(FacesMessage.SEVERITY_INFO, "Sukces!", "Zosta³eœ wylogowany.");
 		return PAGE_INDEX;
 	}
 

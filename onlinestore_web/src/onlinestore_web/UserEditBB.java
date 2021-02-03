@@ -56,7 +56,7 @@ public class UserEditBB implements Serializable {
 			user = loaded;
 			session.removeAttribute("userEdit");
 		} else {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d", null));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d!", "Nie wybrano u¿ytkownika."));
 		}
 	}
 

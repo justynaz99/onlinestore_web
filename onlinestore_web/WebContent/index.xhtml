@@ -111,7 +111,7 @@
 
 			<!--.................................. lista produktów ..................................-->
 
-			<p:growl id="addInfo" showDetail="true" severity="info" closable="true" />
+			
 			<div class="mini-posts">
 				<c:forEach items="#{productListBB.list}" var="p">
 					<article class="mini-post"> <header>
@@ -165,6 +165,14 @@
 
 			<!--...................................................................................-->
 			
+			
+			<!--............................... messages ..........................................-->
+			
+			<p:growl id="addInfo" showDetail="true" severity="info" closable="true" />
+			<p:growl id="logoutInfo" showDetail="true" severity="info" closable="true" />
+			<p:growl id="accessError" showDetail="true" severity="error" closable="true" />
+			
+			<!--...................................................................................-->
 			
 
 			</section>
