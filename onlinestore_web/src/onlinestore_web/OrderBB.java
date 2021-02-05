@@ -82,7 +82,6 @@ public class OrderBB implements Serializable {
 			e.printStackTrace();
 			return false;
 		}
-		
 	}
 
 	public Order getCart() { //returns order with status cart for user saved in session

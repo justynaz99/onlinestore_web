@@ -80,8 +80,9 @@ public class OrderPositionBB implements Serializable {
 	public String addToCart(Product product) { // creating cart and first position or if cart already exists adding
 												// position to cart
 		session = (HttpSession) context.getExternalContext().getSession(false);
+		User user = (User) session.getAttribute("user");
 		
-		if (!orderDAO.cartExists(session.getAttribute("user"))) {
+		if (!orderDAO.cartExists(user)) {
 			Order order = new Order();
 			Date date = new Date(System.currentTimeMillis());
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

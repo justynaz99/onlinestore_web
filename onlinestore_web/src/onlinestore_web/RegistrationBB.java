@@ -2,9 +2,17 @@ package onlinestore_web;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
+import java.util.regex.Pattern;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -28,6 +36,14 @@ public class RegistrationBB implements Serializable {
 	private static final String PAGE_LOGIN = "login?faces-redirect=true";
 	private static final String PAGE_REGISTRATION = "registration?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
+	
+	public static final String ID = "$31$"; // Each token produced by this class uses this identifier as a prefix.
+	public static final int DEFAULT_COST = 16; // The minimum recommended cost, used by default
+	private static final String ALGORITHM = "PBKDF2WithHmacSHA1";
+	private static final int SIZE = 128;
+	private static final Pattern layout = Pattern.compile("\\$31\\$(\\d\\d?)\\$(.{43})");
+	private final SecureRandom random = new SecureRandom();
+	private final int cost = 0;
 
 	private User user = new User();
 
@@ -58,8 +74,35 @@ public class RegistrationBB implements Serializable {
 	public User getUser() {
 		return user;
 	}
+	
 
-
+	public String hash(char[] password) {
+		byte[] salt = new byte[SIZE / 8];
+		random.nextBytes(salt);
+		byte[] dk = pbkdf2(password, salt, 1 << cost);
+		byte[] hash = new byte[salt.length + dk.length];
+		System.arraycopy(salt, 0, hash, 0, salt.length);
+		System.arraycopy(dk, 0, hash, salt.length, dk.length);
+		Base64.Encoder enc = Base64.getUrlEncoder().withoutPadding();
+		return ID + cost + '$' + enc.encodeToString(hash);
+	}
+	
+	private static byte[] pbkdf2(char[] password, byte[] salt, int iterations) {
+		KeySpec spec = new PBEKeySpec(password, salt, iterations, SIZE);
+		try {
+			SecretKeyFactory f = SecretKeyFactory.getInstance(ALGORITHM);
+			return f.generateSecret(spec).getEncoded();
+		} catch (NoSuchAlgorithmException ex) {
+			throw new IllegalStateException("Missing algorithm: " + ALGORITHM, ex);
+		} catch (InvalidKeySpecException ex) {
+			throw new IllegalStateException("Invalid SecretKeyFactory", ex);
+		}
+	}
+	
+	@Deprecated
+	public String hash(String password) {
+		return hash(password.toCharArray());
+	}
 
 	public String registration() {
 		Date date = new Date(System.currentTimeMillis());
@@ -70,6 +113,7 @@ public class RegistrationBB implements Serializable {
 			user.setRole("user");
 			userDAO.create(user);
 			user.setWhoAdded(user.getIdUser());
+			user.setPassword(hash(user.getPassword()));
 			userDAO.merge(user);
 
 		} catch (Exception e) {

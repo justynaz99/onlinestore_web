@@ -52,15 +52,6 @@ public class ProductBB implements Serializable {
 		this.name = name;
 	}
 	
-	public String showMore(Product product) {
-		if(session == null) {
-			session = (HttpSession) context.getExternalContext().getSession(true);
-		} else {
-			session = (HttpSession) context.getExternalContext().getSession(false);
-		}
-		session.setAttribute("product", product);
-		return PAGE_PRODUCT;
-	}
 	
 	public void onLoad() {
 		session = (HttpSession) context.getExternalContext().getSession(false);

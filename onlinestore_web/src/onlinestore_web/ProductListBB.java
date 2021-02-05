@@ -13,6 +13,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
+
 import jsfproject.dao.ProductDAO;
 import jsfproject.entities.Product;
 
@@ -23,8 +25,11 @@ public class ProductListBB implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private static final String PAGE_STAY_AT_THE_SAME = null;
+	private static final String PAGE_PRODUCT = "product?faces-redirect=true";
+	
 	private Product product = new Product();
 	private String name;
+	private HttpSession session;
 	//pagination
 	private Integer page;
 	private String stringPage;
@@ -113,6 +118,16 @@ public class ProductListBB implements Serializable {
 			
 		list = productDAO.getList(searchParams);
 		return list;
+	}
+	
+	public String showMore(Product product) {
+		if(session == null) {
+			session = (HttpSession) context.getExternalContext().getSession(true);
+		} else {
+			session = (HttpSession) context.getExternalContext().getSession(false);
+		}
+		session.setAttribute("product", product);
+		return PAGE_PRODUCT;
 	}
 	
 	//methods for seller

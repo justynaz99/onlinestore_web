@@ -2,8 +2,18 @@ package onlinestore_web;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -35,6 +45,8 @@ public class LoginBB implements Serializable {
 	private String name;
 	private String role;
 	private HttpSession session;
+
+	
 
 	@Inject
 	FacesContext context;
@@ -68,7 +80,7 @@ public class LoginBB implements Serializable {
 	public String getName() {
 		session = (HttpSession) context.getExternalContext().getSession(false);
 		User user = (User) session.getAttribute("user");
-		if(user != null)
+		if (user != null)
 			return user.getFirstName();
 		return " ";
 	}
@@ -84,11 +96,10 @@ public class LoginBB implements Serializable {
 	public String registrationPage() {
 		return PAGE_REGISTRATION;
 	}
-	
+
 	public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
-        FacesContext.getCurrentInstance().
-                addMessage(null, new FacesMessage(severity, summary, detail));
-    }
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
+	}
 
 	public String login() {
 		try {
@@ -119,7 +130,7 @@ public class LoginBB implements Serializable {
 		if (session != null) {
 			session.invalidate();
 		}
-		
+
 		addMessage(FacesMessage.SEVERITY_INFO, "Sukces!", "Zosta³eœ wylogowany.");
 		return PAGE_INDEX;
 	}

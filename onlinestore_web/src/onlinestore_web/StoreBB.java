@@ -10,9 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-
 import javax.servlet.http.HttpServletRequest;
 
+import jsfproject.dao.OrderDAO;
 import jsfproject.dao.UserDAO;
 import jsfproject.entities.User;
 
@@ -27,10 +27,11 @@ public class StoreBB {
 	private static final String PAGE_ORDERS = "orders?faces-redirect=true";
 	private static final String PAGE_USERS = "users?faces-redirect=true";
 	private static final String PAGE_MY_ACCOUNT = "myAccount?faces-redirect=true";
+	private static final String PAGE_CONFIRM_ORDER = "confirmOrder?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
-	
+
 	private HttpSession session;
-	
+
 	@Inject
 	FacesContext context;
 
@@ -42,7 +43,8 @@ public class StoreBB {
 
 	@EJB
 	UserDAO userDAO;
-	
+	@EJB
+	OrderDAO orderDAO;
 
 	public String indexPage() {
 		return PAGE_INDEX;
@@ -63,20 +65,19 @@ public class StoreBB {
 	public String ordersPage() {
 		return PAGE_ORDERS;
 	}
-	
+
 	public String usersPage() {
 		return PAGE_USERS;
 	}
-	
+
 	public String myAccountPage() {
 		return PAGE_MY_ACCOUNT;
-		
+
 	}
-	
-	
+
 	public String checkSession() {
 		session = (HttpSession) context.getExternalContext().getSession(false);
-		if(session != null)
+		if (session != null)
 			return PAGE_STAY_AT_THE_SAME;
 		else {
 			FacesContext.getCurrentInstance().addMessage("sessionError",
@@ -84,18 +85,17 @@ public class StoreBB {
 			return PAGE_LOGIN;
 		}
 	}
-	
+
 	public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
-        FacesContext.getCurrentInstance().
-                addMessage(null, new FacesMessage(severity, summary, detail));
-    }
-	
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
+	}
+
 	public String checkRole(String role, String role2) {
 		session = (HttpSession) context.getExternalContext().getSession(false);
-		try {			
+		try {
 			User userFromSession = (User) session.getAttribute("user");
 			String roleFromSession = userFromSession.getRole();
-			if(roleFromSession.equals(role) || roleFromSession.equals(role2))
+			if (roleFromSession.equals(role) || roleFromSession.equals(role2))
 				return PAGE_STAY_AT_THE_SAME;
 			else {
 				addMessage(FacesMessage.SEVERITY_ERROR, "B³¹d!", "Nie posiadasz uprawnieñ do tej strony!");
@@ -103,9 +103,25 @@ public class StoreBB {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage("userError",
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Zaloguj siê aby uzyskaæ dostêp do tej strony!", null));
+			FacesContext.getCurrentInstance().addMessage("userError", new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Zaloguj siê aby uzyskaæ dostêp do tej strony!", null));
 			return PAGE_LOGIN;
+		}
+	}
+
+	public String checkCart() { //checks if there is something in cart to display in confirmOrder.xhtml
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		User user = (User) session.getAttribute("user");
+		try {
+			if (orderDAO.cartExists(user))
+				return PAGE_CONFIRM_ORDER;
+			else {
+				addMessage(FacesMessage.SEVERITY_ERROR, "B³¹d!", "Nie mo¿esz przejœæ do tej strony jeœli nic nie znajduje siê w koszyku.");
+				return PAGE_INDEX;
+				}
+		} catch (Exception e) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "B³¹d!", "Wyst¹pi³ nieoczekiwany b³¹d.!");
+			return PAGE_INDEX;
 		}
 	}
 

@@ -3250,7 +3250,7 @@ body.is-menu-visible #menu {
 }
 
 .formInput {
-	float: left;
+
 	width: 300px;
 	margin-right: 10px
 }
@@ -3362,10 +3362,6 @@ body .ui-accordion .ui-accordion-header.ui-state-active:hover, body .ui-accordio
 
 .ui-messages-error-summary {
 	display: block;
-}
-
-body .ui-messages .ui-messages-info {
-	background-color: #ffe399;
 }
 
 .center { /* for payment.xhtml */

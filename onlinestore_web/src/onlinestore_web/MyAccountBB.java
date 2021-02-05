@@ -23,7 +23,8 @@ public class MyAccountBB implements Serializable {
 
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
-	private User user = new User();
+	private User userDataEdit = new User();
+	private User userPassEdit = new User();
 	private HttpSession session;
 
 	@Inject
@@ -38,10 +39,16 @@ public class MyAccountBB implements Serializable {
 	@EJB
 	UserDAO userDAO;
 
-	public User getUser() {
+	public User getUserDataEdit() {
 		session = (HttpSession) context.getExternalContext().getSession(false);
-		user = (User) session.getAttribute("user");
-		return user;
+		userDataEdit = (User) session.getAttribute("user");
+		return userDataEdit;
+	}
+	
+	public User getUserPassEdit() {
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		userPassEdit = (User) session.getAttribute("user");
+		return userPassEdit;
 	}
 
 	public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
@@ -52,16 +59,34 @@ public class MyAccountBB implements Serializable {
 		Date date = new Date(System.currentTimeMillis());
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			if (user.getIdUser() != null) {
-				user.setWhoModificated(user.getIdUser());
-				user.setDateModification(Date.valueOf(formatter.format(date)));
-				userDAO.merge(user);
-				addMessage(FacesMessage.SEVERITY_INFO, "Sukces!", "Dane zosta³y poprawnie edytowane. ");
+			if (userDataEdit.getIdUser() != null) {
+				userDataEdit.setWhoModificated(userDataEdit.getIdUser());
+				userDataEdit.setDateModification(Date.valueOf(formatter.format(date)));
+				userDAO.merge(userDataEdit);
+				addMessage(FacesMessage.SEVERITY_INFO, "Sukces! Dane zosta³y poprawnie edytowane.", null);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			addMessage(FacesMessage.SEVERITY_ERROR, "Wyst¹pi³ b³¹d podczas edycji.",
-					"Wyst¹pi³ b³¹d podczas zapisu rekordu.");
+			addMessage(FacesMessage.SEVERITY_ERROR, "B³¹d!",
+					"Wyst¹pi³ b³¹d podczas edycji.");
+
+		}
+	}
+	
+	public void savePassword() {
+		Date date = new Date(System.currentTimeMillis());
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			if (userPassEdit.getIdUser() != null) {
+				userPassEdit.setWhoModificated(userPassEdit.getIdUser());
+				userPassEdit.setDateModification(Date.valueOf(formatter.format(date)));
+				userDAO.merge(userPassEdit);
+				addMessage(FacesMessage.SEVERITY_INFO, "Sukces! Dane zosta³y poprawnie edytowane.", null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			addMessage(FacesMessage.SEVERITY_ERROR, "B³¹d!",
+					"Wyst¹pi³ b³¹d podczas edycji.");
 
 		}
 	}
