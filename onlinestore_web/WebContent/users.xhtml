@@ -32,10 +32,9 @@
 								<thead>
 									<tr>
 										<th>Id</th>
-										<th>Hasło</th>
-										<th>Imię</th>
-										<th>Nazwisko</th>
 										<th>Email</th>
+										<th>Imię</th>
+										<th>Nazwisko</th>									
 										<th>Rola</th>
 										<th></th>
 									</tr>
@@ -44,10 +43,9 @@
 									<tbody>
 										<tr>
 											<td><h:outputText value="#{u.idUser}" /></td>
-											<td><h:outputText value="#{u.password}" /></td>
+											<td><h:outputText value="#{u.email}" /></td>
 											<td><h:outputText value="#{u.firstName}" /></td>
 											<td><h:outputText value="#{u.lastName}" /></td>
-											<td><h:outputText value="#{u.email}" /></td>
 											<td><h:outputText value="#{u.role}" /></td>
 											<td><p:commandButton value="Edytuj"
 													action="#{userListBB.editUser(u)}" /></td>

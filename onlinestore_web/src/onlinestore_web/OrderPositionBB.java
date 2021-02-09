@@ -59,11 +59,6 @@ public class OrderPositionBB implements Serializable {
 	@EJB
 	OrderStatusDAO orderStatusDAO;
 	
-	public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
-        FacesContext.getCurrentInstance().
-                addMessage(null, new FacesMessage(severity, summary, detail));
-    }
-
 	public String getValue(Order order) {
 		List<OrderPosition> opList = orderPositionDAO.listPositionsFromThisOrder(order);
 
@@ -72,10 +67,25 @@ public class OrderPositionBB implements Serializable {
 		}
 		return value.toString();
 	}
+	
+	public List<OrderPosition> getPositions(Order order) { // lists all positions from given order
+		List<OrderPosition> opList = orderPositionDAO.listPositionsFromThisOrder(order);
+		return opList;
+	}
+
+	public List<OrderPosition> getPositions() { // lists all positions from all orders
+		return orderPositionDAO.listAllPositions();
+	}
+	
 
 	public String indexPage() {
 		return PAGE_INDEX;
 	}
+	
+	public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(severity, summary, detail));
+    }
 
 	public String addToCart(Product product) { // creating cart and first position or if cart already exists adding
 												// position to cart
@@ -121,17 +131,21 @@ public class OrderPositionBB implements Serializable {
 	}
 
 	public void deletePosition(OrderPosition position) {
-		orderPositionDAO.remove(position);
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		User user = (User) session.getAttribute("user");
+		Order cart = orderDAO.getCart(user);
+		List<OrderPosition> list = orderPositionDAO.listPositionsFromThisOrder(cart);
+		if (list.size() > 1) {
+			orderPositionDAO.remove(position);
+		}
+		else if (list.size() == 1) {
+			orderPositionDAO.remove(position);
+			orderDAO.remove(cart);
+		}
+		
 	}
 
-	public List<OrderPosition> getPositions(Order order) { // lists all positions from given order
-		List<OrderPosition> opList = orderPositionDAO.listPositionsFromThisOrder(order);
-		return opList;
-	}
-
-	public List<OrderPosition> getPositions() { // lists all positions from all orders
-		return orderPositionDAO.listAllPositions();
-	}
+	
 	
 	
 

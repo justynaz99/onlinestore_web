@@ -14,7 +14,9 @@ import javax.servlet.http.HttpSession;
 import jsfproject.dao.OrderDAO;
 import jsfproject.dao.OrderPositionDAO;
 import jsfproject.dao.OrderStatusDAO;
+import jsfproject.dao.ProductDAO;
 import jsfproject.entities.Order;
+import jsfproject.entities.OrderPosition;
 import jsfproject.entities.OrderStatus;
 import jsfproject.entities.User;
 
@@ -48,6 +50,8 @@ public class OrderBB implements Serializable {
 	OrderPositionDAO orderPositionDAO;
 	@EJB
 	OrderStatusDAO orderStatusDAO;
+	@EJB
+	ProductDAO productDAO;
 
 	public String indexPage() {
 		return PAGE_INDEX;
@@ -104,12 +108,18 @@ public class OrderBB implements Serializable {
 			session = (HttpSession) context.getExternalContext().getSession(false);
 			User user = (User) session.getAttribute("user");
 			Order order = orderDAO.getCart(user);
+			//change quantity for every product
+			List<OrderPosition> list = orderPositionDAO.listPositionsFromThisOrder(order);
+			for (OrderPosition op : list) {
+				op.getProduct().setAvailableQuantity(op.getProduct().getAvailableQuantity() - 1);
+				productDAO.merge(op.getProduct());
+				
+			}
 			OrderStatus status = orderStatusDAO.find(2);
 			order.setOrderStatus(status);
 			orderDAO.merge(order);
 			return PAGE_PAYMENT;
 		} catch (Exception e) {
-			e.printStackTrace();
 			addMessage(FacesMessage.SEVERITY_ERROR, "B³¹d!",
 					"Wyst¹pi³ b³¹d podczas zapisu rekordu.");
 			return PAGE_STAY_AT_THE_SAME;

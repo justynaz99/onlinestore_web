@@ -30,12 +30,12 @@ public class ProductListBB implements Serializable {
 	private Product product = new Product();
 	private String name;
 	private HttpSession session;
+	private boolean inStock;
 	//pagination
 	private Integer page;
 	private String stringPage;
 	private int lastPage;
 	//sorting
-	private Map<String, String> availableItems;
 	private String selectedItem = "1";
 
 	@Inject
@@ -49,17 +49,6 @@ public class ProductListBB implements Serializable {
 
 	@EJB
 	ProductDAO productDAO;
-	
-//	public ProductListBB() {
-//		availableItems = new HashMap<String, String>();
-//		availableItems.put("1", "Po cenie rosn¹co");
-//		availableItems.put("2", "Po cenie malej¹co");
-//		availableItems.put("3", "Alfabetycznie");
-//	}
-	
-//	public Map<String, String> getAvailableItems() {
-//		return availableItems;
-//	}
 	
 	public Product getProduct() {
 		return product;
@@ -118,6 +107,20 @@ public class ProductListBB implements Serializable {
 			
 		list = productDAO.getList(searchParams);
 		return list;
+	}
+	
+	public boolean getInStock(Product product) {
+		int quantity = productDAO.find(product.getIdProduct()).getAvailableQuantity();
+		if (quantity > 0) return true;
+		else if (quantity == 0) return false;
+		else {
+			addMessage(FacesMessage.SEVERITY_ERROR, "B³ad!", "Nieznana iloœæ produktu.");
+			return false;
+		}
+	}
+	
+	public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
 	}
 	
 	public String showMore(Product product) {

@@ -18,8 +18,18 @@
 				<p:messages style="width:22em" severity="error" closable="true">
 					<p:autoUpdate />
 				</p:messages>
+				
+				<div class="formInput"  >
+					<p:outputLabel for="email" value="Email" class="formLabel" />
+						<p:inputText id="email" value="#{registrationBB.user.email}"
+							required="true" requiredMessage="Wprowadz email"
+							validatorMessage="Niepoprawny format adresu email">
+							<f:validateLength minimum="3" maximum="20" />
+							<f:validateRegex pattern="^[A-Za-z0-9+_.-]+@(.+)$" />
+						</p:inputText>
+					</div>
 					
-					<div class="formInput" style="margin-top:20px">
+					<div class="formInput" style="margin-top:20px;">
 					<p:outputLabel for="firstname" value="Imię" />
 						<p:inputText id="firstname"
 							value="#{registrationBB.user.firstName}" required="true"
@@ -29,7 +39,7 @@
 						</p:inputText>
 					</div>
 
-					<div class="formInput" style="float: left;">
+					<div class="formInput" >
 					<p:outputLabel for="lastname" value="Nazwisko" class="formLabel" />
 						<p:inputText id="lastname" value="#{registrationBB.user.lastName}"
 							required="true" requiredMessage="Wprowadz nazwisko"
@@ -38,19 +48,11 @@
 						</p:inputText>
 					</div>
 				
-					<div class="formInput" style="clear:both">
-					<p:outputLabel for="email" value="Email" class="formLabel" />
-						<p:inputText id="email" value="#{registrationBB.user.email}"
-							required="true" requiredMessage="Wprowadz email"
-							validatorMessage="Niepoprawny format adresu email">
-							<f:validateLength minimum="3" maximum="20" />
-							<f:validateRegex pattern="^[A-Za-z0-9+_.-]+@(.+)$" />
-						</p:inputText>
-					</div>
+					
 				
 				</div>
 
-					<div class="formInput" style="float: left; ">
+					<div class="formInput" >
 					<p:outputLabel for="password" value="Hasło" class="formLabel" />
 						<p:password id="password" value="#{registrationBB.user.password}"
 							required="true" requiredMessage="Wprowadz hasło"
@@ -64,7 +66,7 @@
 					</div>
 				
 				
-					<div class="formInput" style="clear:both">
+					<div class="formInput">
 					<p:outputLabel for="password2" value="Powtórz hasło"
 						class="formLabel" />
 						<p:password id="password2" required="true"

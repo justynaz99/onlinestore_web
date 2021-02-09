@@ -24,29 +24,7 @@
 				<h3 style="margin-bottom: 30px">Edytuj użytkownika</h3>
 				<div>
 
-					<div class="formInput" style="clear: both">
-						<p:outputLabel for="firstname" value="Imię" />
-						<p:inputText id="firstname" value="#{userEditBB.user.firstName}"
-							placeholder="#{userEditBB.user.firstName}" required="true"
-							requiredMessage="Wprowadz imię"
-							validatorMessage="Imię powinno zawierać od 3 do 20 znaków">
-							<f:validateLength minimum="3" maximum="20" />
-						</p:inputText>
-					</div>
-					<p:message for="firstname" class="formMessage" />
-
-
-					<div class="formInput" style="clear: both">
-						<p:outputLabel for="lastname" value="Nazwisko" class="formLabel" />
-						<p:inputText id="lastname" value="#{userEditBB.user.lastName}"
-							required="true" requiredMessage="Wprowadz nazwisko"
-							validatorMessage="Nazwisko powinno zawierać od 3 do 20 znaków">
-							<f:validateLength minimum="3" maximum="20" />
-						</p:inputText>
-					</div>
-					<p:message for="lastname" class="formMessage" />
-
-					<div class="formInput" style="clear: both">
+					<div class="formInput" style="margin-bottom: 15px">
 						<p:outputLabel for="email" value="Email" class="formLabel" />
 						<p:inputText id="email" value="#{userEditBB.user.email}"
 							required="true" requiredMessage="Wprowadz email"
@@ -55,17 +33,46 @@
 							<f:validateRegex pattern="^[A-Za-z0-9+_.-]+@(.+)$" />
 						</p:inputText>
 					</div>
-					<p:message for="email" class="formMessage" />
 
-					<div class="formInput" style="clear: both">
+					<div class="formInput">
+						<p:outputLabel for="firstname" value="Imię" />
+						<p:inputText id="firstname" value="#{userEditBB.user.firstName}"
+							placeholder="#{userEditBB.user.firstName}" required="true"
+							requiredMessage="Wprowadz imię"
+							validatorMessage="Imię powinno zawierać od 3 do 20 znaków">
+							<f:validateLength minimum="3" maximum="20" />
+						</p:inputText>
+					</div>
+
+
+					<div class="formInput">
+						<p:outputLabel for="lastname" value="Nazwisko" class="formLabel" />
+						<p:inputText id="lastname" value="#{userEditBB.user.lastName}"
+							required="true" requiredMessage="Wprowadz nazwisko"
+							validatorMessage="Nazwisko powinno zawierać od 3 do 20 znaków">
+							<f:validateLength minimum="3" maximum="20" />
+						</p:inputText>
+					</div>
+
+					<!-- <div class="formInput">
 						<p:outputLabel for="password" value="Hasło" class="formLabel" />
 						<p:inputText id="password" value="#{userEditBB.user.password}"
 							required="true" requiredMessage="Wprowadz hasło"
 							validatorMessage="Hasło powinnno zawierać od 3 do 20 znaków">
 							<f:validateLength minimum="3" maximum="20" />
 						</p:inputText>
+					</div> -->
+					
+					<div class="formInput">
+						<p:outputLabel for="role" value="Rola" class="formLabel" />
+						<h:selectOneMenu id="role" value="#{userEditBB.user.role}" style="height: 2.5em">
+						<f:selectItem itemValue="1" itemLabel="Użytkownik" />
+						<f:selectItem itemValue="2" itemLabel="Sprzedawca" />
+						<f:selectItem itemValue="3" itemLabel="Administrator" />
+					</h:selectOneMenu>
 					</div>
-					<p:message for="password" class="formMessage" />
+
+					
 
 					<div style="clear: both">
 						<p:commandButton value="Zapisz" action="#{userEditBB.saveData()}" />

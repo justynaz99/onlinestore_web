@@ -46,7 +46,6 @@
 						required="true" requiredMessage="Wprowadz nazwę produktu">
 					</p:inputText>
 				</div>
-				<p:message for="name" class="formMessage" />
 
 				<p:outputLabel for="price" value="Cena" class="formLabel" />
 				<div class="formInput">
@@ -54,7 +53,6 @@
 						required="true" requiredMessage="Wprowadz cenę produktu">
 					</p:inputText>
 				</div>
-				<p:message for="name" class="formMessage" />
 
 				<p:outputLabel for="quantity" value="Dostępna ilość"
 					class="formLabel" />
@@ -64,13 +62,18 @@
 						requiredMessage="Wprowadz dostępną ilość">
 					</p:inputText>
 				</div>
-				<p:message for="name" class="formMessage" />
 
+				<p:outputLabel value="Zdjęcie" class="formLabel"
+					style="margin-bottom: 0px" />
+				<p:fileUpload id="image" value="#"
+					mode="simple" skinSimple="true"
+					style="width:300px !important; margin-top: -10px" label="Wybierz"
+					required="true" requiredMessage="Wybierz zdjęcie" />
 
-				<div style="clear: both">
+				<div style="clear:both">
 					<p:commandButton value="Dodaj"
 						action="#{productListBB.addProduct()}" update="products"
-						ajax="true" />
+						ajax="true" style="width:300px !important;"/>
 				</div>
 			</div>
 			</section>
@@ -111,18 +114,45 @@
 
 			<!--.................................. lista produktów ..................................-->
 
-			
+
 			<div class="mini-posts">
 				<c:forEach items="#{productListBB.list}" var="p">
 					<article class="mini-post"> <header>
 					<h3>
 						<h:outputText value="#{p.name}" />
 					</h3>
-					<h:outputText class="published" value="#{p.price}" /> <p:commandButton
-						class="author" value="Dodaj do koszyka"
-						action="#{orderPositionBB.addToCart(p)}" ajax="true" update="addInfo"
-						rendered="#{loginBB.role == 'user'}" /> </header> <p:commandLink
-						class="image" action="#{productListBB.showMore(p)}">
+
+					<!--....................... dostępny .........................--> <h:outputText
+						class="published" value="#{p.price}" />
+					<h3 style="margin-top: -9px">
+						<h:outputText value="DOSTĘPNY" style="color: #b7d8b7;"
+							rendered="#{productListBB.getInStock(p)}" />
+					</h3>
+					<p:commandButton class="author" value="Dodaj do koszyka"
+						action="#{loginBB.loginInfo}" ajax="true" update="loginInfo"
+						rendered="#{loginBB.role == null and (productListBB.getInStock(p))}" />
+					<p:commandButton class="author" value="Dodaj do koszyka"
+						action="#{orderPositionBB.addToCart(p)}" ajax="true"
+						update="addInfo"
+						rendered="#{loginBB.role == 'user' and (productListBB.getInStock(p))}" />
+
+					<!--.......................... niedostępny .......................-->
+
+					<h3 style="margin-top: -8px">
+						<h:outputText value="NIEDOSTĘPNY" style="color: #f8b7bd;"
+							rendered="#{productListBB.getInStock(p) == false}" />
+					</h3>
+
+					<p:commandButton class="author" value="Dodaj do koszyka"
+						rendered="#{loginBB.role == 'user' and (productListBB.getInStock(p) == false)}"
+						style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important;" />
+
+					<p:commandButton class="author" value="Dodaj do koszyka"
+						action="#{loginBB.loginInfo}" ajax="true" update="loginInfo"
+						rendered="#{loginBB.role == null  and (productListBB.getInStock(p) == false)}"
+						style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important;" />
+
+					</header> <p:commandLink class="image" action="#{productListBB.showMore(p)}">
 						<h:graphicImage url="resources/images/#{p.name}.jpg" />
 					</p:commandLink> </article>
 				</c:forEach>
@@ -164,17 +194,16 @@
 			</div>
 
 			<!--...................................................................................-->
-			
-			
-			<!--............................... messages ..........................................-->
-			
-			<p:growl id="addInfo" showDetail="true" severity="info" closable="true" />
-			<p:growl id="logoutInfo" showDetail="true" severity="info" closable="true" />
-			<p:growl id="accessError" showDetail="true" severity="error" closable="true" />
-			
-			<!--...................................................................................-->
-			
 
+
+			<!--............................... messages ..........................................-->
+
+			<p:growl id="addInfo" showDetail="true" severity="info"
+				closable="true" /> <p:growl id="logoutInfo" showDetail="true"
+				severity="info" closable="true" /> <p:growl id="accessError"
+				showDetail="true" severity="error" closable="true" /> <p:growl
+				id="loginInfo" showDetail="true" severity="error" closable="true" />
+			<!--...................................................................................-->
 			</section>
 		</h:form>
 
