@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import jsfproject.dao.OrderDAO;
 import jsfproject.dao.OrderPositionDAO;
 import jsfproject.dao.OrderStatusDAO;
+import jsfproject.dao.ProductDAO;
 import jsfproject.entities.Order;
 import jsfproject.entities.OrderPosition;
 import jsfproject.entities.OrderStatus;
@@ -58,6 +59,8 @@ public class OrderPositionBB implements Serializable {
 	OrderDAO orderDAO;
 	@EJB
 	OrderStatusDAO orderStatusDAO;
+	@EJB
+	ProductDAO productDAO;
 	
 	public String getValue(Order order) {
 		List<OrderPosition> opList = orderPositionDAO.listPositionsFromThisOrder(order);
@@ -118,8 +121,8 @@ public class OrderPositionBB implements Serializable {
 		} else { // if order with status cart already exists for user saved in session
 			OrderPosition orderPosition = new OrderPosition();
 			orderPosition.setOrder(orderDAO.getCart((User) session.getAttribute("user")));
+			orderPosition.setProduct(productDAO.find(product.getIdProduct()));
 			orderPosition.setPriceProduct(product.getPrice());
-			orderPosition.setProduct(product);
 			orderPosition.setQuantity(1);
 			orderPositionDAO.create(orderPosition);
 			addMessage(FacesMessage.SEVERITY_INFO, "Sukces!", "Produkt zosta³ dodany do koszyka");

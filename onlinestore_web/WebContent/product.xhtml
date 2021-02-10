@@ -8,6 +8,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <f:metadata>
+	<f:viewAction action="#{storeBB.checkSessionProduct()}" />
 	<f:viewAction action="#{productBB.onLoad()}" />
 </f:metadata>
 
@@ -19,7 +20,7 @@
 
 			<div class="mini-posts">
 				<div>
-					<article class="mini-product">  <a class="image"><h:graphicImage
+					<article class="mini-product"> <a class="image"><h:graphicImage
 							url="resources/images/#{productBB.product.name}.jpg" /></a> </article>
 				</div>
 
@@ -32,10 +33,42 @@
 						Kod produktu:
 						<h:outputText value="#{productBB.product.idProduct}" />
 					</h3>
-					<p:commandButton class="author" value="Dodaj do koszyka"
+
+
+
+					<!--....................... dostępny .........................-->
+					<h3 style="margin-top: 20px">
+						<h:outputText value="DOSTĘPNY" style="color: #b7d8b7;"
+							rendered="#{productBB.getInStock(productBB.product) == true}" />
+					</h3>
+					<p:commandButton value="Dodaj do koszyka"
+						action="#{loginBB.loginInfo}" ajax="true" update="loginInfo"
+						rendered="#{loginBB.role == null and (productBB.getInStock(productBB.product))}" />
+					<p:commandButton value="Dodaj do koszyka"
 						action="#{orderPositionBB.addToCart(productBB.product)}" ajax="true"
-						rendered="#{loginBB.role == 'user'}"  />
-					<p:accordionPanel multiple="true" widgetVar="multiple" style="margin-top: 46px">
+						update="addInfo"
+						rendered="#{loginBB.role == 'user' and (productBB.getInStock(productBB.product))}" />
+
+					<!--.......................... niedostępny .......................-->
+
+					<h3 style="margin-top: 20px">
+						<h:outputText value="NIEDOSTĘPNY" style="color: #f8b7bd;"
+							rendered="#{productBB.getInStock(productBB.product) == false}" />
+					</h3>
+
+					<p:commandButton value="Dodaj do koszyka"
+						rendered="#{loginBB.role == 'user' and (productBB.getInStock(productBB.product) == false)}"
+						style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important; margin-bottom: 0px" />
+
+					<p:commandButton value="Dodaj do koszyka"
+						action="#{loginBB.loginInfo}" ajax="true" update="loginInfo"
+						rendered="#{loginBB.role == null  and (productBB.getInStock(productBB.product) == false)}"
+						style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important; margin-bottom: -20px" />
+
+
+
+					<p:accordionPanel multiple="true" widgetVar="multiple"
+						style="margin-top: 46px">
 						<p:tab title="Opis produktu">
 							<p class="p-m-0">Lorem ipsum dolor sit amet, consectetur
 								adipiscing elit, sed do eiusmod tempor incididunt ut labore et
@@ -69,6 +102,14 @@
 					</p:accordionPanel>
 				</div>
 			</div>
+			<p:growl id="addInfo" showDetail="true" severity="info"
+				closable="true" />
+			<p:growl id="logoutInfo" showDetail="true" severity="info"
+				closable="true" />
+			<p:growl id="accessError" showDetail="true" severity="error"
+				closable="true" />
+			<p:growl id="loginInfo" showDetail="true" severity="error"
+				closable="true" />
 
 		</div>
 	</ui:define>

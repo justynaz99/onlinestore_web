@@ -110,11 +110,13 @@ public class ProductListBB implements Serializable {
 	}
 	
 	public boolean getInStock(Product product) {
-		int quantity = productDAO.find(product.getIdProduct()).getAvailableQuantity();
-		if (quantity > 0) return true;
-		else if (quantity == 0) return false;
+		if (product != null) {
+			int quantity = productDAO.find(product.getIdProduct()).getAvailableQuantity();
+			if (quantity > 0) return true;
+			else if (quantity == 0) return false;
+			else return false;
+		}
 		else {
-			addMessage(FacesMessage.SEVERITY_ERROR, "B³ad!", "Nieznana iloœæ produktu.");
 			return false;
 		}
 	}
@@ -138,8 +140,14 @@ public class ProductListBB implements Serializable {
 	public String addProduct() {
 
 		try {
-			productDAO.create(product);
-
+			if (productDAO.findByName(product.getName()).size() == 0) {
+				productDAO.create(product);
+				addMessage(FacesMessage.SEVERITY_INFO, "Sukces!", "Produkt zosta³ dodany.");
+			} else {
+				addMessage(FacesMessage.SEVERITY_ERROR, "B³ad!", "Istnieje ju¿ produkt o takiej nazwie.");
+			}
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			context.addMessage(null,

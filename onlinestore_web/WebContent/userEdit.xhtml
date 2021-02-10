@@ -62,17 +62,18 @@
 							<f:validateLength minimum="3" maximum="20" />
 						</p:inputText>
 					</div> -->
-					
+
 					<div class="formInput">
 						<p:outputLabel for="role" value="Rola" class="formLabel" />
-						<h:selectOneMenu id="role" value="#{userEditBB.user.role}" style="height: 2.5em">
-						<f:selectItem itemValue="1" itemLabel="Użytkownik" />
-						<f:selectItem itemValue="2" itemLabel="Sprzedawca" />
-						<f:selectItem itemValue="3" itemLabel="Administrator" />
-					</h:selectOneMenu>
+						<h:selectOneMenu id="role" value="#{userEditBB.user.role}"
+							style="height: 2.5em">
+							<f:selectItem itemValue="1" itemLabel="Użytkownik" />
+							<f:selectItem itemValue="2" itemLabel="Sprzedawca" />
+							<f:selectItem itemValue="3" itemLabel="Administrator" />
+						</h:selectOneMenu>
 					</div>
 
-					
+
 
 					<div style="clear: both">
 						<p:commandButton value="Zapisz" action="#{userEditBB.saveData()}" />

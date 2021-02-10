@@ -2,6 +2,8 @@ package onlinestore_web;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -42,7 +44,13 @@ public class UserEditBB implements Serializable {
 	UserDAO userDAO;
 
 	public User getUser() {
-		return user;
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		loaded = (User) session.getAttribute("userEdit");
+		if (loaded != null) {
+			user = loaded;
+			return user;
+		}
+		else return null;
 	}
 	
 	public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
@@ -54,20 +62,23 @@ public class UserEditBB implements Serializable {
 		loaded = (User) session.getAttribute("userEdit");
 		if (loaded != null) {
 			user = loaded;
-			session.removeAttribute("userEdit");
+			//session.removeAttribute("userEdit");
 		} else {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d!", "Nie wybrano u¿ytkownika."));
 		}
 	}
 
 	public String saveData() {
-		if (loaded == null) {
-			return PAGE_STAY_AT_THE_SAME;
-		}
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		User admin = (User) session.getAttribute("user");
+		Date date = new Date(System.currentTimeMillis());
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			if (user.getIdUser() == null) {			
 				userDAO.create(user);
 			} else {
+				user.setDateModification(Date.valueOf(formatter.format(date)));
+				user.setWhoModificated(admin.getIdUser());
 				userDAO.merge(user);
 			}
 			addMessage(FacesMessage.SEVERITY_INFO, "Sukces!", "Dane zosta³y poprawnie edytowane. ");
@@ -76,6 +87,7 @@ public class UserEditBB implements Serializable {
 			addMessage(FacesMessage.SEVERITY_ERROR, "B³¹d!", "Wyst¹pi³ b³¹d podczas edycji danych. ");
 			return PAGE_STAY_AT_THE_SAME;
 		}
+		session.removeAttribute("userEdit");		
 		return PAGE_USERS;
 	}
 

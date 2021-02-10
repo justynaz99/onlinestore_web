@@ -75,6 +75,21 @@ public class StoreBB {
 
 	}
 
+	public String checkSessionProduct() {
+		try {
+			session = (HttpSession) context.getExternalContext().getSession(false);
+			if (session != null)
+				return PAGE_STAY_AT_THE_SAME;
+			else {
+				FacesContext.getCurrentInstance().addMessage("sessionError",
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sesja wygas³a!", null));
+				return PAGE_INDEX;
+		}} catch (Exception e) {
+			return PAGE_INDEX;
+		}
+		
+	}
+	
 	public String checkSession() {
 		session = (HttpSession) context.getExternalContext().getSession(false);
 		if (session != null)

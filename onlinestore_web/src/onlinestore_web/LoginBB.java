@@ -45,7 +45,6 @@ public class LoginBB implements Serializable {
 	private String name;
 	private String role;
 	private HttpSession session;
-	private String loginInfo;
 
 	
 
@@ -141,7 +140,7 @@ public class LoginBB implements Serializable {
 	}
 	
 	public String loginInfo() {
-		addMessage(FacesMessage.SEVERITY_ERROR, "B³ad!", "Zaloguj siê aby dodaæ produkt do koszyka.");
+		addMessage(FacesMessage.SEVERITY_ERROR, "Uwaga!", "Zaloguj siê aby dodaæ produkt do koszyka.");
 		return PAGE_STAY_AT_THE_SAME;
 	}
 
