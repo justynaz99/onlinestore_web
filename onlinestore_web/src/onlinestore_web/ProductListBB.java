@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import jsfproject.dao.ProductDAO;
 import jsfproject.entities.Product;
+import jsfproject.entities.User;
 
 
 @Named
@@ -26,6 +27,7 @@ public class ProductListBB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 	private static final String PAGE_PRODUCT = "product?faces-redirect=true";
+	private static final String PAGE_PRODUCT_EDIT = "productEdit?faces-redirect=true";
 	
 	private Product product = new Product();
 	private String name;
@@ -34,7 +36,9 @@ public class ProductListBB implements Serializable {
 	//pagination
 	private Integer page;
 	private String stringPage;
-	private int lastPage;
+	private Integer lastPage;
+	private String stringLastPage;
+	private List<String> pages;
 	//sorting
 	private String selectedItem = "1";
 
@@ -90,6 +94,15 @@ public class ProductListBB implements Serializable {
 		lastPage = productDAO.getLastPage();
 		return lastPage;
 	}
+	
+	public String getStringLastPage() {
+		Integer lastPage = (Integer)productDAO.getLastPage();
+		stringLastPage = lastPage.toString();
+		return stringLastPage;
+	}
+	
+	
+
 	
 	
 	
@@ -196,6 +209,22 @@ public class ProductListBB implements Serializable {
 			productDAO.setPage(productDAO.getPage() - 1);
 		}
 		return PAGE_STAY_AT_THE_SAME;
+	}
+	
+	public String firstPage() {
+		productDAO.setPage(1);
+		return PAGE_STAY_AT_THE_SAME;
+	}
+	
+	public String lastPage() {
+		productDAO.setPage(lastPage);
+		return PAGE_STAY_AT_THE_SAME;
+	}
+	
+	public String editProduct(Product product) {
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		session.setAttribute("productEdit", product);
+		return PAGE_PRODUCT_EDIT;
 	}
 	
 	

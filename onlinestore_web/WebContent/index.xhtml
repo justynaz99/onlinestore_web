@@ -152,7 +152,11 @@
 						rendered="#{loginBB.role == null  and (productListBB.getInStock(p) == false)}"
 						style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important;" />
 
-					</header> <p:commandLink class="image" action="#{productListBB.showMore(p)}">
+					<!--.......................... edit .......................--> <p:commandButton
+						class="author" value="Edytuj"
+						action="#{productListBB.editProduct(p)}" ajax="true"
+						rendered="#{loginBB.role == 'seller'}" /> </header> <p:commandLink
+						class="image" action="#{productListBB.showMore(p)}">
 						<h:graphicImage url="resources/images/#{p.name}.jpg" />
 					</p:commandLink> </article>
 				</c:forEach>
@@ -166,9 +170,16 @@
 
 			<div style="margin-top: 20px;">
 				<p:commandButton icon="pi pi-angle-double-left" style="width: 50px"
-					action="#{productListBB.prevPage()}" ajax="true" update="products"
+					action="#{productListBB.firstPage()}" ajax="true" update="products"
 					rendered="#{productListBB.page != 1}" />
 				<p:commandButton icon="pi pi-angle-double-left"
+					action="#{productListBB.firstPage()}" ajax="true" update="products"
+					rendered="#{productListBB.page == 1}"
+					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important; width: 50px;" />
+				<p:commandButton icon="pi pi-angle-left" style="width: 50px"
+					action="#{productListBB.prevPage()}" ajax="true" update="products"
+					rendered="#{productListBB.page != 1}" />
+				<p:commandButton icon="pi pi-angle-left"
 					action="#{productListBB.prevPage()}" ajax="true" update="products"
 					rendered="#{productListBB.page == 1}"
 					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important; width: 50px;" />
@@ -176,22 +187,28 @@
 
 				<h:commandButton value="#{productListBB.stringPage}"
 					style="pointer-events: none; box-shadow: none; font-size: 0.9em; margin-left: -10px !important; margin-right: -10px !important" />
+				<h:commandButton value="..."
+					style="pointer-events: none; box-shadow: none; font-size: 0.9em; padding: 0px" />
+				<h:commandButton value="#{productListBB.stringLastPage}"
+					style="pointer-events: none; box-shadow: none; font-size: 0.9em; margin-left: -10px !important; margin-right: -10px !important" />
 
-				<p:commandButton icon="pi pi-angle-double-right"
+				<p:commandButton icon="pi pi-angle-right"
 					style="width: 50px; box-shadow: none"
 					action="#{productListBB.nextPage()}" ajax="true" update="products"
 					rendered="#{productListBB.page != productListBB.lastPage}" />
-				<p:commandButton icon="pi pi-angle-double-right"
+				<p:commandButton icon="pi pi-angle-right"
 					action="#{productListBB.nextPage()}" ajax="true" update="products"
 					rendered="#{productListBB.page == productListBB.lastPage}"
 					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important; width: 50px" />
+				<p:commandButton icon="pi pi-angle-double-right"
+					style="width: 50px; box-shadow: none"
+					action="#{productListBB.lastPage()}" ajax="true" update="products"
+					rendered="#{productListBB.page != productListBB.lastPage}" />
+				<p:commandButton icon="pi pi-angle-double-right"
+					action="#{productListBB.lastPage()}" ajax="true" update="products"
+					rendered="#{productListBB.page == productListBB.lastPage}"
+					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important; width: 50px" />
 
-
-				<!-- <select name="page" id="page" style="width: 100px">
-					<option value="#{productListBB.getPage()}">1</option>
-					<option value="#{productListBB.getPage()}">2</option>
-					<option value="#{productListBB.getPage()}">3</option>
-				</select> -->
 			</div>
 
 			<!--...................................................................................-->
@@ -210,6 +227,7 @@
 			<!--...................................................................................-->
 
 		</h:form>
+
 
 	</ui:define>
 </ui:composition>

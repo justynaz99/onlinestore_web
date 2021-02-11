@@ -18,8 +18,9 @@
 
 		<div id="main">
 			<ui:fragment rendered="#{orderBB.orders.size() == 0}">
-				<h2 style="margin-bottom: 30px">Nie masz jeszcze żadnych
-					zamówień!</h2>
+			<div class="center">
+				<h2>Nie masz jeszcze żadnych
+					zamówień!</h2></div>
 			</ui:fragment>
 
 			<ui:fragment rendered="#{orderBB.orders.size() > 0}">
