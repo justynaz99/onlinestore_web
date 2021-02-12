@@ -99,7 +99,4 @@ public class ProductBB implements Serializable {
 		}
 
 	}
-
-	
-
 }

@@ -14,9 +14,7 @@
 
 
 <ui:composition template="/templates/page-template.xhtml">
-
 	<ui:define name="pageContent">
-
 		<div id="main">
 			<h:form>
 				<p:growl id="editError" showDetail="true" severity="error"
@@ -44,7 +42,6 @@
 						</p:inputText>
 					</div>
 
-
 					<div class="formInput">
 						<p:outputLabel for="lastname" value="Nazwisko" class="formLabel" />
 						<p:inputText id="lastname" value="#{userEditBB.user.lastName}"
@@ -54,26 +51,15 @@
 						</p:inputText>
 					</div>
 
-					<!-- <div class="formInput">
-						<p:outputLabel for="password" value="Hasło" class="formLabel" />
-						<p:inputText id="password" value="#{userEditBB.user.password}"
-							required="true" requiredMessage="Wprowadz hasło"
-							validatorMessage="Hasło powinnno zawierać od 3 do 20 znaków">
-							<f:validateLength minimum="3" maximum="20" />
-						</p:inputText>
-					</div> -->
-
 					<div class="formInput">
 						<p:outputLabel for="role" value="Rola" class="formLabel" />
 						<h:selectOneMenu id="role" value="#{userEditBB.user.role}"
 							style="height: 2.5em">
-							<f:selectItem itemValue="1" itemLabel="Użytkownik" />
-							<f:selectItem itemValue="2" itemLabel="Sprzedawca" />
-							<f:selectItem itemValue="3" itemLabel="Administrator" />
+							<f:selectItem itemValue="user" itemLabel="Użytkownik" />
+							<f:selectItem itemValue="seller" itemLabel="Sprzedawca" />
+							<f:selectItem itemValue="admin" itemLabel="Administrator" />
 						</h:selectOneMenu>
 					</div>
-
-
 
 					<div style="clear: both">
 						<p:commandButton value="Zapisz" action="#{userEditBB.saveData()}" />
@@ -81,10 +67,6 @@
 				</div>
 			</h:form>
 		</div>
-
-
 	</ui:define>
-
 </ui:composition>
-
 </html>

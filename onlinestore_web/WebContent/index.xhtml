@@ -122,8 +122,9 @@
 						<h:outputText value="#{p.name}" />
 					</h3>
 
-					<!--....................... in stock .........................--> <h:outputText
-						class="published" value="#{p.price}" />
+					<!--............................ in stock ...........................-->
+
+					<h:outputText class="published" value="#{p.price}" />
 					<h3 style="margin-top: -9px">
 						<h:outputText value="DOSTĘPNY" style="color: #7db97d;"
 							rendered="#{productListBB.getInStock(p)}" />
@@ -152,8 +153,9 @@
 						rendered="#{loginBB.role == null  and (productListBB.getInStock(p) == false)}"
 						style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important;" />
 
-					<!--.......................... edit .......................--> <p:commandButton
-						class="author" value="Edytuj"
+					<!--............................... edit .............................-->
+
+					<p:commandButton class="author" value="Edytuj"
 						action="#{productListBB.editProduct(p)}" ajax="true"
 						rendered="#{loginBB.role == 'seller'}" /> </header> <p:commandLink
 						class="image" action="#{productListBB.showMore(p)}">
@@ -169,21 +171,22 @@
 			<!--................................. pagination ...................................-->
 
 			<div style="margin-top: 20px;">
-				<p:commandButton icon="pi pi-angle-double-left" style="width: 50px"
+				<p:commandButton icon="pi pi-angle-double-left"
+					style="width: 50px; outline:none"
 					action="#{productListBB.firstPage()}" ajax="true" update="products"
 					rendered="#{productListBB.page != 1}" />
 				<p:commandButton icon="pi pi-angle-double-left"
 					action="#{productListBB.firstPage()}" ajax="true" update="products"
 					rendered="#{productListBB.page == 1}"
 					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important; width: 50px;" />
-				<p:commandButton icon="pi pi-angle-left" style="width: 50px"
+				<p:commandButton icon="pi pi-angle-left"
+					style="width: 50px; outline:none"
 					action="#{productListBB.prevPage()}" ajax="true" update="products"
 					rendered="#{productListBB.page != 1}" />
 				<p:commandButton icon="pi pi-angle-left"
 					action="#{productListBB.prevPage()}" ajax="true" update="products"
 					rendered="#{productListBB.page == 1}"
 					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important; width: 50px;" />
-
 
 				<h:commandButton value="#{productListBB.stringPage}"
 					style="pointer-events: none; box-shadow: none; font-size: 0.9em; margin-left: -10px !important; margin-right: -10px !important" />
@@ -193,7 +196,7 @@
 					style="pointer-events: none; box-shadow: none; font-size: 0.9em; margin-left: -10px !important; margin-right: -10px !important" />
 
 				<p:commandButton icon="pi pi-angle-right"
-					style="width: 50px; box-shadow: none"
+					style="width: 50px; box-shadow: none; outline:none"
 					action="#{productListBB.nextPage()}" ajax="true" update="products"
 					rendered="#{productListBB.page != productListBB.lastPage}" />
 				<p:commandButton icon="pi pi-angle-right"
@@ -201,18 +204,16 @@
 					rendered="#{productListBB.page == productListBB.lastPage}"
 					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important; width: 50px" />
 				<p:commandButton icon="pi pi-angle-double-right"
-					style="width: 50px; box-shadow: none"
+					style="width: 50px; box-shadow: none; outline:none"
 					action="#{productListBB.lastPage()}" ajax="true" update="products"
 					rendered="#{productListBB.page != productListBB.lastPage}" />
 				<p:commandButton icon="pi pi-angle-double-right"
 					action="#{productListBB.lastPage()}" ajax="true" update="products"
 					rendered="#{productListBB.page == productListBB.lastPage}"
 					style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important; width: 50px" />
-
 			</div>
 
 			<!--...................................................................................-->
-
 
 			<!--............................... messages ..........................................-->
 
@@ -224,14 +225,12 @@
 				closable="true" />
 			<p:growl id="loginInfo" showDetail="true" severity="error"
 				closable="true" />
+			<p:growl id="editProductInfo" showDetail="true" severity="info"
+				closable="true" />
+				
 			<!--...................................................................................-->
 
 		</h:form>
-
-
 	</ui:define>
 </ui:composition>
-
-
-
 </html>

@@ -80,7 +80,6 @@ public class OrderPositionBB implements Serializable {
 		return orderPositionDAO.listAllPositions();
 	}
 	
-
 	public String indexPage() {
 		return PAGE_INDEX;
 	}
@@ -147,10 +146,5 @@ public class OrderPositionBB implements Serializable {
 		}
 		
 	}
-
-	
-	
-	
-
 
 }

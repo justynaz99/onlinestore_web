@@ -8,10 +8,7 @@
 
 
 <ui:composition template="/templates/page-template.xhtml">
-
 	<ui:define name="pageContent">
-
-
 		<h:form>
 			<h3>Zarejestruj się</h3>
 			<div>
@@ -46,10 +43,7 @@
 							validatorMessage="Nazwisko powinno zawierać od 3 do 20 znaków">
 							<f:validateLength minimum="3" maximum="20" />
 						</p:inputText>
-					</div>
-				
-					
-				
+					</div>				
 				</div>
 
 					<div class="formInput" >
@@ -64,8 +58,7 @@
 							<f:validateLength minimum="8" maximum="20" />
 						</p:password>
 					</div>
-				
-				
+								
 					<div class="formInput">
 					<p:outputLabel for="password2" value="Powtórz hasło"
 						class="formLabel" />
@@ -80,11 +73,7 @@
 					action="#{registrationBB.registration()}" update="@form"
 					ajax="true" />
 			</div>
-		</h:form>
-
-		
+		</h:form>		
 	</ui:define>
-
 </ui:composition>
-
 </html>

@@ -19,27 +19,28 @@ import jsfproject.dao.ProductDAO;
 import jsfproject.entities.Product;
 import jsfproject.entities.User;
 
-
 @Named
 @RequestScoped
 public class ProductListBB implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 	private static final String PAGE_PRODUCT = "product?faces-redirect=true";
 	private static final String PAGE_PRODUCT_EDIT = "productEdit?faces-redirect=true";
-	
+
 	private Product product = new Product();
 	private String name;
 	private HttpSession session;
 	private boolean inStock;
-	//pagination
+	
+	// pagination
 	private Integer page;
 	private String stringPage;
 	private Integer lastPage;
 	private String stringLastPage;
 	private List<String> pages;
-	//sorting
+	
+	// sorting
 	private String selectedItem = "1";
 
 	@Inject
@@ -53,23 +54,23 @@ public class ProductListBB implements Serializable {
 
 	@EJB
 	ProductDAO productDAO;
-	
+
 	public Product getProduct() {
 		return product;
 	}
-	
-	//searching
-	
+
+	// searching
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	//sorting
-	
+
+	// sorting
+
 	public String getSelectedItem() {
 		return selectedItem;
 	}
@@ -77,69 +78,69 @@ public class ProductListBB implements Serializable {
 	public void setSelectedItem(String selectedItem) {
 		this.selectedItem = selectedItem;
 	}
-	
-	//pagination
-	
+
+	// pagination
+
 	public Integer getPage() {
 		page = productDAO.getPage();
 		return page;
 	}
-	
+
 	public String getStringPage() {
 		stringPage = page.toString();
 		return stringPage;
 	}
-	
+
 	public int getLastPage() {
 		lastPage = productDAO.getLastPage();
 		return lastPage;
 	}
-	
+
 	public String getStringLastPage() {
-		Integer lastPage = (Integer)productDAO.getLastPage();
+		Integer lastPage = (Integer) productDAO.getLastPage();
 		stringLastPage = lastPage.toString();
 		return stringLastPage;
 	}
 	
-	
-
-	
-	
-	
-	public List<Product> getList() {
-		List<Product> list = null;
-		Map<String,Object> searchParams = new HashMap<String, Object>();
-		
-		if (name != null && name.length() > 0){
-			searchParams.put("name", name);
-		}
-		
-		if(selectedItem != null) {
-			searchParams.put("selectedItem", selectedItem);
-		}
-			
-		list = productDAO.getList(searchParams);
-		return list;
-	}
+	//
 	
 	public boolean getInStock(Product product) {
 		if (product != null) {
 			int quantity = productDAO.find(product.getIdProduct()).getAvailableQuantity();
-			if (quantity > 0) return true;
-			else if (quantity == 0) return false;
-			else return false;
-		}
-		else {
+			if (quantity > 0)
+				return true;
+			else if (quantity == 0)
+				return false;
+			else
+				return false;
+		} else {
 			return false;
 		}
 	}
-	
+
+	public List<Product> getList() {
+		List<Product> list = null;
+		Map<String, Object> searchParams = new HashMap<String, Object>();
+
+		if (name != null && name.length() > 0) {
+			searchParams.put("name", name);
+		}
+
+		if (selectedItem != null) {
+			searchParams.put("selectedItem", selectedItem);
+		}
+
+		list = productDAO.getList(searchParams);
+		return list;
+	}
+
+
 	public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
 	}
-	
+
 	public String showMore(Product product) {
-		if(session == null) {
+		if (session == null) {
 			session = (HttpSession) context.getExternalContext().getSession(true);
 		} else {
 			session = (HttpSession) context.getExternalContext().getSession(false);
@@ -147,9 +148,9 @@ public class ProductListBB implements Serializable {
 		session.setAttribute("product", product);
 		return PAGE_PRODUCT;
 	}
-	
-	//methods for seller
-	
+
+	// methods for seller
+
 	public String addProduct() {
 
 		try {
@@ -159,8 +160,7 @@ public class ProductListBB implements Serializable {
 			} else {
 				addMessage(FacesMessage.SEVERITY_ERROR, "B³ad!", "Istnieje ju¿ produkt o takiej nazwie.");
 			}
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			context.addMessage(null,
@@ -170,14 +170,14 @@ public class ProductListBB implements Serializable {
 
 		return PAGE_STAY_AT_THE_SAME;
 	}
-	
+
 	public String deleteProduct(Product product) {
 		productDAO.remove(product);
 		return PAGE_STAY_AT_THE_SAME;
 	}
-	
-	//searching
-	
+
+	// searching
+
 	public String search() {
 		return PAGE_STAY_AT_THE_SAME;
 	}
@@ -186,56 +186,48 @@ public class ProductListBB implements Serializable {
 		setName("");
 		return PAGE_STAY_AT_THE_SAME;
 	}
-	
-	//sorting
-	
+
+	// sorting
+
 	public String sort() {
 		return PAGE_STAY_AT_THE_SAME;
 	}
-	
-	//pagination
+
+	// pagination
 
 	public String nextPage() {
-		if(productDAO.getPage() != productDAO.getLastPage()) {
-			productDAO.setOffset(productDAO.getOffset() + productDAO.getQuantity()); 
+		if (productDAO.getPage() != productDAO.getLastPage()) {
+			productDAO.setOffset(productDAO.getOffset() + productDAO.getQuantity());
 			productDAO.setPage(productDAO.getPage() + 1);
 		}
 		return PAGE_STAY_AT_THE_SAME;
 	}
-	
+
 	public String prevPage() {
-		if(productDAO.getPage() != 1) {
-			productDAO.setOffset(productDAO.getOffset() - productDAO.getQuantity()); 
+		if (productDAO.getPage() != 1) {
+			productDAO.setOffset(productDAO.getOffset() - productDAO.getQuantity());
 			productDAO.setPage(productDAO.getPage() - 1);
 		}
 		return PAGE_STAY_AT_THE_SAME;
 	}
-	
+
 	public String firstPage() {
-		productDAO.setPage(1);
+		productDAO.setOffset(productDAO.getOffset() - (productDAO.getQuantity() * productDAO.getPage()));
+		productDAO.setPage(productDAO.getPage() - (productDAO.getPage()) + 1);
 		return PAGE_STAY_AT_THE_SAME;
 	}
-	
+
 	public String lastPage() {
-		productDAO.setPage(lastPage);
+		productDAO.setOffset(productDAO.getOffset()
+				+ (productDAO.getQuantity() * (productDAO.getLastPage() - productDAO.getPage())));
+		productDAO.setPage(productDAO.getPage() + (productDAO.getLastPage() - productDAO.getPage()));
 		return PAGE_STAY_AT_THE_SAME;
 	}
-	
+
 	public String editProduct(Product product) {
 		session = (HttpSession) context.getExternalContext().getSession(false);
 		session.setAttribute("productEdit", product);
 		return PAGE_PRODUCT_EDIT;
 	}
-	
-	
-
-	
-	
-	
-	
-	
-
-
-	
 
 }

@@ -113,7 +113,6 @@ public class OrderBB implements Serializable {
 			for (OrderPosition op : list) {
 				op.getProduct().setAvailableQuantity(op.getProduct().getAvailableQuantity() - 1);
 				productDAO.merge(op.getProduct());
-				
 			}
 			OrderStatus status = orderStatusDAO.find(2);
 			order.setOrderStatus(status);
@@ -125,5 +124,4 @@ public class OrderBB implements Serializable {
 			return PAGE_STAY_AT_THE_SAME;
 		}
 	}
-
 }

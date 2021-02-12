@@ -15,13 +15,12 @@
 <ui:composition template="/templates/page-template.xhtml">
 	<ui:define name="pageContent">
 		<div id="main">
-
 			<h:form id="data">
 				<div style="float: left">
 					<h3>Edycja danych</h3>
 					<div>
-
-						<p:messages style="width:22em" severity="error, info" closable="true" />
+						<p:messages style="width:22em" severity="error, info"
+							closable="true" />
 							
 						<div class="formInput" style="margin-top: 20px">
 							<p:outputLabel for="firstname" value="Imię" />
@@ -55,7 +54,6 @@
 								<f:validateRegex pattern="^[A-Za-z0-9+_.-]+@(.+)$" />
 							</p:inputText>
 						</div>
-
 					</div>
 
 					<div style="clear: both">
@@ -66,13 +64,13 @@
 				</div>
 			</h:form>
 			
-
 			<h:form id="password">
 				<div style="float: left; margin-left: 150px">
 					<h3 style="margin-bottom: 15px">Edycja hasła</h3>
-					
-					<p:messages style="width:22em" severity="error, info" closable="true" />
-							
+
+					<p:messages style="width:22em" severity="error, info"
+						closable="true" />
+
 					<div class="formInput" style="clear: both">
 						<p:outputLabel for="password" value="Hasło" class="formLabel" />
 						<p:password id="password"
@@ -104,8 +102,6 @@
 				</div>
 				<div style="clear: both"></div>
 			</h:form>
-
-
 		</div>
 	</ui:define>
 </ui:composition>

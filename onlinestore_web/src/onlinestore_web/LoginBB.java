@@ -46,8 +46,6 @@ public class LoginBB implements Serializable {
 	private String role;
 	private HttpSession session;
 
-	
-
 	@Inject
 	FacesContext context;
 
@@ -83,6 +81,10 @@ public class LoginBB implements Serializable {
 		if (user != null)
 			return user.getFirstName();
 		return " ";
+	}
+	
+	public List<User> getList() {
+		return userDAO.listAllUsers();
 	}
 
 	public String indexPage() {
@@ -121,7 +123,6 @@ public class LoginBB implements Serializable {
 			e.printStackTrace();
 			return PAGE_STAY_AT_THE_SAME;
 		}
-
 		return PAGE_STAY_AT_THE_SAME;
 	}
 
@@ -130,15 +131,10 @@ public class LoginBB implements Serializable {
 		if (session != null) {
 			session.invalidate();
 		}
-
 		addMessage(FacesMessage.SEVERITY_INFO, "Sukces!", "Zosta³eœ wylogowany.");
 		return PAGE_INDEX;
 	}
 
-	public List<User> getList() {
-		return userDAO.listAllUsers();
-	}
-	
 	public String loginInfo() {
 		addMessage(FacesMessage.SEVERITY_ERROR, "Uwaga!", "Zaloguj siê aby dodaæ produkt do koszyka.");
 		return PAGE_STAY_AT_THE_SAME;

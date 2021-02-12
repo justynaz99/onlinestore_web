@@ -58,6 +58,10 @@ public class RegistrationBB implements Serializable {
 
 	@EJB
 	UserDAO userDAO;
+	
+	public User getUser() {
+		return user;
+	}
 
 	public String indexPage() {
 		return PAGE_INDEX;
@@ -70,11 +74,6 @@ public class RegistrationBB implements Serializable {
 	public String registrationPage() {
 		return PAGE_REGISTRATION;
 	}
-
-	public User getUser() {
-		return user;
-	}
-	
 
 	public String hash(char[] password) {
 		byte[] salt = new byte[SIZE / 8];

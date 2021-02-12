@@ -14,15 +14,17 @@
 
 
 <ui:composition template="/templates/page-template.xhtml">
-
 	<ui:define name="pageContent">
-
 		<div id="main">
 			<h:form>
 				<p:growl id="editError" showDetail="true" severity="error"
 					closable="true" />
 				<h3 style="margin-bottom: 30px">Edytuj produkt</h3>
 				<div>
+
+					<p:messages style="width:22em" severity="error" closable="true">
+						<p:autoUpdate />
+					</p:messages>
 
 					<div class="formInput">
 						<p:outputLabel for="name" value="Nazwa" />
@@ -40,31 +42,24 @@
 						</p:inputText>
 					</div>
 
-
 					<div class="formInput">
 						<p:outputLabel for="quantity" value="Dostępna ilość"
 							class="formLabel" />
-						<p:inputText id="quantity" disabled="true"
+						<p:inputText id="quantity"
 							value="#{productEditBB.product.availableQuantity}"
-							placeholder="#{productEditBB.product.price}" required="true"
-							requiredMessage="Wprowadz dostępną ilość"
+							placeholder="#{productEditBB.product.availableQuantity}"
+							required="true" requiredMessage="Wprowadz dostępną ilość"
 							validatorMessage="Ilość powinna składać się wyłącznie z cyfr.">
-							<f:validateLength minimum="3" maximum="20" />
-							<f:validateRegex pattern="^[0-9]$" />
 						</p:inputText>
-					</div> 
-
+					</div>
 
 					<div style="clear: both">
-						<p:commandButton value="Zapisz" action="#{productEditBB.saveData()}" />
+						<p:commandButton value="Zapisz"
+							action="#{productEditBB.saveData()}" />
 					</div>
 				</div>
 			</h:form>
 		</div>
-
-
 	</ui:define>
-
 </ui:composition>
-
 </html>

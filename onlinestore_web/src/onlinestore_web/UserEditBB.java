@@ -62,7 +62,6 @@ public class UserEditBB implements Serializable {
 		loaded = (User) session.getAttribute("userEdit");
 		if (loaded != null) {
 			user = loaded;
-			//session.removeAttribute("userEdit");
 		} else {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d!", "Nie wybrano u¿ytkownika."));
 		}
@@ -90,6 +89,4 @@ public class UserEditBB implements Serializable {
 		session.removeAttribute("userEdit");		
 		return PAGE_USERS;
 	}
-
-
 }

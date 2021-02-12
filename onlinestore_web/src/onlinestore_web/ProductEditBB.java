@@ -71,24 +71,20 @@ public class ProductEditBB implements Serializable {
 	}
 
 	public String saveData() {
-//		session = (HttpSession) context.getExternalContext().getSession(false);
-//		try {
-//			if (product == null) {			
-//				productDAO.create(product);
-//			} else {
-//				productDAO.merge(product);
-//			}
-//			addMessage(FacesMessage.SEVERITY_INFO, "Sukces!", "Dane zosta³y poprawnie edytowane. ");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			addMessage(FacesMessage.SEVERITY_ERROR, "B³¹d!", "Wyst¹pi³ b³¹d podczas edycji danych. ");
-//			return PAGE_STAY_AT_THE_SAME;
-//		}
-//		session.removeAttribute("productEdit");		
-		addMessage(FacesMessage.SEVERITY_INFO, "Sukces!", "Produkt zosta³ poprawnie edytowany.");
+		session = (HttpSession) context.getExternalContext().getSession(false);
+		try {
+			if (product.getIdProduct() == null) {			
+				productDAO.create(product);
+			} else {
+				productDAO.merge(product);
+			}
+			addMessage(FacesMessage.SEVERITY_INFO, "Sukces!", "Dane zosta³y poprawnie edytowane. ");
+		} catch (Exception e) {
+			e.printStackTrace();
+			addMessage(FacesMessage.SEVERITY_ERROR, "B³¹d!", "Wyst¹pi³ b³¹d podczas edycji danych. ");
+			return PAGE_STAY_AT_THE_SAME;
+		}
+		session.removeAttribute("productEdit");		
 		return PAGE_INDEX;
 	}
-	
-	
-
 }

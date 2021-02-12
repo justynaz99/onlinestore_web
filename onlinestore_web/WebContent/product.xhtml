@@ -13,11 +13,8 @@
 </f:metadata>
 
 <ui:composition template="templates/page-template.xhtml">
-
 	<ui:define name="pageContent">
-
 		<div id="main">
-
 			<div class="mini-posts">
 				<div>
 					<article class="mini-product"> <a class="image"><h:graphicImage
@@ -34,9 +31,8 @@
 						<h:outputText value="#{productBB.product.idProduct}" />
 					</h3>
 
+					<!--....................... in stock .........................-->
 
-
-					<!--....................... dostępny .........................-->
 					<h3 style="margin-top: 20px">
 						<h:outputText value="DOSTĘPNY" style="color: #b7d8b7;"
 							rendered="#{productBB.getInStock(productBB.product) == true}" />
@@ -45,11 +41,11 @@
 						action="#{loginBB.loginInfo}" ajax="true" update="loginInfo"
 						rendered="#{loginBB.role == null and (productBB.getInStock(productBB.product))}" />
 					<p:commandButton value="Dodaj do koszyka"
-						action="#{orderPositionBB.addToCart(productBB.product)}" ajax="true"
-						update="addInfo"
+						action="#{orderPositionBB.addToCart(productBB.product)}"
+						ajax="true" update="addInfo"
 						rendered="#{loginBB.role == 'user' and (productBB.getInStock(productBB.product))}" />
 
-					<!--.......................... niedostępny .......................-->
+					<!--.......................... out of stock .......................-->
 
 					<h3 style="margin-top: 20px">
 						<h:outputText value="NIEDOSTĘPNY" style="color: #f8b7bd;"
@@ -64,8 +60,6 @@
 						action="#{loginBB.loginInfo}" ajax="true" update="loginInfo"
 						rendered="#{loginBB.role == null  and (productBB.getInStock(productBB.product) == false)}"
 						style="pointer-events: none; color: rgba(160, 160, 160, 0.3) !important; margin-bottom: -20px" />
-
-
 
 					<p:accordionPanel multiple="true" widgetVar="multiple"
 						style="margin-top: 46px">
@@ -102,6 +96,7 @@
 					</p:accordionPanel>
 				</div>
 			</div>
+			
 			<p:growl id="addInfo" showDetail="true" severity="info"
 				closable="true" />
 			<p:growl id="logoutInfo" showDetail="true" severity="info"
@@ -114,7 +109,4 @@
 		</div>
 	</ui:define>
 </ui:composition>
-
-
-
 </html>
